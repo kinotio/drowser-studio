@@ -2,7 +2,14 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+import { HeaderComponent } from "@/components/common/header-component";
+import { FooterComponent } from "@/components/common/footer-component";
+
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-inter",
+});
 
 export const metadata: Metadata = {
   title: "Drowser Hub",
@@ -15,7 +22,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <HeaderComponent />
+        {children}
+        <FooterComponent />
+      </body>
     </html>
   );
 }
