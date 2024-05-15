@@ -1,5 +1,5 @@
-import { AboutComponent } from "@/components/pages/home/about-component";
-import { HeroComponent } from "@/components/pages/home/hero-component";
+import { AboutComponent } from '@/components/pages/home/about-component'
+import { HeroComponent } from '@/components/pages/home/hero-component'
 
 export default function Home() {
   return (
@@ -7,5 +7,5 @@ export default function Home() {
       <HeroComponent />
       <AboutComponent />
     </main>
-  );
+  )
 }
