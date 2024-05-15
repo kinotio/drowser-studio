@@ -1,4 +1,4 @@
-import Link from "next/link"
+import Link from "next/link";
 
 export function FooterComponent() {
   return (
@@ -20,23 +20,10 @@ export function FooterComponent() {
             <Link href="#">Integrations</Link>
           </div>
           <div className="grid gap-1">
-            <h3 className="font-semibold">Resources</h3>
-            <Link href="#">Blog</Link>
-            <Link href="#">Documentation</Link>
-            <Link href="#">Support</Link>
-            <Link href="#">Webinars</Link>
-          </div>
-          <div className="grid gap-1">
             <h3 className="font-semibold">Legal</h3>
             <Link href="#">Privacy Policy</Link>
             <Link href="#">Terms of Service</Link>
             <Link href="#">Cookie Policy</Link>
-          </div>
-          <div className="grid gap-1">
-            <h3 className="font-semibold">Contact</h3>
-            <Link href="#">Sales</Link>
-            <Link href="#">Support</Link>
-            <Link href="#">Partnerships</Link>
           </div>
         </div>
       </footer>
