@@ -1,13 +1,13 @@
-import type { Metadata } from "next";
+import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: "Drowser | Dashboard",
-};
+  title: 'Drowser | Dashboard'
+}
 
 export default function DashboardLayout({
-  children,
+  children
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
-  return <>{children}</>;
+  return <>{children}</>
 }
