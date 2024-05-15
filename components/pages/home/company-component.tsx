@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 export function CompanyComponent() {
   return (
     <>
@@ -13,35 +15,35 @@ export function CompanyComponent() {
                 helped them deliver high-quality software and stay ahead of the competition.
               </p>
               <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 sm:gap-6 md:gap-8'>
-                <img
+                <Image
                   alt='Logo'
                   className='aspect-[2/1] overflow-hidden rounded-lg object-contain object-center'
                   height={70}
                   src='/placeholder.svg'
                   width={140}
                 />
-                <img
+                <Image
                   alt='Logo'
                   className='aspect-[2/1] overflow-hidden rounded-lg object-contain object-center'
                   height={70}
                   src='/placeholder.svg'
                   width={140}
                 />
-                <img
+                <Image
                   alt='Logo'
                   className='aspect-[2/1] overflow-hidden rounded-lg object-contain object-center'
                   height={70}
                   src='/placeholder.svg'
                   width={140}
                 />
-                <img
+                <Image
                   alt='Logo'
                   className='aspect-[2/1] overflow-hidden rounded-lg object-contain object-center'
                   height={70}
                   src='/placeholder.svg'
                   width={140}
                 />
-                <img
+                <Image
                   alt='Logo'
                   className='aspect-[2/1] overflow-hidden rounded-lg object-contain object-center'
                   height={70}
