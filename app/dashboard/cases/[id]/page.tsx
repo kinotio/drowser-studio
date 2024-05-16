@@ -1,5 +1,8 @@
 'use client'
 
+import { useEffect, useState } from 'react'
+import { useParams, useRouter } from 'next/navigation'
+
 import { CardTitle, CardDescription, CardHeader, CardContent, Card } from '@/components/ui/card'
 import { ResponsiveLine } from '@nivo/line'
 import { ResponsiveBar } from '@nivo/bar'
@@ -12,7 +15,28 @@ import {
   Table
 } from '@/components/ui/table'
 
+import useReportStore from '@/stores/useReportStore'
+
+import { TContentCase, TContentSubCase } from '@/types'
+
 export default function Case() {
+  const report = useReportStore((state) => state.content)
+
+  const { id } = useParams()
+  const router = useRouter()
+
+  const [content, setContent] = useState<TContentCase>()
+
+  useEffect(() => {
+    if (report === '') {
+      router.push('/')
+      return
+    }
+    const file = JSON.parse(report)
+    const c = file?.drowser.cases.filter((c: any) => c.id === id)[0]
+    setContent(c)
+  }, [id, report])
+
   return (
     <main className='flex flex-col gap-4 p-4 md:gap-8 md:p-6'>
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
@@ -20,7 +44,7 @@ export default function Case() {
           <CardHeader>
             <CardTitle>Total Tests</CardTitle>
             <CardDescription>
-              <span className='text-4xl font-bold'>1,234</span>
+              <span className='text-4xl font-bold'>{content?.cases.length}</span>
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -56,42 +80,25 @@ export default function Case() {
             <TableHeader>
               <TableRow>
                 <TableHead>Test Name</TableHead>
+                <TableHead>Actual</TableHead>
+                <TableHead>Exceptation</TableHead>
                 <TableHead>Status</TableHead>
-                <TableHead>Duration</TableHead>
-                <TableHead>Assigned To</TableHead>
+                <TableHead>Time</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              <TableRow>
-                <TableCell>Login Test</TableCell>
-                <TableCell className='text-green-500'>Passed</TableCell>
-                <TableCell>2m 15s</TableCell>
-                <TableCell>John Doe</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Signup Test</TableCell>
-                <TableCell className='text-red-500'>Failed</TableCell>
-                <TableCell>3m 45s</TableCell>
-                <TableCell>Jane Smith</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Forgot Password Test</TableCell>
-                <TableCell className='text-green-500'>Passed</TableCell>
-                <TableCell>1m 30s</TableCell>
-                <TableCell>Bob Johnson</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Checkout Test</TableCell>
-                <TableCell className='text-yellow-500'>In Progress</TableCell>
-                <TableCell>5m 0s</TableCell>
-                <TableCell>Sarah Lee</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Search Test</TableCell>
-                <TableCell className='text-green-500'>Passed</TableCell>
-                <TableCell>2m 45s</TableCell>
-                <TableCell>Tom Wilson</TableCell>
-              </TableRow>
+              {Array.isArray(content?.cases) &&
+                content?.cases.map((c: TContentSubCase) => (
+                  <TableRow key={c.id}>
+                    <TableCell>{c.name}</TableCell>
+                    <TableCell>{c.actual}</TableCell>
+                    <TableCell>{c.exceptation}</TableCell>
+                    <TableCell className={c.status === 'ok' ? 'text-green-500' : 'text-red-500'}>
+                      {c.status.toUpperCase()}
+                    </TableCell>
+                    <TableCell>{c.timestamp}</TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
         </div>
