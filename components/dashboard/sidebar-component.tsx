@@ -44,7 +44,7 @@ export default function SidebarComponent() {
               <Link
                 key={c.id}
                 className='flex items-center gap-3 rounded-lg px-3 py-2 text-gray-900 transition-all hover:text-gray-900 dark:bg-gray-800 dark:text-gray-50 dark:hover:text-gray-50'
-                href='#'
+                href={`/dashboard/cases/${c.id}`}
               >
                 <ClipboardIcon className='h-4 w-4' />
                 {c.time}
