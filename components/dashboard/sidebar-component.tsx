@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { GithubIcon } from 'lucide-react'
 
 import { Badge } from '@/components/ui/badge'
@@ -11,7 +12,7 @@ export default function SidebarComponent() {
       <div className='flex flex-col gap-2 h-full'>
         <div className='flex h-[60px] items-center px-6'>
           <Link className='flex items-center font-bold' href='/dashboard'>
-            <span className='text-black'>Drowser</span>
+            <Image src='/images/drowser-black.png' width={100} height={100} alt='Drowser Logo' />
           </Link>
         </div>
 
