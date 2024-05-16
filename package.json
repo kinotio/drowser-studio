@@ -10,6 +10,8 @@
     "format": "prettier --write \"./**/*.{ts,tsx}\""
   },
   "dependencies": {
+    "@nivo/bar": "^0.87.0",
+    "@nivo/line": "^0.87.0",
     "@radix-ui/react-collapsible": "^1.0.3",
     "@radix-ui/react-dropdown-menu": "^2.0.6",
     "@radix-ui/react-navigation-menu": "^1.1.4",
