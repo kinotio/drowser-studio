@@ -3,16 +3,21 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { ImportIcon } from 'lucide-react'
+
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 
-import { FileContent } from '@/types'
+import { TFileContent } from '@/types'
 import { isValidFileContent } from '@/lib/utils'
 
+import useReportStore from '@/stores/useReportStore'
+
 export function HeroComponent() {
+  const setReport = useReportStore((state) => state.setReport)
+
   const router = useRouter()
 
-  const [fileContent, setFileContent] = useState<FileContent | null>(null)
+  const [fileContent, setFileContent] = useState<TFileContent | null>(null)
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files) return
@@ -24,6 +29,7 @@ export function HeroComponent() {
 
   const handleSubmit = () => {
     if (!isValidFileContent(fileContent)) return
+    setReport(JSON.stringify(fileContent))
     router.push('/dashboard')
   }
 

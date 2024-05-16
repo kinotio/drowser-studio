@@ -1,12 +1,34 @@
+'use client'
+
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { GithubIcon } from 'lucide-react'
+import { ClipboardIcon, GithubIcon } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 
 import { Badge } from '@/components/ui/badge'
 
-import { APP_VERSION, DASHBOARD_MENU } from '@/constants'
+import { APP_VERSION } from '@/constants'
+
+import useReportStore from '@/stores/useReportStore'
+
+import { TDrowserReport, TContentCase } from '@/types'
 
 export default function SidebarComponent() {
+  const report = useReportStore((state) => state.content)
+
+  const router = useRouter()
+
+  const [content, setContent] = useState<TDrowserReport>()
+
+  useEffect(() => {
+    if (report === '') {
+      router.push('/')
+      return
+    }
+    setContent(JSON.parse(report))
+  }, [report])
+
   return (
     <div className='hidden border-r bg-gray-100/40 lg:block dark:bg-gray-800/40'>
       <div className='flex flex-col gap-2 h-full'>
@@ -18,19 +40,16 @@ export default function SidebarComponent() {
 
         <div className='flex-1'>
           <nav className='grid items-start px-4 text-sm font-medium'>
-            {DASHBOARD_MENU.map((menu) => {
-              const Icon = menu.icon
-              return (
-                <Link
-                  key={menu.label}
-                  className='flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50'
-                  href={menu.url}
-                >
-                  <Icon className='h-5 w-5' />
-                  {menu.label}
-                </Link>
-              )
-            })}
+            {content?.drowser.cases.map((c: TContentCase) => (
+              <Link
+                key={c.id}
+                className='flex items-center gap-3 rounded-lg px-3 py-2 text-gray-900 transition-all hover:text-gray-900 dark:bg-gray-800 dark:text-gray-50 dark:hover:text-gray-50'
+                href='#'
+              >
+                <ClipboardIcon className='h-4 w-4' />
+                {c.time}
+              </Link>
+            ))}
           </nav>
         </div>
 
