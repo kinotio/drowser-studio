@@ -11,6 +11,8 @@ import { TContentSubCase } from '@/types'
 
 import { caseStatus } from '@/constants'
 
+import { readableTimestamp } from '@/utils'
+
 export default function TableComponent({ content }: { content: any }) {
   return (
     <div className='border rounded-lg w-full'>
@@ -41,7 +43,7 @@ export default function TableComponent({ content }: { content: any }) {
                   >
                     {c.status}
                   </TableCell>
-                  <TableCell>{c.timestamp}</TableCell>
+                  <TableCell>{readableTimestamp(c.timestamp)}</TableCell>
                 </TableRow>
               ))}
           </TableBody>

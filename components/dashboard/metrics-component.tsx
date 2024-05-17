@@ -10,6 +10,8 @@ import { isEmpty } from 'lodash'
 
 import { CardTitle, CardDescription, CardHeader, CardContent, Card } from '@/components/ui/card'
 
+import { humanizeDuration } from '@/utils'
+
 export default function MetricsComponent({ content }: { content: any }) {
   const [goupedByStatus, setGoupedByStatus] = useState<any>()
 
@@ -58,7 +60,7 @@ export default function MetricsComponent({ content }: { content: any }) {
         <CardHeader>
           <CardTitle>Test Coverage</CardTitle>
           <CardDescription>
-            <span className='text-4xl font-bold'>85%</span>
+            <span className='text-4xl font-bold'>{`${content?.coverage?.toFixed() ?? 0}%`}</span>
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -69,7 +71,9 @@ export default function MetricsComponent({ content }: { content: any }) {
         <CardHeader>
           <CardTitle>Avg. Test Duration</CardTitle>
           <CardDescription>
-            <span className='text-4xl font-bold'>2m 30s</span>
+            <span className='text-4xl font-bold'>
+              {humanizeDuration(content?.avg_duration) ?? 0}
+            </span>
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -80,7 +84,7 @@ export default function MetricsComponent({ content }: { content: any }) {
         <CardHeader>
           <CardTitle>Flaky Tests</CardTitle>
           <CardDescription>
-            <span className='text-4xl font-bold'>15</span>
+            <span className='text-4xl font-bold'>{content?.flaky ?? 0}</span>
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -158,17 +162,6 @@ function LineChart(props: any) {
               { x: 'Apr', y: 145 },
               { x: 'May', y: 26 },
               { x: 'Jun', y: 154 }
-            ]
-          },
-          {
-            id: 'Mobile',
-            data: [
-              { x: 'Jan', y: 60 },
-              { x: 'Feb', y: 48 },
-              { x: 'Mar', y: 177 },
-              { x: 'Apr', y: 78 },
-              { x: 'May', y: 96 },
-              { x: 'Jun', y: 204 }
             ]
           }
         ]}
