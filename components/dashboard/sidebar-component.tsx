@@ -22,10 +22,7 @@ export default function SidebarComponent() {
   const [content, setContent] = useState<TDrowserReport>()
 
   useEffect(() => {
-    if (report === '') {
-      router.push('/')
-      return
-    }
+    if (report === '') return router.push('/')
     setContent(JSON.parse(report))
   }, [report])
 

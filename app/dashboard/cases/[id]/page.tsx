@@ -26,15 +26,13 @@ export default function Case() {
   const router = useRouter()
 
   const [content, setContent] = useState<TContentCase>()
+  const [goupedByStatus, setGoupedByStatus] = useState<any>()
 
   useEffect(() => {
-    if (report === '') {
-      router.push('/')
-      return
-    }
-    const file = JSON.parse(report)
-    const c = file?.drowser.cases.filter((c: any) => c.id === id)[0]
-    setContent(c)
+    if (report === '') return router.push('/')
+    const file = JSON.parse(report)?.drowser.cases.filter((c: any) => c.id === id)[0]
+    setGoupedByStatus(Object.groupBy(file.cases, ({ status }: { status: string }) => status))
+    setContent(file)
   }, [id, report])
 
   return (
@@ -44,7 +42,7 @@ export default function Case() {
           <CardHeader>
             <CardTitle>Total Tests</CardTitle>
             <CardDescription>
-              <span className='text-4xl font-bold'>{content?.cases.length}</span>
+              <span className='text-4xl font-bold'>{content?.cases?.length ?? 0}</span>
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -55,7 +53,7 @@ export default function Case() {
           <CardHeader>
             <CardTitle>Passing Tests</CardTitle>
             <CardDescription>
-              <span className='text-4xl font-bold'>987</span>
+              <span className='text-4xl font-bold'>{goupedByStatus?.ok?.length ?? 0}</span>
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -66,7 +64,7 @@ export default function Case() {
           <CardHeader>
             <CardTitle>Failed Tests</CardTitle>
             <CardDescription>
-              <span className='text-4xl font-bold'>247</span>
+              <span className='text-4xl font-bold'>{goupedByStatus?.ko?.length ?? 0}</span>
             </CardDescription>
           </CardHeader>
           <CardContent>
