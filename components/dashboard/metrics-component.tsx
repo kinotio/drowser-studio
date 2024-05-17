@@ -36,7 +36,7 @@ export default function MetricsComponent({ content }: { content: any }) {
         <CardHeader>
           <CardTitle>Passing Tests</CardTitle>
           <CardDescription>
-            <span className='text-4xl font-bold'>{goupedByStatus?.ok?.length ?? 0}</span>
+            <span className='text-4xl font-bold'>{goupedByStatus?.passed?.length ?? 0}</span>
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -47,7 +47,7 @@ export default function MetricsComponent({ content }: { content: any }) {
         <CardHeader>
           <CardTitle>Failed Tests</CardTitle>
           <CardDescription>
-            <span className='text-4xl font-bold'>{goupedByStatus?.ko?.length ?? 0}</span>
+            <span className='text-4xl font-bold'>{goupedByStatus?.failed?.length ?? 0}</span>
           </CardDescription>
         </CardHeader>
         <CardContent>

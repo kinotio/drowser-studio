@@ -9,3 +9,8 @@ export const DASHBOARD_MENU = [
     icon: ClipboardIcon
   }
 ]
+
+export const caseStatus: Record<string, string> = {
+  passed: 'passed',
+  failed: 'failed'
+}

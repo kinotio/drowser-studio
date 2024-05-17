@@ -9,6 +9,8 @@ import {
 
 import { TContentSubCase } from '@/types'
 
+import { caseStatus } from '@/constants'
+
 export default function TableComponent({ content }: { content: any }) {
   return (
     <div className='border rounded-lg w-full'>
@@ -30,8 +32,14 @@ export default function TableComponent({ content }: { content: any }) {
                   <TableCell>{c.name}</TableCell>
                   <TableCell>{c.actual}</TableCell>
                   <TableCell>{c.exceptation}</TableCell>
-                  <TableCell className={c.status === 'ok' ? 'text-green-500' : 'text-red-500'}>
-                    {c.status.toUpperCase()}
+                  <TableCell
+                    className={
+                      c.status === caseStatus.passed
+                        ? 'text-green-500 capitalize'
+                        : 'text-red-500 capitalize'
+                    }
+                  >
+                    {c.status}
                   </TableCell>
                   <TableCell>{c.timestamp}</TableCell>
                 </TableRow>
