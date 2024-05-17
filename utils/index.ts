@@ -8,23 +8,26 @@ export function hasReport(report: string, router: AppRouterInstance) {
 }
 
 export function humanizeDuration(durationMs: number): string {
-  const secondsTotal = Math.round(durationMs / 1000)
-  const seconds = secondsTotal % 60
-  const minutesTotal = Math.floor(secondsTotal / 60)
-  const minutes = minutesTotal % 60
-  const hoursTotal = Math.floor(minutesTotal / 60)
-  const hours = hoursTotal % 24
-  const days = Math.floor(hoursTotal / 24)
+  if (durationMs < 1000) {
+    return `${Math.round(durationMs)}ms`;
+  } else {
+    const secondsTotal = Math.round(durationMs / 1000);
+    const seconds = secondsTotal % 60;
+    const minutesTotal = Math.floor(secondsTotal / 60);
+    const minutes = minutesTotal % 60;
+    const hoursTotal = Math.floor(minutesTotal / 60);
+    const days = Math.floor(hoursTotal / 24);
 
-  let humanized = ''
-  if (days > 0) humanized += `${days}d `
-  if (hours > 0) humanized += `${hours}h `
-  if (minutes > 0) humanized += `${minutes}m `
-  if (seconds > 0 || (days === 0 && hours === 0 && minutes === 0)) {
-    humanized += `${seconds}s`
+    let humanized = '';
+    if (days > 0) humanized += `${days}d `;
+    if (hoursTotal > 0) humanized += `${hoursTotal}h `;
+    if (minutesTotal > 0) humanized += `${minutesTotal}m `;
+    if (secondsTotal > 0 || (days === 0 && hoursTotal === 0 && minutesTotal === 0)) {
+      humanized += `${secondsTotal}s`;
+    }
+
+    return humanized.trim();
   }
-
-  return humanized.trim()
 }
 
 export function readableTimestamp(timestamp: string): string {
