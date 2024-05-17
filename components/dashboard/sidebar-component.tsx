@@ -14,6 +14,8 @@ import useReportStore from '@/stores/useReportStore'
 
 import { TDrowserReport, TContentCase } from '@/types'
 
+import { readableTimestamp } from '@/utils'
+
 export default function SidebarComponent() {
   const report = useReportStore((state) => state.content)
 
@@ -44,7 +46,7 @@ export default function SidebarComponent() {
                 href={`/dashboard/cases/${c.id}`}
               >
                 <ClipboardIcon className='h-4 w-4' />
-                {c.time}
+                {readableTimestamp(c.time)}
               </Link>
             ))}
           </nav>
