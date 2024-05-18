@@ -1,7 +1,8 @@
-export type TFileContent = { drowser: { cases: any[] } }
+export type TFileContent = { drowser: { metrics: any, cases: any[] } }
 
 export type TDrowserReport = {
   drowser: {
+    metrics: Record<string, any>
     cases: TContentCase[]
   }
 }
@@ -21,3 +22,22 @@ export type TContentSubCase = {
   timestamp: string
 }
 
+export type DataPoint =  {
+  x: string;
+  y: number;
+}
+
+export type DataSet = {
+  id: string;
+  data: DataPoint[];
+}
+
+export type MonthCount  = {
+  name: string;
+  count: number;
+}
+
+export type MonthValue = {
+  id: string;
+  value: number;
+}
