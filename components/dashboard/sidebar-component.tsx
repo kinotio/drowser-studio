@@ -3,11 +3,12 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ClipboardIcon, GithubIcon, HomeIcon } from 'lucide-react'
+import { ClipboardIcon, GithubIcon, BarChartBigIcon, ImportIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
 import { Badge } from '@/components/ui/badge'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
+import { Button } from '@/components/ui/button'
 
 import { APP_VERSION } from '@/constants'
 
@@ -32,7 +33,7 @@ export default function SidebarComponent() {
   return (
     <div className='hidden border-r bg-gray-100/40 lg:block dark:bg-gray-800/40'>
       <div className='flex flex-col gap-2 h-full'>
-        <div className='flex h-[60px] items-center px-6'>
+        <div className='flex h-[60px] items-center px-6 border-b'>
           <Link className='flex items-center font-bold' href='/dashboard'>
             <Image src='/images/drowser-black.png' width={100} height={100} alt='Drowser Logo' />
           </Link>
@@ -44,7 +45,7 @@ export default function SidebarComponent() {
               className='flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50'
               href='/dashboard'
             >
-              <HomeIcon className='h-4 w-4' />
+              <BarChartBigIcon className='h-4 w-4' />
               Dashboard
             </Link>
             <Collapsible className='grid gap-2'>
@@ -70,11 +71,19 @@ export default function SidebarComponent() {
           </nav>
         </div>
 
-        <div className='flex h-[60px] py-6 px-6 items-end justify-between'>
-          <Badge>{APP_VERSION}</Badge>
-          <Link href={'https://github.com/kinotio/drowser'}>
-            <GithubIcon />
-          </Link>
+        <div className='flex flex-col border-t'>
+          <div className='mt-auto px-6 py-4'>
+            <Button size='lg' variant='default' className='w-full'>
+              Import JSON <ImportIcon className='ml-2' />
+            </Button>
+          </div>
+
+          <div className='flex h-[60px] py-6 px-6 items-end justify-between'>
+            <Badge>{APP_VERSION}</Badge>
+            <Link href={'https://github.com/kinotio/drowser'}>
+              <GithubIcon />
+            </Link>
+          </div>
         </div>
       </div>
     </div>
