@@ -4,25 +4,7 @@ export default function LineChart(props: any) {
   return (
     <div {...props}>
       <ResponsiveLine
-        data={[
-          {
-            id: 'Desktop',
-            data: [
-              { x: 'Jan', y: 43 },
-              { x: 'Feb', y: 137 },
-              { x: 'Mar', y: 61 },
-              { x: 'Apr', y: 145 },
-              { x: 'May', y: 26 },
-              { x: 'Jun', y: 154 },
-              { x: 'Jul', y: 111 },
-              { x: 'Aug', y: 157 },
-              { x: 'Sep', y: 129 },
-              { x: 'Oct', y: 150 },
-              { x: 'Nov', y: 119 },
-              { x: 'Dec', y: 72 }
-            ]
-          }
-        ]}
+        data={props.data}
         margin={{ top: 10, right: 10, bottom: 40, left: 40 }}
         xScale={{
           type: 'point'
