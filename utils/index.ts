@@ -1,3 +1,5 @@
+import { isEmpty } from 'lodash';
+
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
 
 export function hasReport(report: string, router: AppRouterInstance) {
@@ -26,7 +28,7 @@ export function humanizeDuration(durationMs: number): string {
       humanized += `${secondsTotal}s`;
     }
 
-    return humanized.trim();
+    return isEmpty(humanized) ? '0' : humanized.trim();
   }
 }
 

@@ -3,10 +3,11 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ClipboardIcon, GithubIcon } from 'lucide-react'
+import { ClipboardIcon, GithubIcon, HomeIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
 import { Badge } from '@/components/ui/badge'
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 
 import { APP_VERSION } from '@/constants'
 
@@ -39,16 +40,33 @@ export default function SidebarComponent() {
 
         <div className='flex-1'>
           <nav className='grid items-start px-4 text-sm font-medium'>
-            {content?.drowser.cases.map((c: TContentCase) => (
-              <Link
-                key={c.id}
-                className='flex items-center gap-3 rounded-lg px-3 py-2 text-gray-900 transition-all hover:text-gray-900 dark:bg-gray-800 dark:text-gray-50 dark:hover:text-gray-50'
-                href={`/dashboard/cases/${c.id}`}
-              >
-                <ClipboardIcon className='h-4 w-4' />
-                {readableTimestamp(c.time)}
-              </Link>
-            ))}
+            <Link
+              className='flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50'
+              href='/dashboard'
+            >
+              <HomeIcon className='h-4 w-4' />
+              Dashboard
+            </Link>
+            <Collapsible className='grid gap-2'>
+              <CollapsibleTrigger className='flex items-center justify-between gap-3 rounded-lg px-3 py-2 text-gray-900 transition-all hover:text-gray-900 dark:bg-gray-800 dark:text-gray-50 dark:hover:text-gray-50'>
+                <div className='flex items-center gap-3'>
+                  <ClipboardIcon className='h-4 w-4' />
+                  Tests
+                </div>
+              </CollapsibleTrigger>
+              <CollapsibleContent className='grid gap-2 px-4'>
+                {content?.drowser.cases.map((c: TContentCase) => (
+                  <Link
+                    key={c.id}
+                    className='flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50'
+                    href={`/dashboard/cases/${c.id}`}
+                  >
+                    <ClipboardIcon className='h-4 w-4' />
+                    {readableTimestamp(c.time)}
+                  </Link>
+                ))}
+              </CollapsibleContent>
+            </Collapsible>
           </nav>
         </div>
 
