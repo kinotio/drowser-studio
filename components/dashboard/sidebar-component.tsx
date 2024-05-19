@@ -16,7 +16,7 @@ import useReportStore from '@/stores/useReportStore'
 import { TDrowserReport, TContentCase } from '@/types'
 
 import { readableTimestamp } from '@/utils'
-import ImportDialog from './import-dialog'
+import ImportDialogComponent from './import-dialog-component'
 
 export default function SidebarComponent() {
   const report = useReportStore((state) => state.content)
@@ -24,7 +24,6 @@ export default function SidebarComponent() {
   const router = useRouter()
 
   const [content, setContent] = useState<TDrowserReport>()
-  const [openImportDialog, setOpenImportDialog] = useState<boolean>(false)
 
   useEffect(() => {
     if (report === '') return router.push('/')
@@ -73,7 +72,7 @@ export default function SidebarComponent() {
         </div>
 
         <div className='flex flex-col border-t'>
-          <ImportDialog />
+          <ImportDialogComponent />
 
           <div className='flex h-[60px] py-6 px-6 items-end justify-between'>
             <Badge>{APP_VERSION}</Badge>
