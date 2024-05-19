@@ -3,12 +3,11 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ClipboardIcon, GithubIcon, BarChartBigIcon, ImportIcon } from 'lucide-react'
+import { ClipboardIcon, GithubIcon, BarChartBigIcon, ClipboardListIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
 import { Badge } from '@/components/ui/badge'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
-import { Button } from '@/components/ui/button'
 
 import { APP_VERSION } from '@/constants'
 
@@ -17,6 +16,7 @@ import useReportStore from '@/stores/useReportStore'
 import { TDrowserReport, TContentCase } from '@/types'
 
 import { readableTimestamp } from '@/utils'
+import ImportDialog from './import-dialog'
 
 export default function SidebarComponent() {
   const report = useReportStore((state) => state.content)
@@ -24,6 +24,7 @@ export default function SidebarComponent() {
   const router = useRouter()
 
   const [content, setContent] = useState<TDrowserReport>()
+  const [openImportDialog, setOpenImportDialog] = useState<boolean>(false)
 
   useEffect(() => {
     if (report === '') return router.push('/')
@@ -51,11 +52,11 @@ export default function SidebarComponent() {
             <Collapsible className='grid gap-2'>
               <CollapsibleTrigger className='flex items-center justify-between gap-3 rounded-lg px-3 py-2 text-gray-900 transition-all hover:text-gray-900 dark:bg-gray-800 dark:text-gray-50 dark:hover:text-gray-50'>
                 <div className='flex items-center gap-3'>
-                  <ClipboardIcon className='h-4 w-4' />
+                  <ClipboardListIcon className='h-4 w-4' />
                   Tests
                 </div>
               </CollapsibleTrigger>
-              <CollapsibleContent className='grid gap-2 px-4'>
+              <CollapsibleContent className='grid px-4'>
                 {content?.drowser.cases.map((c: TContentCase) => (
                   <Link
                     key={c.id}
@@ -72,11 +73,7 @@ export default function SidebarComponent() {
         </div>
 
         <div className='flex flex-col border-t'>
-          <div className='mt-auto px-6 py-4'>
-            <Button size='lg' variant='default' className='w-full'>
-              Import JSON <ImportIcon className='ml-2' />
-            </Button>
-          </div>
+          <ImportDialog />
 
           <div className='flex h-[60px] py-6 px-6 items-end justify-between'>
             <Badge>{APP_VERSION}</Badge>
