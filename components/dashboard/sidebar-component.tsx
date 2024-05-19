@@ -3,31 +3,46 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ClipboardIcon, GithubIcon, BarChartBigIcon, ClipboardListIcon } from 'lucide-react'
+import {
+  ClipboardIcon,
+  GithubIcon,
+  BarChartBigIcon,
+  ClipboardListIcon,
+  LogOutIcon
+} from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
 import { Badge } from '@/components/ui/badge'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
+import { Button } from '@/components/ui/button'
+
+import ImportDialogComponent from '@/components/dashboard/import-dialog-component'
 
 import { APP_VERSION } from '@/constants'
 
+import useStore from '@/stores/useStore'
 import useReportStore from '@/stores/useReportStore'
 
 import { TDrowserReport, TContentCase } from '@/types'
 
 import { readableTimestamp } from '@/utils'
-import ImportDialogComponent from './import-dialog-component'
 
 export default function SidebarComponent() {
-  const report = useReportStore((state) => state.content)
+  const report = useStore(useReportStore, (state) => state.content)
 
   const router = useRouter()
 
   const [content, setContent] = useState<TDrowserReport>()
 
+  const handleQuit = () => {
+    useReportStore.persist.clearStorage()
+    router.push('/')
+  }
+
   useEffect(() => {
-    if (report === '') return router.push('/')
-    setContent(JSON.parse(report))
+    try {
+      setContent(JSON.parse(report as string))
+    } catch (error) {}
   }, [report])
 
   return (
@@ -73,6 +88,10 @@ export default function SidebarComponent() {
 
         <div className='flex flex-col border-t'>
           <ImportDialogComponent />
+
+          <Button size='lg' variant='outline' className='mb-4 mx-4' onClick={handleQuit}>
+            Quit <LogOutIcon className='ml-2' />
+          </Button>
 
           <div className='flex h-[60px] py-6 px-6 items-end justify-between'>
             <Badge>{APP_VERSION}</Badge>

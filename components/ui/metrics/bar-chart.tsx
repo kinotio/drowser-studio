@@ -1,8 +1,6 @@
 import { ResponsiveBar } from '@nivo/bar'
 
 export default function BarChart(props: any) {
-  console.log(props.data)
-
   return (
     <div {...props}>
       <ResponsiveBar

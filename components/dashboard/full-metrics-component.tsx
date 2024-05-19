@@ -1,16 +1,13 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { isEmpty } from 'lodash'
+import { BarChartBigIcon } from 'lucide-react'
 
-import { useRouter } from 'next/navigation'
-
+import useStore from '@/stores/useStore'
 import useReportStore from '@/stores/useReportStore'
 
 import { TDrowserReport } from '@/types'
-
-import { isEmpty } from 'lodash'
-
-import { BarChartBigIcon } from 'lucide-react'
 
 import { CardTitle, CardDescription, CardHeader, CardContent, Card } from '@/components/ui/card'
 import LineChart from '@/components/ui/metrics/line-chart'
@@ -20,17 +17,16 @@ import LabelledpieChart from '@/components/ui/metrics/labelled-pie-chart'
 import { humanizeDuration } from '@/utils'
 
 export default function FullMetricsComponent() {
-  const report = useReportStore((state) => state.content)
-
-  const router = useRouter()
+  const report = useStore(useReportStore, (state) => state.content)
 
   const [content, setContent] = useState<TDrowserReport>()
   const [metrics, setMetrics] = useState<Record<string, any>>()
   const [cases, setCases] = useState<Record<string, any>>()
 
   useEffect(() => {
-    if (isEmpty(report)) return router.push('/')
-    setContent(JSON.parse(report))
+    try {
+      setContent(JSON.parse(report as string))
+    } catch (error) {}
   }, [report])
 
   useEffect(() => {
