@@ -77,7 +77,7 @@ export default function FullMetricsComponent() {
             <CardHeader>
               <CardTitle>Test Coverage</CardTitle>
               <CardDescription>
-                <span className='text-4xl font-bold'>{metrics.test_coverage.toFixed() ?? 0}</span>
+                <span className='text-4xl font-bold'>{`${metrics.test_coverage.toFixed() ?? 0}%`}</span>
               </CardDescription>
             </CardHeader>
             <CardContent>
