@@ -25,6 +25,8 @@ export default function TableComponent({ content }: { content: any }) {
               <TableHead>Exceptation</TableHead>
               <TableHead>Status</TableHead>
               <TableHead>Time</TableHead>
+              <TableHead>Month of Testing</TableHead>
+              <TableHead>Browser</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -44,6 +46,8 @@ export default function TableComponent({ content }: { content: any }) {
                     {c.status}
                   </TableCell>
                   <TableCell>{readableTimestamp(c.timestamp)}</TableCell>
+                  <TableCell className='capitalize'>{c.month_of_test}</TableCell>
+                  <TableCell className='capitalize'>{c.browser}</TableCell>
                 </TableRow>
               ))}
           </TableBody>

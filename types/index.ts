@@ -1,4 +1,6 @@
-export type TFileContent = { drowser: { metrics: any, cases: any[] } }
+export type TFileContent = { drowser: { metrics: any; cases: any[] } }
+
+export type TDriverBrowser = 'chrome' | 'firefox' | 'safari' | 'edge'
 
 export type TDrowserReport = {
   drowser: {
@@ -20,24 +22,27 @@ export type TContentSubCase = {
   exceptation: string
   status: string
   timestamp: string
+  duration: number
+  month_of_test: string
+  browser: TDriverBrowser
 }
 
-export type DataPoint =  {
-  x: string;
-  y: number;
+export type DataPoint = {
+  x: string
+  y: number
 }
 
 export type DataSet = {
-  id: string;
-  data: DataPoint[];
+  id: string
+  data: DataPoint[]
 }
 
-export type MonthCount  = {
-  name: string;
-  count: number;
+export type MonthCount = {
+  name: string
+  count: number
 }
 
 export type MonthValue = {
-  id: string;
-  value: number;
+  id: string
+  value: number
 }
