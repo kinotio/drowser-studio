@@ -79,6 +79,7 @@ export default function SidebarComponent() {
                   >
                     <ClipboardIcon className='h-4 w-4' />
                     {readableTimestamp(c.time)}
+                    <span className='capitalize'>({c.browser})</span>
                   </Link>
                 ))}
               </CollapsibleContent>
