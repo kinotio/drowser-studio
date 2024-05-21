@@ -12,6 +12,10 @@ export type TDrowserReport = {
 export type TContentCase = {
   id: string
   time: string
+  avg_duration: number
+  coverage: number
+  flaky: number
+  month_of_test: string
   cases: TContentSubCase[]
 }
 
