@@ -46,7 +46,7 @@ export default function SidebarComponent() {
   }, [report])
 
   return (
-    <div className='hidden border-r bg-gray-100/40 lg:block dark:bg-gray-800/40'>
+    <div className='w-1/4 border-r bg-gray-100/40 lg:block dark:bg-gray-800/40'>
       <div className='flex flex-col gap-2 h-full'>
         <div className='flex h-[60px] items-center px-6 border-b'>
           <Link className='flex items-center font-bold' href='/dashboard'>
@@ -54,7 +54,7 @@ export default function SidebarComponent() {
           </Link>
         </div>
 
-        <div className='flex-1'>
+        <div className='flex-1 overflow-auto'>
           <nav className='grid items-start px-4 text-sm font-medium'>
             <Link
               className='flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50'
@@ -70,7 +70,7 @@ export default function SidebarComponent() {
                   Tests
                 </div>
               </CollapsibleTrigger>
-              <CollapsibleContent className='grid px-4'>
+              <CollapsibleContent className='grid px-4 overflow-auto'>
                 {content?.drowser.cases.map((c: TContentCase) => (
                   <Link
                     key={c.id}
