@@ -11,7 +11,7 @@ import { TContentSubCase } from '@/types'
 
 import { caseStatus } from '@/constants'
 
-import { readableTimestamp } from '@/utils'
+import { readableTimestamp, humanizeDuration } from '@/utils'
 
 export default function TableComponent({ content }: { content: any }) {
   return (
@@ -25,6 +25,7 @@ export default function TableComponent({ content }: { content: any }) {
               <TableHead>Exceptation</TableHead>
               <TableHead>Status</TableHead>
               <TableHead>Time</TableHead>
+              <TableHead>Duration</TableHead>
               <TableHead>Month of Testing</TableHead>
               <TableHead>Browser</TableHead>
             </TableRow>
@@ -46,6 +47,7 @@ export default function TableComponent({ content }: { content: any }) {
                     {c.status}
                   </TableCell>
                   <TableCell>{readableTimestamp(c.timestamp)}</TableCell>
+                  <TableCell>{humanizeDuration(c.duration)}</TableCell>
                   <TableCell className='capitalize'>{c.month_of_test}</TableCell>
                   <TableCell className='capitalize'>{c.browser}</TableCell>
                 </TableRow>
