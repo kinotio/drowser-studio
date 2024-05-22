@@ -16,6 +16,7 @@ export type TContentCase = {
   coverage: number
   flaky: number
   month_of_test: string
+  browser: TDriverBrowser
   cases: TContentSubCase[]
 }
 
