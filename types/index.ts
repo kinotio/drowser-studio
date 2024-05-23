@@ -29,6 +29,7 @@ export type TContentSubCase = {
   timestamp: string
   duration: number
   month_of_test: string
+  type: string
   browser: TDriverBrowser
 }
 
