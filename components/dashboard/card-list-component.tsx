@@ -2,16 +2,25 @@
 
 import { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation'
-import { ClipboardIcon, SheetIcon } from 'lucide-react'
+import {
+  ClipboardIcon,
+  SheetIcon,
+  TimerIcon,
+  CalendarIcon,
+  GlobeIcon,
+  CircleCheckIcon,
+  CircleXIcon
+} from 'lucide-react'
 import { isEmpty } from 'lodash'
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
 
 import { TContentSubCase, TContentCase } from '@/types'
 
 import { caseStatus } from '@/constants'
 
-import { humanizeDuration } from '@/utils'
+import { humanizeDuration, readableTimestamp } from '@/utils'
 
 import useStore from '@/stores/useStore'
 import useReportStore from '@/stores/useReportStore'
@@ -35,7 +44,7 @@ export default function CardListComponent() {
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6'>
           <Card>
             <CardHeader>
-              <CardTitle>Recent Tests</CardTitle>
+              <CardTitle>Recent Cases</CardTitle>
             </CardHeader>
             <CardContent>
               <div className='space-y-4 overflow-auto h-96'>
@@ -49,17 +58,32 @@ export default function CardListComponent() {
                         <h4 className='font-medium'>{c.name}</h4>
                         <div className='flex gap-4'>
                           <p
-                            className={`capitalize text-sm text-gray-500 dark:text-gray-400 ${
+                            className={`capitalize text-sm text-gray-500 dark:text-gray-400 flex gap-2 items-center ${
                               c.status === caseStatus.passed ? 'text-green-500' : 'text-red-500'
                             }`}
                           >
+                            {c.status === caseStatus.passed ? (
+                              <CircleCheckIcon size='16' />
+                            ) : (
+                              <CircleXIcon size='16' />
+                            )}
                             {c.status}
                           </p>
                         </div>
                       </div>
                     </div>
-                    <div className='text-sm text-gray-500 dark:text-gray-400'>
-                      {humanizeDuration(c.duration)}
+                    <div className='flex text-sm text-gray-500 dark:text-gray-400 gap-4'>
+                      <Badge variant='secondary'>
+                        <TimerIcon size='16' className='mr-1' /> {humanizeDuration(c.duration)}
+                      </Badge>
+                      <Badge>
+                        <CalendarIcon size='16' className='mr-1' />
+                        {readableTimestamp(c.timestamp)}
+                      </Badge>
+                      <Badge variant='outline'>
+                        <GlobeIcon size='16' className='mr-1' />
+                        {c.browser}
+                      </Badge>
                     </div>
                   </div>
                 ))}
