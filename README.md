@@ -8,7 +8,11 @@
 
 ![license](https://img.shields.io/github/license/kinotio/drowser?color=success)
 
+You can find the `Drowser` lib from Denoland [here](https://deno.land/x/drowser)
+
 Tools to help you automate your testing, track progress, and ensure your software is ready for deployment. Say goodbye to manual testing and hello to efficiency 🖥️ 📈
+
+> This Drowser Studio depend from reports collected from the Drowser Deno Package who is available on Denoland for now 🦕
 
 ## Dashboard
 
@@ -40,7 +44,7 @@ We're still working with this feature to get able to ask the AI to get a predict
 
 ## Playground
 
-We're still working with this feature to get able to write directly from the platform app instead of using the `Drowser` Deno package 🛠️✍🏻
+We're still working with this feature to get able to write directly from the platform app instead of using the [Drowser](https://deno.land/x/drowser) Deno lib 🛠️✍🏻
 
 ## LICENSE
 
