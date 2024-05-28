@@ -55,7 +55,7 @@ export default function CardListComponent() {
                         <ClipboardIcon className='h-4 w-4 text-gray-500 dark:text-gray-400' />
                       </div>
                       <div>
-                        <h4 className='font-medium'>{c.name}</h4>
+                        <h4 className='font-medium'>{c.name ?? 'N/A'}</h4>
                         <div className='flex gap-4'>
                           <p
                             className={`capitalize text-sm text-gray-500 dark:text-gray-400 flex gap-2 items-center ${
