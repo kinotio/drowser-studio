@@ -14,7 +14,9 @@ Tools to help you automate your testing, track progress, and ensure your softwar
 
 > This Drowser Studio depend from reports collected from the Drowser Deno Package who is available on Denoland for now 🦕
 
-## Dashboard
+## Features
+
+### Dashboard
 
 You can access to the main cases dashboard to get a visulization , track passed or failed cases , get an overview of all informations from each test cases
 
@@ -26,7 +28,7 @@ You can access to the main cases dashboard to get a visulization , track passed 
   />
 </p>
 
-## Cases
+### Cases
 
 And, in the other view you can access directly the metric from each test case
 
@@ -38,13 +40,30 @@ And, in the other view you can access directly the metric from each test case
   />
 </p>
 
-## Drowser AI
+### Drowser AI
 
 We're still working with this feature to get able to ask the AI to get a prediction and analyse from the test data 🛠️🤖
 
-## Playground
+### Playground
 
 We're still working with this feature to get able to write directly from the platform app instead of using the [Drowser](https://deno.land/x/drowser) Deno lib 🛠️✍🏻
+
+## Deploy
+
+You can use Docker to use it as service inside a container or test it in your local machine
+Clone the repository and change directory to be inside of the repository directory and run these commands
+
+Build the Docker image with this command
+
+```sh
+docker build -t drowser .
+```
+
+And, run it with this
+
+```sh
+docker run -p 3000:3000 -it drowser
+```
 
 ## LICENSE
 
