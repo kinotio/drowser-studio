@@ -47,12 +47,12 @@ export default function ImportDialogComponent() {
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button size='lg' variant='default' className='my-4 mx-4'>
-          Import JSON <ImportIcon className='ml-2' />
+          Import Reports <ImportIcon className='ml-2' />
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Import new JSON Config?</AlertDialogTitle>
+          <AlertDialogTitle>Import new reports ?</AlertDialogTitle>
         </AlertDialogHeader>
 
         <div>

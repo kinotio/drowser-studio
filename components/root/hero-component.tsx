@@ -55,7 +55,7 @@ export function HeroComponent() {
                 />
 
                 <Button onClick={handleSubmit}>
-                  Import JSON <ImportIcon className='ml-2' />
+                  Import Reports <ImportIcon className='ml-2' />
                 </Button>
               </div>
             </div>
