@@ -6,7 +6,11 @@
   />
 </p>
 
+![build](https://github.com/kinotio/drowser/workflows/build/badge.svg)
 ![license](https://img.shields.io/github/license/kinotio/drowser?color=success)
+![tags](https://ghcr-badge.egpl.dev/kinotio/drowser/tags?trim=major&color=chocolate)
+![latest](https://ghcr-badge.egpl.dev/kinotio/drowser/latest_tag?trim=major&label=latest&color=blueviolet)
+![size](https://ghcr-badge.egpl.dev/kinotio/drowser/size?color=blue)
 
 You can find the `Drowser` lib from Denoland [here](https://deno.land/x/drowser)
 
