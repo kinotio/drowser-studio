@@ -1,6 +1,7 @@
 import { ClipboardIcon } from 'lucide-react'
+import pkg from '../package.json'
 
-export const APP_VERSION = 'v0.1.0'
+export const APP_VERSION = `v${pkg.version}`
 
 export const DASHBOARD_MENU = [
   {
