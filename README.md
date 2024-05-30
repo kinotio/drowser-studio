@@ -14,7 +14,33 @@ Tools to help you automate your testing, track progress, and ensure your softwar
 
 > This Drowser Studio depend from reports collected from the Drowser Deno Package who is available on Denoland for now 🦕
 
+## Usage
+
+Pull directly the Drowser image from the Github Container Registry:
+
+```sh
+docker pull ghcr.io/kinotio/drowser:0.1.0
+```
+
+And run it
+
+```sh
+docker run -p 3000:3000 -d drowser
+```
+
 ## Features
+
+### Landing Page
+
+Import your reports on the landing page
+
+<p align="center">
+  <img
+    src="presentations/landing.png"
+    alt="Landing"
+    style="width:100%;"
+  />
+</p>
 
 ### Dashboard
 
@@ -48,7 +74,7 @@ We're still working with this feature to get able to ask the AI to get a predict
 
 We're still working with this feature to get able to write directly from the platform app instead of using the [Drowser](https://deno.land/x/drowser) Deno lib 🛠️✍🏻
 
-## Deploy
+## Build from source
 
 You can use Docker to use it as service inside a container or test it in your local machine
 Clone the repository and change directory to be inside of the repository directory and run these commands
@@ -62,7 +88,7 @@ docker build -t drowser .
 And, run it with this
 
 ```sh
-docker run -p 3000:3000 -it drowser
+docker run -p 3000:3000 -d drowser
 ```
 
 ## LICENSE
