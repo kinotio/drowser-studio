@@ -19,13 +19,13 @@ Tools to help you automate your testing, track progress, and ensure your softwar
 Pull directly the Drowser image from the Github Container Registry:
 
 ```sh
-docker pull ghcr.io/kinotio/drowser:0.1.0
+docker pull ghcr.io/kinotio/drowser:latest
 ```
 
 And run it
 
 ```sh
-docker run -p 3000:3000 -d drowser
+docker run --name kinotio_drowser -p 3000:3000 -d ghcr.io/kinotio/drowser:latest
 ```
 
 ## Features
@@ -82,13 +82,13 @@ Clone the repository and change directory to be inside of the repository directo
 Build the Docker image with this command
 
 ```sh
-docker build -t drowser .
+docker build -t kinotio/drowser .
 ```
 
 And, run it with this
 
 ```sh
-docker run -p 3000:3000 -d drowser
+docker run --name kinotio_drowser -p 3000:3000 -d kinotio/drowser
 ```
 
 ## LICENSE
