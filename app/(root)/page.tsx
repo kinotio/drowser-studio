@@ -1,11 +1,9 @@
-import { AboutComponent } from '@/components/root/about-component'
 import { HeroComponent } from '@/components/root/hero-component'
 
 export default function Home() {
   return (
-    <main>
+    <main style={{ height: '86vh' }}>
       <HeroComponent />
-      <AboutComponent />
     </main>
   )
 }
