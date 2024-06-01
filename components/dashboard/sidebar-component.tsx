@@ -52,7 +52,12 @@ export default function SidebarComponent() {
       <div className='flex flex-col gap-2 h-full'>
         <div className='flex h-[60px] items-center px-6 border-b'>
           <Link className='flex items-center font-bold' href='/dashboard'>
-            <Image src='/images/drowser-black.png' width={100} height={100} alt='Drowser Logo' />
+            <Image
+              src='/images/drowser-black.png'
+              width={200}
+              height={200}
+              alt='Drowser Studio Logo'
+            />
           </Link>
         </div>
 
@@ -112,7 +117,7 @@ export default function SidebarComponent() {
 
           <div className='flex h-[60px] py-6 px-6 items-end justify-between'>
             <Badge>{APP_VERSION}</Badge>
-            <Link href={'https://github.com/kinotio/drowser'}>
+            <Link href={'https://github.com/kinotio/drowser-studio'}>
               <GithubIcon />
             </Link>
           </div>

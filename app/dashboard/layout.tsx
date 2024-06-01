@@ -5,7 +5,7 @@ import SidebarComponent from '@/components/dashboard/sidebar-component'
 import FooterComponent from '@/components/dashboard/footer-component'
 
 export const metadata: Metadata = {
-  title: 'Drowser | Dashboard'
+  title: 'Drowser Studio | Dashboard'
 }
 
 export default function DashboardLayout({

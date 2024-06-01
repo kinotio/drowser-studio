@@ -1,16 +1,16 @@
 <p align="center">
   <img
-    src="drowser.png"
-    alt="Drowser"
+    src="drowser-studio.png"
+    alt="Drowser Studio"
     style="width:100%;"
   />
 </p>
 
-![build](https://github.com/kinotio/drowser/workflows/build/badge.svg)
-![license](https://img.shields.io/github/license/kinotio/drowser?color=success)
-![tags](https://ghcr-badge.egpl.dev/kinotio/drowser/tags?trim=major&color=chocolate)
-![latest](https://ghcr-badge.egpl.dev/kinotio/drowser/latest_tag?trim=major&label=latest&color=blueviolet)
-![size](https://ghcr-badge.egpl.dev/kinotio/drowser/size?color=blue)
+![build](https://github.com/kinotio/drowser-studio/workflows/build/badge.svg)
+![license](https://img.shields.io/github/license/kinotio/drowser-studio?color=success)
+![tags](https://ghcr-badge.egpl.dev/kinotio/drowser-studio/tags?trim=major&color=chocolate)
+![latest](https://ghcr-badge.egpl.dev/kinotio/drowser-studio/latest_tag?trim=major&label=latest&color=blueviolet)
+![size](https://ghcr-badge.egpl.dev/kinotio/drowser-studio/size?color=blue)
 
 You can find the `Drowser` lib from Denoland [here](https://deno.land/x/drowser)
 
@@ -23,13 +23,13 @@ Tools to help you automate your testing, track progress, and ensure your softwar
 Pull directly the Drowser image from the Github Container Registry:
 
 ```sh
-docker pull ghcr.io/kinotio/drowser:latest
+docker pull ghcr.io/kinotio/drowser-studio:latest
 ```
 
 And run it
 
 ```sh
-docker run --name kinotio_drowser -p 3000:3000 -d ghcr.io/kinotio/drowser:latest
+docker run --name kinotio_drowser_studio -p 3000:3000 -d ghcr.io/kinotio/drowser-studio:latest
 ```
 
 ## Features
@@ -86,13 +86,13 @@ Clone the repository and change directory to be inside of the repository directo
 Build the Docker image with this command
 
 ```sh
-docker build -t kinotio/drowser .
+docker build -t kinotio/drowser-studio .
 ```
 
 And, run it with this
 
 ```sh
-docker run --name kinotio_drowser -p 3000:3000 -d kinotio/drowser
+docker run --name kinotio_drowser_studio -p 3000:3000 -d kinotio/drowser-studio
 ```
 
 ## LICENSE
