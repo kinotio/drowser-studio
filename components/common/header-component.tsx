@@ -14,10 +14,6 @@ export function HeaderComponent() {
             alt='Drowser Studio Logo'
           />
         </Link>
-        <div className='flex items-center border-l-2 pl-4 gap-3'>
-          <span>Powered by</span>
-          <Image src='/images/kinotio-logo-dark.png' alt='Kinotio Logo' width={120} height={120} />
-        </div>
         <div className='ml-auto gap-3 flex'>
           <Link href={'https://github.com/kinotio/drowser-studio'} className='text-gray-50'>
             <GithubIcon />

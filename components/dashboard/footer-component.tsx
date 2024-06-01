@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default function FooterComponent() {
   return (
@@ -6,7 +7,9 @@ export default function FooterComponent() {
       <div className='flex flex-1 items-center justify-end'>
         <div className='flex items-center pl-4 gap-3'>
           <span className='text-sm'>Powered by</span>
-          <Image src='/images/kinotio-logo-dark.png' alt='Kinotio Logo' width={90} height={90} />
+          <Link href={'https://github.com/kinotio'}>
+            <Image src='/images/kinotio-logo-dark.png' alt='Kinotio Logo' width={90} height={90} />
+          </Link>
         </div>
       </div>
     </footer>
