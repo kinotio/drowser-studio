@@ -12,11 +12,11 @@
 ![latest](https://ghcr-badge.egpl.dev/kinotio/drowser-studio/latest_tag?trim=major&label=latest&color=blueviolet)
 ![size](https://ghcr-badge.egpl.dev/kinotio/drowser-studio/size?color=blue)
 
+Drowser Studio is a robust and intuitive app designed to help users track, visualize, and analyze the performance of various tests over time. 📈🚀
+
+> This Drowser Studio depend from reports collected from the Drowser Deno Package who is available on Denoland 🦕
+
 You can find the `Drowser` lib from Denoland [here](https://deno.land/x/drowser)
-
-Tools to help you automate your testing, track progress, and ensure your software is ready for deployment. Say goodbye to manual testing and hello to efficiency 🖥️ 📈
-
-> This Drowser Studio depend from reports collected from the Drowser Deno Package who is available on Denoland for now 🦕
 
 ## Usage
 

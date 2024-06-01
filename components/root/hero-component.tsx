@@ -40,12 +40,11 @@ export function HeroComponent() {
           <div className='flex flex-col items-center space-y-6 text-center'>
             <div className='space-y-4 text-white'>
               <h1 className='text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl'>
-                Test Your Software with Ease
+                Track, Analyze, and Improve Your Performance Over Time
               </h1>
               <p className='mx-auto max-w-[700px] md:text-xl'>
-                Our powerful platform makes it easy to test your software and ensure it meets the
-                highest standards. Streamline your testing process and deliver reliable,
-                high-quality applications.
+                Drowser Studio is a robust and intuitive app designed to help users track,
+                visualize, and analyze the performance of various tests over time.
               </p>
               <div className='flex justify-center items-center gap-3'>
                 <Input
