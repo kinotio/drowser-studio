@@ -9,7 +9,7 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'Drowser'
+  title: 'Drowser Studio'
 }
 
 export default function Layout({
