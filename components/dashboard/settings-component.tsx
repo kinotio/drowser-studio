@@ -19,10 +19,10 @@ import {
 import { Button } from '@/components/ui/button'
 
 export default function SettingsComponent() {
-  const [openAIToken, setOpenAIToken] = useState('')
+  const [accessToken, setAccessToken] = useState('')
 
   const handleSaveChanges = () => {
-    console.log(openAIToken)
+    console.log(accessToken)
   }
 
   return (
@@ -42,14 +42,14 @@ export default function SettingsComponent() {
         </SheetHeader>
         <div className='flex flex-col gap-4 py-6'>
           <div className='flex flex-col items-start gap-4'>
-            <Label htmlFor='openAIToken' className='text-right'>
-              OpenAI Token
+            <Label htmlFor='accessToken' className='text-right'>
+              Access Token
             </Label>
             <Input
-              id='openAIToken'
+              id='accessToken'
               className='col-span-3'
-              placeholder='****'
-              onChange={(e) => setOpenAIToken(e.target.value)}
+              placeholder='Access Token'
+              onChange={(e) => setAccessToken(e.target.value)}
             />
           </div>
         </div>
