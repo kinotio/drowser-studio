@@ -10,7 +10,8 @@ import {
   ClipboardListIcon,
   LogOutIcon,
   FlaskConicalIcon,
-  PencilIcon
+  PencilIcon,
+  EyeIcon
 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
@@ -71,7 +72,7 @@ export default function SidebarComponent() {
               <BarChartBigIcon className='h-4 w-4' />
               Dashboard
             </Link>
-            <Collapsible className='grid gap-2'>
+            <Collapsible className='grid'>
               <CollapsibleTrigger className='flex items-center justify-between gap-3 rounded-lg px-3 py-2 text-gray-900 transition-all hover:text-gray-900 dark:bg-gray-800 dark:text-gray-50 dark:hover:text-gray-50'>
                 <div className='flex items-center gap-3'>
                   <ClipboardListIcon className='h-4 w-4' />
@@ -92,6 +93,13 @@ export default function SidebarComponent() {
                 ))}
               </CollapsibleContent>
             </Collapsible>
+            <Link
+              className='flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50'
+              href='/dashboard/visualize'
+            >
+              <EyeIcon className='h-4 w-4' />
+              Visualize JSON Reports
+            </Link>
             <Link
               className='pointer-events-none flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50'
               href='/dashboard/ia'
