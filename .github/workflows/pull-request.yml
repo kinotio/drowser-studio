@@ -14,4 +14,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           PULL_REQUEST_BRANCH: main
-          PULL_REQUEST_TITLE: ${{ github.event.commits[0].message }}
+          PULL_REQUEST_TITLE: ${{ github.event.head_commit.message }}
