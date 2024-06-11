@@ -95,6 +95,6 @@ And, run it with this
 docker run --name kinotio_drowser_studio -p 3000:3000 -d kinotio/drowser-studio
 ```
 
-## LICENSE
+## License
 
-[MIT](LICENSE).
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
