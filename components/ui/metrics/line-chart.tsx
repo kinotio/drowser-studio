@@ -23,7 +23,7 @@ export default function LineChart(props: any) {
           tickValues: 5,
           tickPadding: 16
         }}
-        colors={['#4669B3']}
+        colors={['#262E3F']}
         pointSize={6}
         useMesh={true}
         gridYValues={6}

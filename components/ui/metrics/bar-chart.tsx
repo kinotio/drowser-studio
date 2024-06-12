@@ -9,7 +9,7 @@ export default function BarChart(props: any) {
         indexBy='name'
         margin={{ top: 0, right: 0, bottom: 40, left: 40 }}
         padding={0.3}
-        colors={['#4669B3']}
+        colors={['#262E3F']}
         axisBottom={{
           tickSize: 0,
           tickPadding: 16
