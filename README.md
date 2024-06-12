@@ -70,6 +70,10 @@ And, in the other view you can access directly the metric from each test case
   />
 </p>
 
+### Visualize
+
+We're still working with this feature to get able to visualize the report data 🛠️🤖
+
 ### Drowser AI
 
 We're still working with this feature to get able to ask the AI to get a prediction and analyse from the test data 🛠️🤖
