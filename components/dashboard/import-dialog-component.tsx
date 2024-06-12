@@ -28,17 +28,26 @@ export default function ImportDialogComponent() {
   const router = useRouter()
 
   const [fileContent, setFileContent] = useState<TFileContent | null>(null)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files) return
 
     const file = event.target.files[0]
-    if (!file || file.type !== 'application/pdf') return
+    if (!file || file.type !== 'application/json') return
+
+    setIsLoading(true)
 
     const fileReader = new FileReader()
     fileReader.readAsText(file, 'UTF-8')
-    fileReader.onload = (e: ProgressEvent<FileReader>) =>
+    fileReader.onload = (e: ProgressEvent<FileReader>) => {
       setFileContent(JSON.parse(e.target?.result as string))
+      setIsLoading(false)
+    }
+    fileReader.onerror = () => {
+      console.error('An error occurred while loading file')
+      setIsLoading(false)
+    }
   }
 
   const handleSubmit = () => {
@@ -69,7 +78,9 @@ export default function ImportDialogComponent() {
 
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={handleSubmit}>Import</AlertDialogAction>
+          <AlertDialogAction onClick={handleSubmit}>
+            {isLoading ? 'Loading...' : 'Import Reports'}
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
