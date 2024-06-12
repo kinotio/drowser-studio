@@ -33,7 +33,7 @@ export default function ImportDialogComponent() {
     if (!event.target.files) return
 
     const file = event.target.files[0]
-    if (file.type !== 'application/pdf') return
+    if (!file || file.type !== 'application/pdf') return
 
     const fileReader = new FileReader()
     fileReader.readAsText(file, 'UTF-8')
