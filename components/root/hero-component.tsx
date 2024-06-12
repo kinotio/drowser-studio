@@ -21,8 +21,12 @@ export function HeroComponent() {
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files) return
+
+    const file = event.target.files[0]
+    if (file.type !== 'application/pdf') return
+
     const fileReader = new FileReader()
-    fileReader.readAsText(event.target.files[0], 'UTF-8')
+    fileReader.readAsText(file, 'UTF-8')
     fileReader.onload = (e: ProgressEvent<FileReader>) =>
       setFileContent(JSON.parse(e.target?.result as string))
   }
