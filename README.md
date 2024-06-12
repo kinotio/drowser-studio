@@ -72,7 +72,7 @@ And, in the other view you can access directly the metric from each test case
 
 ### Visualize
 
-We're still working with this feature to get able to visualize the report data 🛠️🤖
+We're still working with this feature to get able to visualize the report data 👁️‍🗨️
 
 ### Drowser AI
 
