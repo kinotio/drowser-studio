@@ -14,7 +14,7 @@ export default function LabelledpieChart(props: any) {
         borderWidth={1}
         arcLinkLabelsThickness={1}
         enableArcLabels={false}
-        colors={['#4669B3']}
+        colors={['#262E3F']}
         theme={{
           tooltip: {
             chip: {
