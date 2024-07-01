@@ -22,14 +22,14 @@ import { Button } from '@/components/ui/button'
 import ImportDialogComponent from '@/components/dashboard/import-dialog-component'
 import SettingsComponent from '@/components/dashboard/settings-component'
 
-import { APP_VERSION } from '@/constants'
+import { APP_VERSION } from '@/lib/constants'
 
-import useStore from '@/stores/useStore'
-import useReportStore from '@/stores/useReportStore'
+import useStore from '@/hooks/use-store'
+import useReportStore from '@/hooks/use-report-store'
 
-import { TDrowserReport, TContentCase } from '@/types'
+import { TDrowserReport, TContentCase } from '@/lib/definitions'
 
-import { readableTimestamp } from '@/utils'
+import { readableTimestamp } from '@/lib/utils'
 
 export default function SidebarComponent() {
   const report = useStore(useReportStore, (state) => state.content)

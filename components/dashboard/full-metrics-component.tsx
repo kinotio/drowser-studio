@@ -4,17 +4,17 @@ import { useState, useEffect } from 'react'
 import { isEmpty } from 'lodash'
 import { BarChartBigIcon } from 'lucide-react'
 
-import useStore from '@/stores/useStore'
-import useReportStore from '@/stores/useReportStore'
+import useStore from '@/hooks/use-store'
+import useReportStore from '@/hooks/use-report-store'
 
-import { TDrowserReport } from '@/types'
+import { TDrowserReport } from '@/lib/definitions'
 
 import { CardTitle, CardDescription, CardHeader, CardContent, Card } from '@/components/ui/card'
 import LineChart from '@/components/ui/metrics/line-chart'
 import BarChart from '@/components/ui/metrics/bar-chart'
 import LabelledpieChart from '@/components/ui/metrics/labelled-pie-chart'
 
-import { humanizeDuration } from '@/utils'
+import { humanizeDuration } from '@/lib/utils'
 
 export default function FullMetricsComponent() {
   const report = useStore(useReportStore, (state) => state.content)

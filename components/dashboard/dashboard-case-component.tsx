@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 
 import MetricsComponent from '@/components/dashboard/metrics-component'
 import CardListComponent from '@/components/dashboard/card-list-component'
-import ProgressComponent from '@/components/common/progress-component'
+import ProgressComponent from '@/components/shared/progress-component'
 
 export default function DashboardCaseComponent() {
   const [isLoading, setIsLoading] = useState<boolean>(true)
