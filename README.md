@@ -40,7 +40,7 @@ Import your reports on the landing page
 
 <p align="center">
   <img
-    src="presentations/landing.png"
+    src="docs/landing.png"
     alt="Landing"
     style="width:100%;"
   />
@@ -52,7 +52,7 @@ You can access to the main cases dashboard to get a visulization , track passed 
 
 <p align="center">
   <img
-    src="presentations/dashboard.png"
+    src="docs/dashboard.png"
     alt="Dashboard"
     style="width:100%;"
   />
@@ -64,7 +64,7 @@ And, in the other view you can access directly the metric from each test case
 
 <p align="center">
   <img
-    src="presentations/dashboard-case.png"
+    src="docs/dashboard-case.png"
     alt="Case"
     style="width:100%;"
   />
