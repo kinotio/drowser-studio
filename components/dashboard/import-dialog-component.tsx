@@ -17,9 +17,9 @@ import {
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 
-import useReportStore from '@/stores/useReportStore'
+import useReportStore from '@/hooks/use-report-store'
 
-import { TFileContent } from '@/types'
+import { TFileContent } from '@/lib/definitions'
 import { isValidFileContent } from '@/lib/utils'
 
 export default function ImportDialogComponent() {

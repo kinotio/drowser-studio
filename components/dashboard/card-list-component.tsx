@@ -16,14 +16,14 @@ import { isEmpty } from 'lodash'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 
-import { TContentSubCase, TContentCase } from '@/types'
+import { TContentSubCase, TContentCase } from '@/lib/definitions'
 
-import { caseStatus } from '@/constants'
+import { caseStatus } from '@/lib/constants'
 
-import { humanizeDuration, readableTimestamp } from '@/utils'
+import { humanizeDuration, readableTimestamp } from '@/lib/utils'
 
-import useStore from '@/stores/useStore'
-import useReportStore from '@/stores/useReportStore'
+import useStore from '@/hooks/use-store'
+import useReportStore from '@/hooks/use-report-store'
 
 export default function CardListComponent() {
   const report = useStore(useReportStore, (state) => state.content)

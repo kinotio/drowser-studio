@@ -7,12 +7,12 @@ import { BarChartBigIcon } from 'lucide-react'
 
 import { CardTitle, CardDescription, CardHeader, Card } from '@/components/ui/card'
 
-import { humanizeDuration } from '@/utils'
+import { humanizeDuration } from '@/lib/utils'
 
-import { TContentCase } from '@/types'
+import { TContentCase } from '@/lib/definitions'
 
-import useStore from '@/stores/useStore'
-import useReportStore from '@/stores/useReportStore'
+import useStore from '@/hooks/use-store'
+import useReportStore from '@/hooks/use-report-store'
 
 export default function MetricsComponent() {
   const report = useStore(useReportStore, (state) => state.content)

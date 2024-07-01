@@ -7,10 +7,10 @@ import { ImportIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 
-import { TFileContent } from '@/types'
+import { TFileContent } from '@/lib/definitions'
 import { isValidFileContent } from '@/lib/utils'
 
-import useReportStore from '@/stores/useReportStore'
+import useReportStore from '@/hooks/use-report-store'
 
 export function HeroComponent() {
   const setReport = useReportStore((state) => state.setReport)
