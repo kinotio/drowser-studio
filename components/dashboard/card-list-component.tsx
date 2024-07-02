@@ -18,7 +18,7 @@ import { Badge } from '@/components/ui/badge'
 
 import { TContentSubCase, TContentCase } from '@/lib/definitions'
 
-import { caseStatus } from '@/lib/constants'
+import { CASE_STATUS } from '@/lib/constants'
 
 import { humanizeDuration, readableTimestamp } from '@/lib/utils'
 
@@ -59,10 +59,10 @@ export default function CardListComponent() {
                         <div className='flex gap-4'>
                           <p
                             className={`capitalize text-sm text-gray-500 dark:text-gray-400 flex gap-2 items-center ${
-                              c.status === caseStatus.passed ? 'text-green-500' : 'text-red-500'
+                              c.status === CASE_STATUS.passed ? 'text-green-500' : 'text-red-500'
                             }`}
                           >
-                            {c.status === caseStatus.passed ? (
+                            {c.status === CASE_STATUS.passed ? (
                               <CircleCheckIcon size='16' />
                             ) : (
                               <CircleXIcon size='16' />

@@ -14,7 +14,7 @@ import {
   EyeIcon,
   GlobeIcon
 } from 'lucide-react'
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname, useParams } from 'next/navigation'
 
 import { Badge } from '@/components/ui/badge'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
@@ -23,7 +23,7 @@ import { Button } from '@/components/ui/button'
 import ImportDialogComponent from '@/components/dashboard/import-dialog-component'
 import SettingsComponent from '@/components/dashboard/settings-component'
 
-import { APP_VERSION } from '@/lib/constants'
+import { APP_VERSION, PATH } from '@/lib/constants'
 
 import useStore from '@/hooks/use-store'
 import useReportStore from '@/hooks/use-report-store'
@@ -36,6 +36,8 @@ export default function SidebarComponent() {
   const report = useStore(useReportStore, (state) => state.content)
 
   const router = useRouter()
+  const pathName = usePathname()
+  const params = useParams()
 
   const [content, setContent] = useState<TDrowserReport>()
 
@@ -70,14 +72,16 @@ export default function SidebarComponent() {
         <div className='flex-1 overflow-auto'>
           <nav className='grid items-start px-4 text-sm font-medium'>
             <Link
-              className='flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50'
+              className={`flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50 ${pathName === PATH.DASHBOARD ? 'text-gray-900' : ''}`}
               href='/dashboard'
             >
               <BarChartBigIcon className='h-4 w-4' />
               Dashboard
             </Link>
             <Collapsible className='grid'>
-              <CollapsibleTrigger className='flex items-center justify-between gap-3 rounded-lg px-3 py-2 text-gray-900 transition-all hover:text-gray-900 dark:bg-gray-800 dark:text-gray-50 dark:hover:text-gray-50'>
+              <CollapsibleTrigger
+                className={`flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50 ${pathName.startsWith(PATH.DASHBOARD_CASES) ? 'text-gray-900' : ''}`}
+              >
                 <div className='flex items-center gap-3'>
                   <ClipboardListIcon className='h-4 w-4' />
                   Cases
@@ -86,7 +90,9 @@ export default function SidebarComponent() {
               <CollapsibleContent className='grid px-4 overflow-auto'>
                 {uniqueBrowsers.map((browser, idx) => (
                   <Collapsible key={idx} className='grid'>
-                    <CollapsibleTrigger className='flex items-center justify-between gap-3 rounded-lg px-3 py-2 text-gray-900 transition-all hover:text-gray-900 dark:bg-gray-800 dark:text-gray-50 dark:hover:text-gray-50'>
+                    <CollapsibleTrigger
+                      className={`flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50 ${pathName.startsWith(PATH.DASHBOARD_CASES) ? 'text-gray-900' : ''}`}
+                    >
                       <div className='flex items-center gap-3 capitalize'>
                         <GlobeIcon className='h-4 w-4' />
                         {browser}
@@ -98,7 +104,7 @@ export default function SidebarComponent() {
                           {c.browser === browser ? (
                             <Link
                               key={c.id}
-                              className='ml-2 flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50'
+                              className={`flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50 ${pathName.startsWith(PATH.DASHBOARD_CASES) && params.id === c.id ? 'text-gray-900' : ''}`}
                               href={`/dashboard/cases/${c.id}`}
                             >
                               <ClipboardIcon className='h-4 w-4' />
