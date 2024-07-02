@@ -11,7 +11,8 @@ import {
   LogOutIcon,
   FlaskConicalIcon,
   PencilIcon,
-  EyeIcon
+  EyeIcon,
+  GlobeIcon
 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
@@ -42,6 +43,9 @@ export default function SidebarComponent() {
     useReportStore.persist.clearStorage()
     router.push('/')
   }
+
+  const browserCases = content?.drowser.cases.map((c: TContentCase) => c.browser)
+  const uniqueBrowsers = Array.from(new Set(browserCases))
 
   useEffect(() => {
     try {
@@ -80,16 +84,32 @@ export default function SidebarComponent() {
                 </div>
               </CollapsibleTrigger>
               <CollapsibleContent className='grid px-4 overflow-auto'>
-                {content?.drowser.cases.map((c: TContentCase) => (
-                  <Link
-                    key={c.id}
-                    className='flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50'
-                    href={`/dashboard/cases/${c.id}`}
-                  >
-                    <ClipboardIcon className='h-4 w-4' />
-                    {readableTimestamp(c.time)}
-                    <span className='capitalize'>({c.browser})</span>
-                  </Link>
+                {uniqueBrowsers.map((browser, idx) => (
+                  <Collapsible key={idx} className='grid'>
+                    <CollapsibleTrigger className='flex items-center justify-between gap-3 rounded-lg px-3 py-2 text-gray-900 transition-all hover:text-gray-900 dark:bg-gray-800 dark:text-gray-50 dark:hover:text-gray-50'>
+                      <div className='flex items-center gap-3 capitalize'>
+                        <GlobeIcon className='h-4 w-4' />
+                        {browser}
+                      </div>
+                    </CollapsibleTrigger>
+                    <CollapsibleContent>
+                      {content?.drowser.cases.map((c: TContentCase) => (
+                        <>
+                          {c.browser === browser ? (
+                            <Link
+                              key={c.id}
+                              className='ml-2 flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50'
+                              href={`/dashboard/cases/${c.id}`}
+                            >
+                              <ClipboardIcon className='h-4 w-4' />
+                              {readableTimestamp(c.time)}
+                              <span className='capitalize'>({c.browser})</span>
+                            </Link>
+                          ) : null}
+                        </>
+                      ))}
+                    </CollapsibleContent>
+                  </Collapsible>
                 ))}
               </CollapsibleContent>
             </Collapsible>

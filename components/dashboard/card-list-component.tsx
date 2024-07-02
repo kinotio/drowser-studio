@@ -41,15 +41,15 @@ export default function CardListComponent() {
   return (
     <>
       {!isEmpty(content) ? (
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6'>
+        <div className='grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-6'>
           <Card>
-            <CardHeader>
+            <CardHeader className='border-b-2 pb-6'>
               <CardTitle>Recent Cases</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className='space-y-4 overflow-auto h-96'>
+              <div className='space-y-4 overflow-auto h-96 pt-6'>
                 {content.cases.map((c: TContentSubCase) => (
-                  <div key={c.id} className='flex items-center justify-between'>
+                  <div key={c.id} className='flex items-center justify-between border-b-2 pb-6'>
                     <div className='flex items-center gap-2'>
                       <div className='bg-gray-200 dark:bg-gray-800 rounded-full w-8 h-8 flex items-center justify-center'>
                         <ClipboardIcon className='h-4 w-4 text-gray-500 dark:text-gray-400' />
