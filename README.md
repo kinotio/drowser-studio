@@ -6,6 +6,14 @@
   />
 </p>
 
+<p align="center">
+  <img
+    src="demo.png"
+    alt="Demo"
+    style="width:100%;"
+  />
+</p>
+
 ![build](https://github.com/kinotio/drowser-studio/workflows/build/badge.svg)
 ![license](https://img.shields.io/github/license/kinotio/drowser-studio?color=success)
 ![tags](https://ghcr-badge.egpl.dev/kinotio/drowser-studio/tags?trim=major&color=chocolate)
@@ -33,42 +41,6 @@ docker run --name kinotio_drowser_studio -p 3000:3000 -d ghcr.io/kinotio/drowser
 ```
 
 ## Features
-
-### Landing Page
-
-Import your reports on the landing page
-
-<p align="center">
-  <img
-    src="docs/landing.png"
-    alt="Landing"
-    style="width:100%;"
-  />
-</p>
-
-### Dashboard
-
-You can access to the main cases dashboard to get a visulization , track passed or failed cases , get an overview of all informations from each test cases
-
-<p align="center">
-  <img
-    src="docs/dashboard.png"
-    alt="Dashboard"
-    style="width:100%;"
-  />
-</p>
-
-### Cases
-
-And, in the other view you can access directly the metric from each test case
-
-<p align="center">
-  <img
-    src="docs/dashboard-case.png"
-    alt="Case"
-    style="width:100%;"
-  />
-</p>
 
 ### Visualize
 
