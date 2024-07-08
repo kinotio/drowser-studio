@@ -25,8 +25,8 @@ import { Settings } from '@/components/dashboard/settings'
 
 import { APP_VERSION, PATH } from '@/lib/constants'
 
-import useStore from '@/hooks/use-store'
-import useReportStore from '@/hooks/use-report-store'
+import { useStore } from '@/hooks/use-store'
+import { useReportStore } from '@/hooks/use-report-store'
 
 import { TDrowserReport, TContentCase } from '@/lib/definitions'
 

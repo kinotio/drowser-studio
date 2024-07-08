@@ -5,11 +5,11 @@ import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.share
 
 import { TFileContent } from '@/lib/definitions'
 
-export function cn(...inputs: ClassValue[]) {
+export const cn = (...inputs: ClassValue[]) => {
   return twMerge(clsx(inputs))
 }
 
-export function isValidFileContent(content: any): content is TFileContent {
+export const isValidFileContent = (content: any): content is TFileContent => {
   return (
     typeof content === 'object' &&
     content !== null &&
@@ -20,11 +20,11 @@ export function isValidFileContent(content: any): content is TFileContent {
   )
 }
 
-export function hasReport(report: string, router: AppRouterInstance) {
+export const hasReport = (report: string, router: AppRouterInstance) => {
   if (report === '') return router.push('/')
 }
 
-export function humanizeDuration(durationMs: number): string {
+export const humanizeDuration = (durationMs: number): string => {
   if (durationMs < 1000) {
     return `${Math.round(durationMs)}ms`
   } else {
@@ -47,7 +47,7 @@ export function humanizeDuration(durationMs: number): string {
   }
 }
 
-export function readableTimestamp(timestamp: string): string {
+export const readableTimestamp = (timestamp: string): string => {
   const date = new Date(timestamp)
 
   const year = date.getFullYear()

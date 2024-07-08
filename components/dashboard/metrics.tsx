@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react'
 import { isEmpty } from 'lodash'
 import { BarChartBigIcon } from 'lucide-react'
 
-import useStore from '@/hooks/use-store'
-import useReportStore from '@/hooks/use-report-store'
+import { useStore } from '@/hooks/use-store'
+import { useReportStore } from '@/hooks/use-report-store'
 
 import { TDrowserReport } from '@/lib/definitions'
 

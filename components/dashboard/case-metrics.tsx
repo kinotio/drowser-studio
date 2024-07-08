@@ -11,8 +11,8 @@ import { humanizeDuration } from '@/lib/utils'
 
 import { TContentCase } from '@/lib/definitions'
 
-import useStore from '@/hooks/use-store'
-import useReportStore from '@/hooks/use-report-store'
+import { useStore } from '@/hooks/use-store'
+import { useReportStore } from '@/hooks/use-report-store'
 
 const CaseMetrics = () => {
   const report = useStore(useReportStore, (state) => state.content)
