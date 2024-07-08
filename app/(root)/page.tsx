@@ -1,9 +1,11 @@
 import { HeroComponent } from '@/components/root/hero-component'
 
-export default function Home() {
+const Page = () => {
   return (
     <main className='min-h-[84dvh]'>
       <HeroComponent />
     </main>
   )
 }
+
+export default Page

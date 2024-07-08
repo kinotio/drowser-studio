@@ -1,5 +1,7 @@
 import DashboardCaseComponent from '@/components/dashboard/dashboard-case-component'
 
-export default function Case() {
+const Page = () => {
   return <DashboardCaseComponent />
 }
+
+export default Page
