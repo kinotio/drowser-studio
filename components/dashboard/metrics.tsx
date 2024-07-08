@@ -10,13 +10,13 @@ import useReportStore from '@/hooks/use-report-store'
 import { TDrowserReport } from '@/lib/definitions'
 
 import { CardTitle, CardDescription, CardHeader, CardContent, Card } from '@/components/ui/card'
-import LineChart from '@/components/ui/metrics/line-chart'
-import BarChart from '@/components/ui/metrics/bar-chart'
-import LabelledpieChart from '@/components/ui/metrics/labelled-pie-chart'
+import { LineChart } from '@/components/ui/metrics/line-chart'
+import { BarChart } from '@/components/ui/metrics/bar-chart'
+import { LabelledpieChart } from '@/components/ui/metrics/labelled-pie-chart'
 
 import { humanizeDuration } from '@/lib/utils'
 
-export default function FullMetricsComponent() {
+const Metrics = () => {
   const report = useStore(useReportStore, (state) => state.content)
 
   const [content, setContent] = useState<TDrowserReport>()
@@ -124,3 +124,5 @@ export default function FullMetricsComponent() {
     </div>
   )
 }
+
+export { Metrics }

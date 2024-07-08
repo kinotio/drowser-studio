@@ -1,10 +1,10 @@
-import { HeroComponent } from '@/components/root/hero-component'
+import { Hero } from '@/components/root/hero'
 
 const Page = () => {
   return (
-    <main className='min-h-[84dvh]'>
-      <HeroComponent />
-    </main>
+    <div className='min-h-[84dvh]'>
+      <Hero />
+    </div>
   )
 }
 

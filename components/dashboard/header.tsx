@@ -2,7 +2,7 @@ import { SearchIcon } from 'lucide-react'
 
 import { Input } from '@/components/ui/input'
 
-export default function HeaderComponent() {
+const Header = () => {
   return (
     <header className='flex h-14 lg:h-[60px] items-center gap-4 border-b bg-gray-100/40 px-6 dark:bg-gray-800/40'>
       <div className='flex flex-1 items-center gap-4 md:ml-auto md:gap-2 lg:gap-4'>
@@ -20,3 +20,5 @@ export default function HeaderComponent() {
     </header>
   )
 }
+
+export { Header }

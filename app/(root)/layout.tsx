@@ -1,5 +1,5 @@
-import { HeaderComponent } from '@/components/shared/header-component'
-import { FooterComponent } from '@/components/shared/footer-component'
+import { Header } from '@/components/shared/header'
+import { Footer } from '@/components/shared/footer'
 
 const Layout = ({
   children
@@ -8,9 +8,11 @@ const Layout = ({
 }>) => {
   return (
     <>
-      <HeaderComponent />
-      {children}
-      <FooterComponent />
+      <Header />
+
+      <main> {children}</main>
+
+      <Footer />
     </>
   )
 }

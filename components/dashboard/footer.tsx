@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
-export default function FooterComponent() {
+const Footer = () => {
   return (
     <footer className='flex h-14 lg:h-[60px] items-center gap-4 border-b bg-gray-100/40 px-6 dark:bg-gray-800/40'>
       <div className='flex flex-1 items-center justify-end'>
@@ -15,3 +15,5 @@ export default function FooterComponent() {
     </footer>
   )
 }
+
+export { Footer }

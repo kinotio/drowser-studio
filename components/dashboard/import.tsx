@@ -22,7 +22,7 @@ import useReportStore from '@/hooks/use-report-store'
 import { TFileContent } from '@/lib/definitions'
 import { isValidFileContent } from '@/lib/utils'
 
-export default function ImportDialogComponent() {
+const Import = () => {
   const setReport = useReportStore((state) => state.setReport)
 
   const router = useRouter()
@@ -86,3 +86,5 @@ export default function ImportDialogComponent() {
     </AlertDialog>
   )
 }
+
+export { Import }

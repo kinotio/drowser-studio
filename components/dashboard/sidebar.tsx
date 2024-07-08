@@ -20,8 +20,8 @@ import { Badge } from '@/components/ui/badge'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import { Button } from '@/components/ui/button'
 
-import ImportDialogComponent from '@/components/dashboard/import-dialog-component'
-import SettingsComponent from '@/components/dashboard/settings-component'
+import { Import } from '@/components/dashboard/import'
+import { Settings } from '@/components/dashboard/settings'
 
 import { APP_VERSION, PATH } from '@/lib/constants'
 
@@ -32,7 +32,7 @@ import { TDrowserReport, TContentCase } from '@/lib/definitions'
 
 import { readableTimestamp } from '@/lib/utils'
 
-export default function SidebarComponent() {
+const Sidebar = () => {
   const report = useStore(useReportStore, (state) => state.content)
 
   const router = useRouter()
@@ -143,13 +143,13 @@ export default function SidebarComponent() {
               className='pointer-events-none flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50'
               href='#'
             >
-              <SettingsComponent />
+              <Settings />
             </Link>
           </nav>
         </div>
 
         <div className='flex flex-col border-t'>
-          <ImportDialogComponent />
+          <Import />
 
           <Button size='lg' variant='outline' className='mb-4 mx-4' onClick={handleQuit}>
             Quit <LogOutIcon className='ml-2' />
@@ -166,3 +166,5 @@ export default function SidebarComponent() {
     </div>
   )
 }
+
+export { Sidebar }

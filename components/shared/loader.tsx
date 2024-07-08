@@ -1,4 +1,4 @@
-export default function LoaderComponent() {
+const Loader = () => {
   return (
     <div className='lds-ellipsis'>
       <div></div>
@@ -8,3 +8,5 @@ export default function LoaderComponent() {
     </div>
   )
 }
+
+export { Loader }

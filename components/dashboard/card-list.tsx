@@ -25,7 +25,7 @@ import { humanizeDuration, readableTimestamp } from '@/lib/utils'
 import useStore from '@/hooks/use-store'
 import useReportStore from '@/hooks/use-report-store'
 
-export default function CardListComponent() {
+const CardList = () => {
   const report = useStore(useReportStore, (state) => state.content)
 
   const { id } = useParams()
@@ -106,3 +106,5 @@ export default function CardListComponent() {
     </>
   )
 }
+
+export { CardList }

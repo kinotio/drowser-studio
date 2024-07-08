@@ -14,7 +14,7 @@ import { TContentCase } from '@/lib/definitions'
 import useStore from '@/hooks/use-store'
 import useReportStore from '@/hooks/use-report-store'
 
-export default function MetricsComponent() {
+const CaseMetrics = () => {
   const report = useStore(useReportStore, (state) => state.content)
 
   const { id } = useParams()
@@ -104,3 +104,5 @@ export default function MetricsComponent() {
     </>
   )
 }
+
+export { CaseMetrics }
