@@ -12,13 +12,15 @@ import {
   FlaskConicalIcon,
   PencilIcon,
   EyeIcon,
-  GlobeIcon
+  GlobeIcon,
+  ConstructionIcon
 } from 'lucide-react'
 import { useRouter, usePathname, useParams } from 'next/navigation'
 
 import { Badge } from '@/components/ui/badge'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import { Button } from '@/components/ui/button'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 
 import { Import } from '@/components/dashboard/import'
 import { Settings } from '@/components/dashboard/settings'
@@ -78,6 +80,7 @@ const Sidebar = () => {
               <BarChartBigIcon className='h-4 w-4' />
               Dashboard
             </Link>
+
             <Collapsible className='grid'>
               <CollapsibleTrigger
                 className={`flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50 ${pathName.startsWith(PATH.DASHBOARD_CASES) ? 'text-gray-900' : ''}`}
@@ -118,27 +121,67 @@ const Sidebar = () => {
                 ))}
               </CollapsibleContent>
             </Collapsible>
-            <Link
-              className='pointer-events-none flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50'
-              href='/dashboard/visualize'
-            >
-              <EyeIcon className='h-4 w-4' />
-              Visualize
-            </Link>
-            <Link
-              className='pointer-events-none flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50'
-              href='/dashboard/ia'
-            >
-              <FlaskConicalIcon className='h-4 w-4' />
-              Drowser AI
-            </Link>
-            <Link
-              className='pointer-events-none flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50'
-              href='/dashboard/playground'
-            >
-              <PencilIcon className='h-4 w-4' />
-              Playground
-            </Link>
+
+            <div className='flex'>
+              <Link
+                className='pointer-events-none flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50'
+                href='/dashboard/visualize'
+              >
+                <EyeIcon className='h-4 w-4' />
+                Visualize
+              </Link>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <ConstructionIcon className='text-yellow-400 h-4 w-4' />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Under construction</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
+
+            <div className='flex'>
+              <Link
+                className='pointer-events-none flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50'
+                href='/dashboard/ia'
+              >
+                <FlaskConicalIcon className='h-4 w-4' />
+                Drowser AI
+              </Link>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <ConstructionIcon className='text-yellow-400 h-4 w-4' />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Under construction</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
+
+            <div className='flex'>
+              <Link
+                className='pointer-events-none flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50'
+                href='/dashboard/playground'
+              >
+                <PencilIcon className='h-4 w-4' />
+                Playground
+              </Link>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <ConstructionIcon className='text-yellow-400 h-4 w-4' />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Under construction</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
+
             <Link
               className='pointer-events-none flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50'
               href='#'
