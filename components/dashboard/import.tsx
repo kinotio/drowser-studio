@@ -17,7 +17,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 
-import useReportStore from '@/hooks/use-report-store'
+import { useReportStore } from '@/hooks/use-report-store'
 
 import { TFileContent } from '@/lib/definitions'
 import { isValidFileContent } from '@/lib/utils'
