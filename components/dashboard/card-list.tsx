@@ -22,8 +22,8 @@ import { CASE_STATUS } from '@/lib/constants'
 
 import { humanizeDuration, readableTimestamp } from '@/lib/utils'
 
-import useStore from '@/hooks/use-store'
-import useReportStore from '@/hooks/use-report-store'
+import { useStore } from '@/hooks/use-store'
+import { useReportStore } from '@/hooks/use-report-store'
 
 const CardList = () => {
   const report = useStore(useReportStore, (state) => state.content)

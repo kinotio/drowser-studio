@@ -6,7 +6,7 @@ type State = {
   setReport: (content: string) => void
 }
 
-export const useReportStore = create(
+const useReportStore = create(
   persist<State>(
     (set, get) => ({
       content: '',
@@ -19,4 +19,4 @@ export const useReportStore = create(
   )
 )
 
-export default useReportStore
+export { useReportStore }
