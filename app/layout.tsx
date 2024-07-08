@@ -12,14 +12,16 @@ export const metadata: Metadata = {
   title: 'Drowser Studio'
 }
 
-export default function Layout({
+const Layout = ({
   children
 }: Readonly<{
   children: React.ReactNode
-}>) {
+}>) => {
   return (
     <html lang='en'>
       <body className={inter.className}>{children}</body>
     </html>
   )
 }
+
+export default Layout

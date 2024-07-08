@@ -1,11 +1,11 @@
 import { HeaderComponent } from '@/components/shared/header-component'
 import { FooterComponent } from '@/components/shared/footer-component'
 
-export default function RootLayout({
+const Layout = ({
   children
 }: Readonly<{
   children: React.ReactNode
-}>) {
+}>) => {
   return (
     <>
       <HeaderComponent />
@@ -14,3 +14,5 @@ export default function RootLayout({
     </>
   )
 }
+
+export default Layout

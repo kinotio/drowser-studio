@@ -8,11 +8,11 @@ export const metadata: Metadata = {
   title: 'Drowser Studio | Dashboard'
 }
 
-export default function DashboardLayout({
+const Layout = ({
   children
 }: Readonly<{
   children: React.ReactNode
-}>) {
+}>) => {
   return (
     <div className='flex h-screen'>
       <SidebarComponent />
@@ -26,3 +26,5 @@ export default function DashboardLayout({
     </div>
   )
 }
+
+export default Layout
