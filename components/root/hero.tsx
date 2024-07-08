@@ -10,7 +10,7 @@ import { Input } from '@/components/ui/input'
 import { TFileContent } from '@/lib/definitions'
 import { isValidFileContent } from '@/lib/utils'
 
-import useReportStore from '@/hooks/use-report-store'
+import { useReportStore } from '@/hooks/use-report-store'
 
 const Hero = () => {
   const setReport = useReportStore((state) => state.setReport)
