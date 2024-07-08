@@ -1,7 +1,7 @@
-import DashboardCaseComponent from '@/components/dashboard/dashboard-case-component'
+import { DashboardCase } from '@/components/dashboard/dashboard-case'
 
 const Page = () => {
-  return <DashboardCaseComponent />
+  return <DashboardCase />
 }
 
 export default Page

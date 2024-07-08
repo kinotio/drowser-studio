@@ -12,7 +12,7 @@ import { isValidFileContent } from '@/lib/utils'
 
 import useReportStore from '@/hooks/use-report-store'
 
-export function HeroComponent() {
+const Hero = () => {
   const setReport = useReportStore((state) => state.setReport)
 
   const router = useRouter()
@@ -75,3 +75,5 @@ export function HeroComponent() {
     </section>
   )
 }
+
+export { Hero }

@@ -1,6 +1,6 @@
 import { ResponsivePie } from '@nivo/pie'
 
-export default function LabelledpieChart(props: any) {
+const LabelledpieChart = (props: any) => {
   return (
     <div {...props}>
       <ResponsivePie
@@ -32,3 +32,5 @@ export default function LabelledpieChart(props: any) {
     </div>
   )
 }
+
+export { LabelledpieChart }

@@ -1,6 +1,6 @@
 import { ResponsiveLine } from '@nivo/line'
 
-export default function LineChart(props: any) {
+const LineChart = (props: any) => {
   return (
     <div {...props}>
       <ResponsiveLine
@@ -49,3 +49,5 @@ export default function LineChart(props: any) {
     </div>
   )
 }
+
+export { LineChart }

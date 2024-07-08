@@ -18,7 +18,7 @@ import {
 } from '@/components/ui/sheet'
 import { Button } from '@/components/ui/button'
 
-export default function SettingsComponent() {
+const Settings = () => {
   const [accessToken, setAccessToken] = useState('')
 
   const handleSaveChanges = () => {
@@ -64,3 +64,5 @@ export default function SettingsComponent() {
     </Sheet>
   )
 }
+
+export { Settings }

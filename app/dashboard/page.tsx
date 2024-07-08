@@ -1,7 +1,7 @@
-import FullMetricsComponent from '@/components/dashboard/full-metrics-component'
+import { Metrics } from '@/components/dashboard/metrics'
 
 const Page = () => {
-  return <FullMetricsComponent />
+  return <Metrics />
 }
 
 export default Page
