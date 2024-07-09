@@ -4,6 +4,8 @@ import type { Metadata } from 'next'
 import { Sidebar } from '@/components/dashboard/sidebar'
 import { Footer } from '@/components/dashboard/footer'
 
+import { Toaster } from '@/components/ui/sonner'
+
 export const metadata: Metadata = {
   title: 'Drowser Studio | Dashboard'
 }
@@ -22,6 +24,8 @@ const Layout = ({
           {children}
         </main>
         <Footer />
+
+        <Toaster position='bottom-left' />
       </div>
     </div>
   )

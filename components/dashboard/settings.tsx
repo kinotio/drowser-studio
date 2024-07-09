@@ -5,6 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { BoltIcon } from 'lucide-react'
+import { toast } from 'sonner'
 
 import { Input } from '@/components/ui/input'
 import {
@@ -83,14 +84,23 @@ const Settings = () => {
 
   const [provider, setProvider] = useState<string>('')
   const [model, setModel] = useState<string>('')
+  const [encryptedKey, setEncryptedKey] = useState<string>('')
   const [apiKey, setApiKey] = useState<string>('')
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    const { provider, model, apiKey } = data
-    const encryptedKey = encrypt(apiKey)
-    const config = { provider, model, encrypted_key: encryptedKey }
+    const { provider: dataProvider, model: dataModel, apiKey: dataApiKey } = data
+    const dataEncryptedKey = encrypt(dataApiKey)
+    const config = { provider: dataProvider, model: dataModel, encrypted_key: dataEncryptedKey }
 
     setConfig(config)
+
+    toast('Config has been saved', {
+      description: new Date().toDateString(),
+      action: {
+        label: 'Undo',
+        onClick: () => setConfig({ provider, model, encrypted_key: encryptedKey })
+      }
+    })
   }
 
   useEffect(() => {
@@ -100,6 +110,8 @@ const Settings = () => {
 
       setProvider(provider)
       setModel(model)
+      setEncryptedKey(encrypted_key)
+
       setApiKey(decryptedKey)
     }
   }, [config])
