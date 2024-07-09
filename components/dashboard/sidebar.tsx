@@ -102,8 +102,8 @@ const Sidebar = () => {
                       </div>
                     </CollapsibleTrigger>
                     <CollapsibleContent>
-                      {content?.drowser.cases.map((c: TContentCase) => (
-                        <>
+                      {content?.drowser.cases.map((c: TContentCase, idx) => (
+                        <div key={idx}>
                           {c.browser === browser ? (
                             <Link
                               key={c.id}
@@ -114,7 +114,7 @@ const Sidebar = () => {
                               {readableTimestamp(c.time)}
                             </Link>
                           ) : null}
-                        </>
+                        </div>
                       ))}
                     </CollapsibleContent>
                   </Collapsible>

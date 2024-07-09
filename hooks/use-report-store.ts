@@ -13,7 +13,7 @@ const useReportStore = create(
       setReport: (content: string) => set({ content: content })
     }),
     {
-      name: 'report-storage',
+      name: 'report',
       storage: createJSONStorage(() => sessionStorage)
     }
   )

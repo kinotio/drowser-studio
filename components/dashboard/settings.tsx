@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -27,11 +28,16 @@ import {
   FormMessage
 } from '@/components/ui/form'
 
+import { useStore } from '@/hooks/use-store'
+import { useConfigStore } from '@/hooks/use-config-store'
+
+import { encrypt, decrypt } from '@/lib/crypto'
+
 const FormSchema = z.object({
-  type: z.enum(['openai', 'anthropic'], {
+  provider: z.string({
     required_error: 'You need to select a api key provider type.'
   }),
-  model: z.enum(['gpt-4o', 'gpt-3.5', 'claude-3.5-sonnet', 'claude-3-opus'], {
+  model: z.string({
     required_error: 'You need to specify a model'
   }),
   apiKey: z.string({ required_error: 'You need to enter the api key provided by the provider' })
@@ -68,13 +74,35 @@ const modelOpts = [
 ]
 
 const Settings = () => {
+  const config = useStore(useConfigStore, (state) => state.config)
+  const setConfig = useConfigStore((state) => state.setConfig)
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema)
   })
 
+  const [provider, setProvider] = useState<string>('')
+  const [model, setModel] = useState<string>('')
+  const [apiKey, setApiKey] = useState<string>('')
+
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(data)
+    const { provider, model, apiKey } = data
+    const encryptedKey = encrypt(apiKey)
+    const config = { provider, model, encrypted_key: encryptedKey }
+
+    setConfig(config)
   }
+
+  useEffect(() => {
+    if (config !== undefined) {
+      const { provider, model, encrypted_key } = config
+      const decryptedKey = decrypt(encrypted_key)
+
+      setProvider(provider)
+      setModel(model)
+      setApiKey(decryptedKey)
+    }
+  }, [config])
 
   return (
     <Sheet>
@@ -95,14 +123,14 @@ const Settings = () => {
           <form className='space-y-6 w-full'>
             <FormField
               control={form.control}
-              name='type'
+              name='provider'
               render={({ field }) => (
                 <FormItem className='space-y-3'>
                   <FormLabel>Provider</FormLabel>
                   <FormControl>
                     <RadioGroup
                       onValueChange={field.onChange}
-                      defaultValue={field.value}
+                      defaultValue={provider}
                       className='flex flex-col space-y-1'
                     >
                       {providerOpts.map((opt) => (
@@ -129,7 +157,7 @@ const Settings = () => {
                   <FormControl>
                     <RadioGroup
                       onValueChange={field.onChange}
-                      defaultValue={field.value}
+                      defaultValue={model}
                       className='flex flex-col space-y-1'
                     >
                       {modelOpts.map((opt) => (
@@ -156,10 +184,10 @@ const Settings = () => {
                   <FormControl>
                     <Input
                       id='apiKey'
-                      type='apiKey'
+                      type='text'
                       placeholder='Your api key'
                       onChange={field.onChange}
-                      defaultValue={field.value}
+                      defaultValue={apiKey}
                     />
                   </FormControl>
                   <FormMessage />
