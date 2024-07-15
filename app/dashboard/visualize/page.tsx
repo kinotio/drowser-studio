@@ -119,90 +119,91 @@ const Page = () => {
         edges={edges}
         className='p-0 m-0 border'
         onZoomChange={(z) => setZoom(z)}
-        node={
-          <ReaflowNode>
-            {(event) => (
-              <foreignObject width={event.width} height={event.height} x={0} y={0}>
-                {event.node.data && Object.keys(event.node?.data).length !== 0 ? (
-                  <Card className='h-full w-full flex items-center justify-center flex-col bg-white border-none rounded-none'>
-                    <CardContent className='w-full h-full py-6'>
-                      <div className='flex  items-center justify-center gap-4'>
-                        <div className='flex gap-2 items-center'>
-                          <div className='bg-gray-200 dark:bg-gray-800 rounded-full w-8 h-8 flex items-center justify-center'>
-                            {event.node.data.name ? (
-                              <div>
-                                {event.node.data.name === 'Main' ? (
-                                  <FolderRootIcon className='h-4 w-4 text-gray-500 dark:text-gray-400' />
-                                ) : (
-                                  <ClipboardIcon className='h-4 w-4 text-gray-500 dark:text-gray-400' />
-                                )}
-                              </div>
-                            ) : (
-                              <BoxesIcon className='h-4 w-4 text-gray-500 dark:text-gray-400' />
-                            )}
-                          </div>
-                          <div>
-                            <h4 className='font-medium'>
-                              {!event.node.data.name ? 'Group' : event.node.data.name}
-                            </h4>
-                          </div>
-                        </div>
-
-                        {event.node.data.status ? (
-                          <div className='flex gap-4'>
-                            <p
-                              className={`capitalize text-sm text-gray-500 dark:text-gray-400 flex gap-2 items-center ${
-                                event.node.data.status === CASE_STATUS.passed
-                                  ? 'text-green-500'
-                                  : 'text-red-500'
-                              }`}
-                            >
-                              {event.node.data.status === CASE_STATUS.passed ? (
-                                <CircleCheckIcon size='16' />
-                              ) : (
-                                <CircleXIcon size='16' />
-                              )}
-                              {event.node.data.status}
-                            </p>
-                          </div>
-                        ) : null}
-                      </div>
-                    </CardContent>
-
-                    <CardFooter>
-                      <div className='flex text-sm text-gray-500 dark:text-gray-400 gap-4 justify-center w-full'>
-                        {event.node.data.browser ? (
-                          <div>
-                            <Badge variant='secondary'>
-                              <TimerIcon size='16' className='mr-1' />
-                              {humanizeDuration(
-                                event.node.data.duration ?? event.node.data.avg_duration
-                              )}
-                            </Badge>
-                            <Badge>
-                              <CalendarIcon size='16' className='mr-1' />
-                              {readableTimestamp(event.node.data.timestamp ?? event.node.data.time)}
-                            </Badge>
-                            <Badge variant='outline'>
-                              <GlobeIcon size='16' className='mr-1' />
-                              {event.node.data.browser}
-                            </Badge>
-                          </div>
-                        ) : (
-                          <Badge>This is the main root of the graph.</Badge>
-                        )}
-                      </div>
-                    </CardFooter>
-                  </Card>
-                ) : null}
-              </foreignObject>
-            )}
-          </ReaflowNode>
-        }
+        node={renderNode}
       />
-
       <ZoomControls passedRef={ref} />
     </div>
+  )
+}
+
+const renderNode = () => {
+  return (
+    <ReaflowNode>
+      {(event) => (
+        <foreignObject width={event.width} height={event.height} x={0} y={0}>
+          {event.node.data && Object.keys(event.node?.data).length !== 0 ? (
+            <Card className='h-full w-full flex items-center justify-center flex-col bg-white border-none rounded-none'>
+              <CardContent className='w-full h-full py-6'>
+                <div className='flex  items-center justify-center gap-4'>
+                  <div className='flex gap-2 items-center'>
+                    <div className='bg-gray-200 dark:bg-gray-800 rounded-full w-8 h-8 flex items-center justify-center'>
+                      {event.node.data.name ? (
+                        <div>
+                          {event.node.data.name === 'Main' ? (
+                            <FolderRootIcon className='h-4 w-4 text-gray-500 dark:text-gray-400' />
+                          ) : (
+                            <ClipboardIcon className='h-4 w-4 text-gray-500 dark:text-gray-400' />
+                          )}
+                        </div>
+                      ) : (
+                        <BoxesIcon className='h-4 w-4 text-gray-500 dark:text-gray-400' />
+                      )}
+                    </div>
+                    <div>
+                      <h4 className='font-medium'>
+                        {!event.node.data.name ? 'Group' : event.node.data.name}
+                      </h4>
+                    </div>
+                  </div>
+
+                  {event.node.data.status ? (
+                    <div className='flex gap-4'>
+                      <p
+                        className={`capitalize text-sm text-gray-500 dark:text-gray-400 flex gap-2 items-center ${
+                          event.node.data.status === CASE_STATUS.passed
+                            ? 'text-green-500'
+                            : 'text-red-500'
+                        }`}
+                      >
+                        {event.node.data.status === CASE_STATUS.passed ? (
+                          <CircleCheckIcon size='16' />
+                        ) : (
+                          <CircleXIcon size='16' />
+                        )}
+                        {event.node.data.status}
+                      </p>
+                    </div>
+                  ) : null}
+                </div>
+              </CardContent>
+
+              <CardFooter>
+                <div className='flex text-sm text-gray-500 dark:text-gray-400 gap-4 justify-center w-full'>
+                  {event.node.data.browser ? (
+                    <div>
+                      <Badge variant='secondary'>
+                        <TimerIcon size='16' className='mr-1' />
+                        {humanizeDuration(event.node.data.duration ?? event.node.data.avg_duration)}
+                      </Badge>
+                      <Badge>
+                        <CalendarIcon size='16' className='mr-1' />
+                        {readableTimestamp(event.node.data.timestamp ?? event.node.data.time)}
+                      </Badge>
+                      <Badge variant='outline'>
+                        <GlobeIcon size='16' className='mr-1' />
+                        {event.node.data.browser}
+                      </Badge>
+                    </div>
+                  ) : (
+                    <Badge>This is the main root of the graph.</Badge>
+                  )}
+                </div>
+              </CardFooter>
+            </Card>
+          ) : null}
+        </foreignObject>
+      )}
+    </ReaflowNode>
   )
 }
 
