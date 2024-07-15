@@ -63,7 +63,7 @@ const Page = () => {
     id: 'main',
     text: 'Cases',
     data: {
-      name: 'Main'
+      name: 'Root'
     },
     nodes: content?.drowser.cases.map((group) => ({
       id: group.id,
@@ -136,9 +136,9 @@ const renderNode = ({ router }: { router: AppRouterInstance }) => {
         <foreignObject width={event.width} height={event.height} x={0} y={0}>
           {event.node.data && Object.keys(event.node?.data).length !== 0 ? (
             <Card
-              className={`${!event.node.data.name && event.node.data.name !== 'Main' ? 'cursor-pointer' : ''} h-full w-full flex items-center justify-center flex-col bg-white border-none rounded-none`}
+              className={`${!event.node.data.name && event.node.data.name !== 'Root' ? 'cursor-pointer' : ''} h-full w-full flex items-center justify-center flex-col bg-white border-none rounded-none`}
               onClick={() => {
-                if (!event.node.data.name && event.node.data.name !== 'Main') {
+                if (!event.node.data.name && event.node.data.name !== 'Root') {
                   router.push('/dashboard/cases/' + event.node.id)
                 }
               }}
@@ -149,7 +149,7 @@ const renderNode = ({ router }: { router: AppRouterInstance }) => {
                     <div className='bg-gray-200 dark:bg-gray-800 rounded-full w-8 h-8 flex items-center justify-center'>
                       {event.node.data.name ? (
                         <div>
-                          {event.node.data.name === 'Main' ? (
+                          {event.node.data.name === 'Root' ? (
                             <FolderRootIcon className='h-4 w-4 text-gray-500 dark:text-gray-400' />
                           ) : (
                             <ClipboardIcon className='h-4 w-4 text-gray-500 dark:text-gray-400' />
