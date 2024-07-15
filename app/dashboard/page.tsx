@@ -17,23 +17,19 @@ import { LabelledpieChart } from '@/components/ui/metrics/labelled-pie-chart'
 import { humanizeDuration } from '@/lib/utils'
 
 const Page = () => {
-  const report = useStore(useReportStore, (state) => state.content)
+  const report = useStore(useReportStore, (state) => state.content) as string
 
   const [content, setContent] = useState<TDrowserReport>()
   const [metrics, setMetrics] = useState<Record<string, any>>()
-  const [cases, setCases] = useState<Record<string, any>>()
 
   useEffect(() => {
     try {
-      setContent(JSON.parse(report as string))
+      setContent(JSON.parse(report))
     } catch (error) {}
   }, [report])
 
   useEffect(() => {
-    if (!isEmpty(content)) {
-      setMetrics(content?.drowser?.metrics)
-      setCases(content?.drowser?.cases)
-    }
+    if (!isEmpty(content)) setMetrics(content?.drowser?.metrics)
   }, [content])
 
   return (
