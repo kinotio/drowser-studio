@@ -188,9 +188,9 @@ const renderNode = ({ router }: { router: AppRouterInstance }) => {
               </CardContent>
 
               <CardFooter>
-                <div className='flex text-sm text-gray-500 dark:text-gray-400 gap-4 justify-center w-full'>
+                <div className='text-sm text-gray-500 dark:text-gray-400 justify-center w-full'>
                   {event.node.data.browser ? (
-                    <div>
+                    <div className='flex gap-4'>
                       <Badge variant='secondary'>
                         <TimerIcon size='16' className='mr-1' />
                         {humanizeDuration(event.node.data.duration ?? event.node.data.avg_duration)}
