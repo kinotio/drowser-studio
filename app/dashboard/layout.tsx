@@ -3,7 +3,6 @@ import type { Metadata } from 'next'
 // import HeaderComponent from '@/components/dashboard/header-component'
 import { Sidebar } from '@/components/dashboard/sidebar'
 import { Footer } from '@/components/dashboard/footer'
-
 import { Toaster } from '@/components/ui/sonner'
 
 export const metadata: Metadata = {
@@ -24,7 +23,6 @@ const Layout = ({
           {children}
         </main>
         <Footer />
-
         <Toaster position='bottom-left' />
       </div>
     </div>
