@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef, MutableRefObject } from 'react'
+import { useRouter } from 'next/navigation'
 import { Canvas, CanvasPosition, CanvasRef, Node as ReaflowNode } from 'reaflow'
 import {
   ZoomInIcon,
@@ -15,6 +16,7 @@ import {
   CircleXIcon,
   BoxesIcon
 } from 'lucide-react'
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
 
 import { Button } from '@/components/ui/button'
 import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip'
@@ -49,6 +51,7 @@ const Page = () => {
   const [content, setContent] = useState<TDrowserReport>()
   const [zoom, setZoom] = useState<number>(0.7)
   const ref = useRef<CanvasRef | null>(null)
+  const router = useRouter()
 
   useEffect(() => {
     try {
@@ -119,20 +122,27 @@ const Page = () => {
         edges={edges}
         className='p-0 m-0 border'
         onZoomChange={(z) => setZoom(z)}
-        node={renderNode}
+        node={renderNode({ router })}
       />
       <ZoomControls passedRef={ref} />
     </div>
   )
 }
 
-const renderNode = () => {
+const renderNode = ({ router }: { router: AppRouterInstance }) => {
   return (
     <ReaflowNode>
       {(event) => (
         <foreignObject width={event.width} height={event.height} x={0} y={0}>
           {event.node.data && Object.keys(event.node?.data).length !== 0 ? (
-            <Card className='h-full w-full flex items-center justify-center flex-col bg-white border-none rounded-none'>
+            <Card
+              className={`${!event.node.data.name && event.node.data.name !== 'Main' ? 'cursor-pointer' : ''} h-full w-full flex items-center justify-center flex-col bg-white border-none rounded-none`}
+              onClick={() => {
+                if (!event.node.data.name && event.node.data.name !== 'Main') {
+                  router.push('/dashboard/cases/' + event.node.id)
+                }
+              }}
+            >
               <CardContent className='w-full h-full py-6'>
                 <div className='flex  items-center justify-center gap-4'>
                   <div className='flex gap-2 items-center'>
