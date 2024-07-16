@@ -60,8 +60,8 @@ const Page = () => {
   }, [report])
 
   const mainNode: Node = {
-    id: 'main',
-    text: 'Cases',
+    id: 'root',
+    text: 'Root',
     data: {
       name: 'Root'
     },
