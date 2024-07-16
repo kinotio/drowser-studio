@@ -59,7 +59,7 @@ const Page = () => {
     } catch (error) {}
   }, [report])
 
-  const mainNode: Node = {
+  const root: Node = {
     id: 'root',
     text: 'Root',
     data: {
@@ -99,8 +99,8 @@ const Page = () => {
     return edges
   }
 
-  const nodes: Node[] = flattenNodes(mainNode || [])
-  const edges: Edge[] = generateEdges(mainNode || [])
+  const nodes: Node[] = flattenNodes(root || [])
+  const edges: Edge[] = generateEdges(root || [])
 
   return (
     <div className='w-[80vw] h-full relative overflow-hidden'>
@@ -266,7 +266,7 @@ const ZoomControls = ({ passedRef }: { passedRef: MutableRefObject<CanvasRef | n
               <TooltipTrigger asChild>
                 <Button
                   className='bg-primary text-primary-foreground px-4 py-2 rounded-md hover:bg-primary/90 focus:outline-none focus:ring-1 focus:ring-primary'
-                  onClick={() => passedRef.current?.fitNodes?.('main')}
+                  onClick={() => passedRef.current?.fitNodes?.('root')}
                 >
                   <FolderRootIcon className='h-4 w-4' />
                 </Button>
