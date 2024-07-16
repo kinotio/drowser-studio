@@ -16,6 +16,7 @@ import {
   ConstructionIcon
 } from 'lucide-react'
 import { useRouter, usePathname, useParams } from 'next/navigation'
+import { deleteCookie } from 'cookies-next'
 
 import { Badge } from '@/components/ui/badge'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
@@ -29,6 +30,7 @@ import { APP_VERSION, PATH } from '@/lib/constants'
 
 import { useStore } from '@/hooks/use-store'
 import { useReportStore } from '@/hooks/use-report-store'
+import { useConfigStore } from '@/hooks/use-config-store'
 
 import { TDrowserReport, TContentCase } from '@/lib/definitions'
 
@@ -45,6 +47,8 @@ const Sidebar = () => {
 
   const handleQuit = () => {
     useReportStore.persist.clearStorage()
+    useConfigStore.persist.clearStorage()
+    deleteCookie('session-active')
     router.push('/')
   }
 
@@ -130,16 +134,6 @@ const Sidebar = () => {
                 <EyeIcon className='h-4 w-4' />
                 Visualize
               </Link>
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger>
-                    <ConstructionIcon className='text-yellow-400 h-4 w-4' />
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Under construction</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
             </div>
 
             <div className='flex'>
