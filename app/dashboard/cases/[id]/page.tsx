@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import { isEmpty } from 'lodash'
 import {
   BarChartBigIcon,
@@ -11,11 +11,14 @@ import {
   CalendarIcon,
   GlobeIcon,
   CircleCheckIcon,
-  CircleXIcon
+  CircleXIcon,
+  NetworkIcon
 } from 'lucide-react'
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
 
 import { CardTitle, CardDescription, CardHeader, Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
+import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip'
 
 import { humanizeDuration, readableTimestamp } from '@/lib/utils'
 import { CASE_STATUS } from '@/lib/constants'
@@ -23,20 +26,13 @@ import { TContentCase, TContentSubCase } from '@/lib/definitions'
 
 import { useStore } from '@/hooks/use-store'
 import { useReportStore } from '@/hooks/use-report-store'
+import { Button } from '@/components/ui/button'
 
 const Page = () => {
-  return (
-    <div className='flex flex-col gap-4 p-4 md:gap-8 md:p-6'>
-      <CaseMetrics />
-      <CardList />
-    </div>
-  )
-}
-
-const CaseMetrics = () => {
   const report = useStore(useReportStore, (state) => state.content)
 
   const { id } = useParams()
+  const router = useRouter()
 
   const [content, setContent] = useState<TContentCase>()
   const [goupedByStatus, setGoupedByStatus] = useState<any>()
@@ -53,6 +49,21 @@ const CaseMetrics = () => {
     }
   }, [content])
 
+  return (
+    <div className='flex flex-col gap-4 p-4 md:gap-8 md:p-6'>
+      <CaseMetrics content={content} goupedByStatus={goupedByStatus} />
+      <CardList content={content} router={router} />
+    </div>
+  )
+}
+
+const CaseMetrics = ({
+  content,
+  goupedByStatus
+}: {
+  content: TContentCase | undefined
+  goupedByStatus: any
+}) => {
   return (
     <>
       {!isEmpty(content) ? (
@@ -124,19 +135,13 @@ const CaseMetrics = () => {
   )
 }
 
-const CardList = () => {
-  const report = useStore(useReportStore, (state) => state.content)
-
-  const { id } = useParams()
-
-  const [content, setContent] = useState<TContentCase>()
-
-  useEffect(() => {
-    try {
-      setContent(JSON.parse(report as string)?.drowser.cases.filter((c: any) => c.id === id)[0])
-    } catch (error) {}
-  }, [id, report])
-
+const CardList = ({
+  content,
+  router
+}: {
+  content: TContentCase | undefined
+  router: AppRouterInstance
+}) => {
   return (
     <>
       {!isEmpty(content) ? (
@@ -183,6 +188,20 @@ const CardList = () => {
                         <GlobeIcon size='16' className='mr-1' />
                         {c.browser}
                       </Badge>
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button
+                              variant='outline'
+                              className='text-primary px-4 py-2 rounded-full hover:bg-primary/90 hover:text-white focus:outline-none focus:ring-1 focus:ring-primary'
+                              onClick={() => router.push(`/dashboard/visualize?node=${c.id}`)}
+                            >
+                              <NetworkIcon className='h-4 w-4 -rotate-90' />
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent>Visualize on Graph</TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
                     </div>
                   </div>
                 ))}
