@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef, MutableRefObject } from 'react'
+import { useState, useRef, MutableRefObject } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Canvas, CanvasPosition, CanvasRef, Node as ReaflowNode } from 'reaflow'
 import {
@@ -18,17 +18,15 @@ import {
   XIcon
 } from 'lucide-react'
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
-import { deleteCookie } from 'cookies-next'
 
 import { Button } from '@/components/ui/button'
 import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip'
 import { Card, CardContent, CardFooter } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 
-import { useStore } from '@/hooks/use-store'
-import { useReportStore } from '@/hooks/use-report-store'
+import { useReport } from '@/hooks/use-report'
 
-import { TDrowserReport, TContentCase, TContentSubCase } from '@/lib/definitions'
+import { TContentCase, TContentSubCase } from '@/lib/definitions'
 import { humanizeDuration, readableTimestamp } from '@/lib/utils'
 import { CASE_STATUS } from '@/lib/constants'
 
@@ -48,28 +46,11 @@ type Edge = {
 }
 
 const Page = () => {
-  const report = useStore(useReportStore, (state) => state.content) as string
-
   const ref = useRef<CanvasRef | null>(null)
-
   const router = useRouter()
   const query = useSearchParams()
-
-  const [content, setContent] = useState<TDrowserReport>()
   const [zoom, setZoom] = useState<number>(0.7)
-
-  useEffect(() => {
-    if (report && report !== '') {
-      try {
-        const parsedJson = JSON.parse(report)
-        setContent(parsedJson)
-      } catch (error) {
-        deleteCookie('active-session')
-        router.push('/')
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [report])
+  const { content } = useReport()
 
   const root: Node = {
     id: 'root',
@@ -111,9 +92,7 @@ const Page = () => {
     return edges
   }
 
-  const clearSeachParams = () => {
-    return router.replace('/dashboard/visualize')
-  }
+  const clearSeachParams = () => router.replace('/dashboard/visualize')
 
   const nodes: Node[] = flattenNodes(root || [])
   const edges: Edge[] = generateEdges(root || [])
@@ -122,7 +101,6 @@ const Page = () => {
   return (
     <div className='w-[80vw] h-full relative overflow-hidden'>
       <Canvas
-        fit={true}
         arrow={null}
         panType='drag'
         maxZoom={10}
