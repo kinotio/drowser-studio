@@ -122,6 +122,7 @@ const Page = () => {
   return (
     <div className='w-[80vw] h-full relative overflow-hidden'>
       <Canvas
+        fit={true}
         arrow={null}
         panType='drag'
         maxZoom={10}
