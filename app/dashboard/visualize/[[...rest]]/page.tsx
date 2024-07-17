@@ -1,8 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef, MutableRefObject } from 'react'
-import { useRouter } from 'next/navigation'
-import { useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { Canvas, CanvasPosition, CanvasRef, Node as ReaflowNode } from 'reaflow'
 import {
   ZoomInIcon,
@@ -19,6 +18,7 @@ import {
   XIcon
 } from 'lucide-react'
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
+import { deleteCookie } from 'cookies-next'
 
 import { Button } from '@/components/ui/button'
 import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip'
@@ -61,7 +61,11 @@ const Page = () => {
   useEffect(() => {
     try {
       setContent(JSON.parse(report))
-    } catch (error) {}
+    } catch (error) {
+      deleteCookie('session-active')
+      router.push('/')
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [report])
 
   const root: Node = {
