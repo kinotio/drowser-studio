@@ -1,15 +1,9 @@
 'use client'
 
-import { useState, useEffect } from 'react'
 import { isEmpty } from 'lodash'
 import { BarChartBigIcon } from 'lucide-react'
-import { deleteCookie } from 'cookies-next'
-import { useRouter } from 'next/navigation'
 
-import { useStore } from '@/hooks/use-store'
-import { useReportStore } from '@/hooks/use-report-store'
-
-import { TDrowserReport } from '@/lib/definitions'
+import { useMetrics } from '@/hooks/use-metrics'
 
 import { CardTitle, CardDescription, CardHeader, CardContent, Card } from '@/components/ui/card'
 import { LineChart } from '@/components/ui/metrics/line-chart'
@@ -19,29 +13,7 @@ import { LabelledpieChart } from '@/components/ui/metrics/labelled-pie-chart'
 import { humanizeDuration } from '@/lib/utils'
 
 const Page = () => {
-  const report = useStore(useReportStore, (state) => state.content) as string
-
-  const [content, setContent] = useState<TDrowserReport>()
-  const [metrics, setMetrics] = useState<Record<string, any>>()
-
-  const router = useRouter()
-
-  useEffect(() => {
-    if (report && report !== '') {
-      try {
-        const parsedJson = JSON.parse(report)
-        setContent(parsedJson)
-      } catch (error) {
-        deleteCookie('active-session')
-        router.push('/')
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [report])
-
-  useEffect(() => {
-    if (!isEmpty(content)) setMetrics(content?.drowser?.metrics)
-  }, [content])
+  const { metrics } = useMetrics()
 
   return (
     <div>
