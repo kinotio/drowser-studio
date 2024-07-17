@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react'
 import { isEmpty } from 'lodash'
 import { BarChartBigIcon } from 'lucide-react'
+import { deleteCookie } from 'cookies-next'
+import { useRouter } from 'next/navigation'
 
 import { useStore } from '@/hooks/use-store'
 import { useReportStore } from '@/hooks/use-report-store'
@@ -22,10 +24,16 @@ const Page = () => {
   const [content, setContent] = useState<TDrowserReport>()
   const [metrics, setMetrics] = useState<Record<string, any>>()
 
+  const router = useRouter()
+
   useEffect(() => {
     try {
       setContent(JSON.parse(report))
-    } catch (error) {}
+    } catch (error) {
+      deleteCookie('session-active')
+      router.push('/')
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [report])
 
   useEffect(() => {
