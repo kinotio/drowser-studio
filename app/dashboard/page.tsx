@@ -27,11 +27,14 @@ const Page = () => {
   const router = useRouter()
 
   useEffect(() => {
-    try {
-      setContent(JSON.parse(report))
-    } catch (error) {
-      deleteCookie('session-active')
-      router.push('/')
+    if (report && report !== '') {
+      try {
+        const parsedJson = JSON.parse(report)
+        setContent(parsedJson)
+      } catch (error) {
+        deleteCookie('active-session')
+        router.push('/')
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [report])
