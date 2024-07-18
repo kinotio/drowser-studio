@@ -61,3 +61,5 @@ export const readableTimestamp = (timestamp: string): string => {
 
   return readableTimestamp
 }
+
+export const getCurrentYear = () => new Date().getFullYear()
