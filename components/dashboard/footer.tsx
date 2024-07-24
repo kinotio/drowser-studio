@@ -8,7 +8,13 @@ const Footer = () => {
         <div className='flex items-center pl-4 gap-2'>
           <span className='text-sm font-semibold'>By</span>
           <Link href={'https://github.com/kinotio'}>
-            <Image src='/images/kinotio-logo-dark.png' alt='Kinotio Logo' width={90} height={90} />
+            <Image
+              src='/images/kinotio-logo-dark.png'
+              alt='Kinotio'
+              width={90}
+              height={90}
+              priority
+            />
           </Link>
         </div>
       </div>
