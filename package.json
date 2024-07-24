@@ -41,6 +41,7 @@
     "react-dom": "^18",
     "react-hook-form": "^7.52.1",
     "reaflow": "^5.3.1",
+    "sharp": "^0.33.4",
     "sonner": "^1.5.0",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
