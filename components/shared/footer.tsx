@@ -12,7 +12,13 @@ const Footer = () => {
       <nav className='sm:ml-auto flex gap-2 items-center'>
         <span className='text-sm font-semibold'>By</span>
         <Link href={'https://github.com/kinotio'}>
-          <Image src='/images/kinotio-logo-dark.png' alt='Kinotio Logo' width={100} height={100} />
+          <Image
+            src='/images/kinotio-logo-dark.png'
+            alt='Kinotio'
+            width={100}
+            height={100}
+            priority
+          />
         </Link>
       </nav>
     </footer>

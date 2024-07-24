@@ -70,7 +70,8 @@ const Sidebar = () => {
               src='/images/drowser-black.png'
               width={200}
               height={200}
-              alt='Drowser Studio Logo'
+              alt='Drowser Studio'
+              priority
             />
           </Link>
         </div>
