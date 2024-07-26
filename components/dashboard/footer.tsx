@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 const Footer = () => {
   return (
-    <footer className='flex h-14 lg:h-[60px] items-center gap-4 border-b bg-gray-100/40 px-6 dark:bg-gray-800/40'>
+    <footer className='flex h-14 lg:h-[60px] items-center gap-4 border-b bg-gray-100/40 px-6 dark:bg-gray-800/40 border-t'>
       <div className='flex flex-1 items-center justify-end'>
         <div className='flex items-center pl-4 gap-2'>
           <span className='text-sm font-semibold'>By</span>
