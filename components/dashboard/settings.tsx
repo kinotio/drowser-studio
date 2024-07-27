@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
-import { BoltIcon } from 'lucide-react'
+import { BoltIcon, EyeIcon, EyeOffIcon } from 'lucide-react'
 import { toast } from 'sonner'
 
 import { Input } from '@/components/ui/input'
@@ -86,6 +86,7 @@ const Settings = () => {
   const [model, setModel] = useState<string>('')
   const [encryptedKey, setEncryptedKey] = useState<string>('')
   const [apiKey, setApiKey] = useState<string>('')
+  const [passwordVisibility, setPasswordVisibility] = useState<boolean>(false)
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
     const { provider: dataProvider, model: dataModel, apiKey: dataApiKey } = data
@@ -193,15 +194,33 @@ const Settings = () => {
               render={({ field }) => (
                 <FormItem className='space-y-3'>
                   <FormLabel>Key</FormLabel>
-                  <FormControl>
-                    <Input
-                      id='apiKey'
-                      type='text'
-                      placeholder='Your api key'
-                      onChange={field.onChange}
-                      defaultValue={apiKey}
-                    />
-                  </FormControl>
+                  <div className='relative'>
+                    <FormControl>
+                      <Input
+                        id='apiKey'
+                        type={passwordVisibility ? 'text' : 'password'}
+                        placeholder='Your api key'
+                        onChange={field.onChange}
+                        defaultValue={apiKey}
+                      />
+                    </FormControl>
+                    <Button
+                      variant='ghost'
+                      size='icon'
+                      type='button'
+                      className='absolute top-1/2 right-3 -translate-y-1/2 h-7 w-7 hover:bg-transparent text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300'
+                      onClick={() => setPasswordVisibility(!passwordVisibility)}
+                    >
+                      {passwordVisibility ? (
+                        <EyeOffIcon className='h-4 w-4' />
+                      ) : (
+                        <EyeIcon className='h-4 w-4' />
+                      )}
+
+                      <span className='sr-only'>Toggle password visibility</span>
+                    </Button>
+                  </div>
+
                   <FormMessage />
                 </FormItem>
               )}
