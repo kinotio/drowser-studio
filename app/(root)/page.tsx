@@ -15,7 +15,7 @@ import { useReportStore } from '@/hooks/use-report-store'
 
 const Page = () => {
   return (
-    <div className='min-h-[84dvh]'>
+    <div className='min-h-[86dvh]'>
       <Hero />
     </div>
   )
