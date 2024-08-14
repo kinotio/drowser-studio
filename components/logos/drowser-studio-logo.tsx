@@ -7,7 +7,7 @@ export const DrowserStudioLogo = (props: React.ComponentProps<"svg">): React.Rea
     aria-label='Drowser Studio'
     {...props}
   >
-    <rect x='656' y='2' width='574' height='193' fill='black' stroke='white' stroke-width='4' />
+    <rect x='656' y='2' width='574' height='193' fill='black' stroke='white' strokeWidth='4' />
     <path
       d='M605.197 160.277H582.533V71.3652H588.012L595.484 81.9085C599.137 78.5878 603.288 76.0419 607.937 74.2708C612.586 72.4445 617.401 71.5313 622.382 71.5313H642.389V94.112H622.382C620.002 94.112 617.76 94.5548 615.657 95.4403C613.554 96.3258 611.728 97.5434 610.178 99.0931C608.628 100.643 607.411 102.469 606.525 104.572C605.64 106.675 605.197 108.917 605.197 111.297V160.277Z'
       fill='currentColor'

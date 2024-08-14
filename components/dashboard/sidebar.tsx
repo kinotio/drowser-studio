@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 import {
   ClipboardIcon,
   GithubIcon,
@@ -22,9 +21,11 @@ import { Badge } from '@/components/ui/badge'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import { Button } from '@/components/ui/button'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
+import { DrowserStudioLogo } from '@/components/logos/drowser-studio-logo'
 
 import { Import } from '@/components/dashboard/import'
 import { Settings } from '@/components/dashboard/settings'
+import { ToggleTheme } from '@/components/shared/toogle-theme'
 
 import { APP_VERSION, PATH } from '@/lib/constants'
 
@@ -62,24 +63,18 @@ const Sidebar = () => {
   }, [report])
 
   return (
-    <div className='w-1/4 border-r bg-gray-100/40 lg:block dark:bg-gray-800/40'>
+    <div className='w-1/4 border-r lg:block'>
       <div className='flex flex-col gap-2 h-full'>
         <div className='flex h-[60px] items-center px-6 border-b'>
           <Link className='flex items-center font-bold' href='/dashboard'>
-            <Image
-              src='/images/drowser-black.png'
-              width={200}
-              height={200}
-              alt='Drowser Studio'
-              priority
-            />
+            <DrowserStudioLogo width={200} height={100} />
           </Link>
         </div>
 
         <div className='flex-1 overflow-auto'>
           <nav className='grid items-start px-4 text-sm font-medium'>
             <Link
-              className={`flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50 ${pathName === PATH.DASHBOARD ? 'text-gray-900' : ''}`}
+              className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${pathName === PATH.DASHBOARD ? 'text-black dark:text-white' : ''}`}
               href='/dashboard'
             >
               <BarChartBigIcon className='h-4 w-4' />
@@ -88,7 +83,7 @@ const Sidebar = () => {
 
             <Collapsible className='grid'>
               <CollapsibleTrigger
-                className={`flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50 ${pathName.startsWith(PATH.DASHBOARD_CASES) ? 'text-gray-900' : ''}`}
+                className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${pathName.startsWith(PATH.DASHBOARD_CASES) ? 'text-black dark:text-white' : ''}`}
               >
                 <div className='flex items-center gap-3'>
                   <ClipboardListIcon className='h-4 w-4' />
@@ -99,7 +94,7 @@ const Sidebar = () => {
                 {uniqueBrowsers.map((browser, idx) => (
                   <Collapsible key={idx} className='grid'>
                     <CollapsibleTrigger
-                      className={`flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50 ${pathName.startsWith(PATH.DASHBOARD_CASES) ? 'text-gray-900' : ''}`}
+                      className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${pathName.startsWith(PATH.DASHBOARD_CASES) ? 'text-black dark:text-white' : ''}`}
                     >
                       <div className='flex items-center gap-3 capitalize'>
                         <GlobeIcon className='h-4 w-4' />
@@ -112,7 +107,7 @@ const Sidebar = () => {
                           {c.browser === browser ? (
                             <Link
                               key={c.id}
-                              className={`ml-6 flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50 ${pathName.startsWith(PATH.DASHBOARD_CASES) && params.id === c.id ? 'text-gray-900' : ''}`}
+                              className={`ml-6 flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${pathName.startsWith(PATH.DASHBOARD_CASES) && params.id === c.id ? 'text-black dark:text-white' : ''}`}
                               href={`/dashboard/cases/${c.id}`}
                             >
                               <ClipboardIcon className='h-4 w-4' />
@@ -129,7 +124,7 @@ const Sidebar = () => {
 
             <div className='flex'>
               <Link
-                className='flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50'
+                className='flex items-center gap-3 rounded-lg px-3 py-2 transition-all'
                 href='/dashboard/visualize'
               >
                 <NetworkIcon className='h-4 w-4 -rotate-90' />
@@ -139,7 +134,7 @@ const Sidebar = () => {
 
             <div className='flex'>
               <Link
-                className='pointer-events-none flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50'
+                className='pointer-events-none flex items-center gap-3 rounded-lg px-3 py-2 transition-all'
                 href='/dashboard/ia'
               >
                 <FlaskConicalIcon className='h-4 w-4' />
@@ -159,7 +154,7 @@ const Sidebar = () => {
 
             <div className='flex'>
               <Link
-                className='pointer-events-none flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50'
+                className='pointer-events-none flex items-center gap-3 rounded-lg px-3 py-2 transition-all'
                 href='/dashboard/playground'
               >
                 <PencilIcon className='h-4 w-4' />
@@ -178,7 +173,7 @@ const Sidebar = () => {
             </div>
 
             <Link
-              className='flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50'
+              className='flex items-center gap-3 rounded-lg px-3 py-2 transition-all'
               href='#'
             >
               <Settings />
@@ -193,11 +188,14 @@ const Sidebar = () => {
             Quit <LogOutIcon className='ml-2' />
           </Button>
 
-          <div className='flex h-[60px] py-6 px-6 items-end justify-between'>
+          <div className='flex h-[60px] py-6 px-6 items-center justify-between'>
             <Badge>{APP_VERSION}</Badge>
-            <Link href={'https://github.com/kinotio/drowser-studio'}>
-              <GithubIcon />
-            </Link>
+            <div className='flex items-center gap-2'>
+              <ToggleTheme />
+              <Link href={'https://github.com/kinotio/drowser-studio'}>
+                <GithubIcon />
+              </Link>
+            </div>
           </div>
         </div>
       </div>

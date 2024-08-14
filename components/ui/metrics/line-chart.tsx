@@ -1,6 +1,12 @@
+'use client'
+
+import { useTheme } from 'next-themes'
 import { ResponsiveLine } from '@nivo/line'
 
 const LineChart = (props: any) => {
+  const { theme } = useTheme()
+  const color = theme === 'light' ? '#262E3F' : '#f3f4f6'
+
   return (
     <div {...props}>
       <ResponsiveLine
@@ -23,7 +29,7 @@ const LineChart = (props: any) => {
           tickValues: 5,
           tickPadding: 16
         }}
-        colors={['#262E3F']}
+        colors={[color]}
         pointSize={6}
         useMesh={true}
         gridYValues={6}

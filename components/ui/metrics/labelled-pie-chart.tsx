@@ -1,6 +1,12 @@
+'use client'
+
+import { useTheme } from 'next-themes'
 import { ResponsivePie } from '@nivo/pie'
 
 const LabelledpieChart = (props: any) => {
+  const { theme } = useTheme()
+  const color = theme === 'light' ? '#262E3F' : '#f3f4f6'
+
   return (
     <div {...props}>
       <ResponsivePie
@@ -14,7 +20,7 @@ const LabelledpieChart = (props: any) => {
         borderWidth={1}
         arcLinkLabelsThickness={1}
         enableArcLabels={false}
-        colors={['#262E3F']}
+        colors={[color]}
         theme={{
           tooltip: {
             chip: {
