@@ -1,6 +1,12 @@
+'use client'
+
+import { useTheme } from 'next-themes'
 import { ResponsiveBar } from '@nivo/bar'
 
 const BarChart = (props: any) => {
+  const { theme } = useTheme()
+  const color = theme === 'light' ? '#262E3F' : '#f3f4f6'
+
   return (
     <div {...props}>
       <ResponsiveBar
@@ -9,7 +15,7 @@ const BarChart = (props: any) => {
         indexBy='name'
         margin={{ top: 0, right: 0, bottom: 40, left: 40 }}
         padding={0.3}
-        colors={['#262E3F']}
+        colors={[color]}
         axisBottom={{
           tickSize: 0,
           tickPadding: 16
@@ -28,7 +34,7 @@ const BarChart = (props: any) => {
             container: {
               fontSize: '12px',
               textTransform: 'capitalize',
-              borderRadius: '6px'
+              borderRadius: '6px',
             }
           },
           grid: {
