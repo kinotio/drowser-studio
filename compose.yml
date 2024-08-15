@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  kinotio-drowser-studio-app:
+    container_name: kinotio_drowser_studio_app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - '3000:3000'
+    environment:
+      CRYPTO_PASSPHRASE: <your-super-passphrase>
+    command: pnpm install && pnpm dev
