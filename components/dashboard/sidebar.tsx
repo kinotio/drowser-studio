@@ -25,7 +25,6 @@ import { DrowserStudioLogo } from '@/components/logos/drowser-studio-logo'
 
 import { Import } from '@/components/dashboard/import'
 import { Settings } from '@/components/dashboard/settings'
-import { ToggleTheme } from '@/components/shared/toogle-theme'
 
 import { APP_VERSION, PATH } from '@/lib/constants'
 
@@ -172,10 +171,7 @@ const Sidebar = () => {
               </TooltipProvider>
             </div>
 
-            <Link
-              className='flex items-center gap-3 rounded-lg px-3 py-2 transition-all'
-              href='#'
-            >
+            <Link className='flex items-center gap-3 rounded-lg px-3 py-2 transition-all' href='#'>
               <Settings />
             </Link>
           </nav>
@@ -191,9 +187,8 @@ const Sidebar = () => {
           <div className='flex h-[60px] py-6 px-6 items-center justify-between'>
             <Badge>{APP_VERSION}</Badge>
             <div className='flex items-center gap-2'>
-              <ToggleTheme />
               <Link href={'https://github.com/kinotio/drowser-studio'}>
-                <GithubIcon />
+                <GithubIcon size={20} />
               </Link>
             </div>
           </div>
