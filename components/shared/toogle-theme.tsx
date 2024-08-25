@@ -14,12 +14,12 @@ export const ToggleTheme = () => {
       className='w-full justify-start'
     >
       <div className='flex gap-2 dark:hidden'>
-        <Moon className='size-6' />
+        <Moon size={20} />
         <span className='block lg:hidden'>Dark</span>
       </div>
 
       <div className='dark:flex gap-2 hidden'>
-        <Sun className='size-6' />
+        <Sun size={20} />
         <span className='block lg:hidden'>Light</span>
       </div>
 
