@@ -23,7 +23,7 @@ const Header = () => {
             </div>
           </form> */}
 
-          <Badge className='h-8 cursor-pointer'>
+          <Badge variant='outline' className='h-8 cursor-pointer'>
             <Link href={'https://github.com/kinotio/drowser-studio/issues'} target='_blank'>
               Feedback
             </Link>
