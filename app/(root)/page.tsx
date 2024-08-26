@@ -61,7 +61,7 @@ const Page = () => {
                 Drowser Studio is a robust and intuitive app designed to help users track,
                 visualize, and analyze the performance of various tests over time.
               </p>
-              <div className='flex justify-center items-center gap-3'>
+              <div className='grid grid-cols-1 px-12 lg:px-0 lg:flex justify-center items-center gap-3'>
                 <Input
                   className='flex h-10 w-50 rounded-md border border-input px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 bg-gray-white backdrop-blur-md'
                   type='file'
