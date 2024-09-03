@@ -44,25 +44,14 @@ const FormSchema = z.object({
   apiKey: z.string({ required_error: 'You need to enter the api key provided by the provider' })
 })
 
-const providerOpts = [
-  {
-    label: 'OpenAI',
-    value: 'openai'
-  },
-  {
-    label: 'Anthropic',
-    value: 'anthropic'
-  }
-]
-
 const modelOpts = [
   {
-    label: 'GPT-4o',
-    value: 'gpt-4o'
+    label: 'GPT-4',
+    value: 'gpt-4'
   },
   {
-    label: 'GPT-3.5',
-    value: 'gpt-3.5'
+    label: 'GPT-3',
+    value: 'gpt-3'
   },
   {
     label: 'Claude-3.5-Sonnet',
@@ -71,6 +60,17 @@ const modelOpts = [
   {
     label: 'Claude-3-Opus',
     value: 'claude-3-opus'
+  }
+]
+
+const providerOpts = [
+  {
+    label: 'OpenAI',
+    value: 'openai'
+  },
+  {
+    label: 'Anthropic',
+    value: 'anthropic'
   }
 ]
 

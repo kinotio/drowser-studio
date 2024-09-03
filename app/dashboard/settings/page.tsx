@@ -1,7 +1,10 @@
 'use client'
 
-import { ResponsiveLine } from '@nivo/line'
-import { ResponsiveBar } from '@nivo/bar'
+import { useEffect, useState } from 'react'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+import { toast } from 'sonner'
 
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card'
 import {
@@ -14,8 +17,76 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Slider } from '@/components/ui/slider'
+import { LineChart } from '@/components/ui/metrics/line-chart'
+import { BarChart } from '@/components/ui/metrics/bar-chart'
+
+import { useStore } from '@/hooks/use-store'
+import { useConfigStore } from '@/hooks/use-config-store'
+
+import { encrypt, decrypt } from '@/lib/crypto'
+
+type AIProviderKey = keyof typeof AI_MODELS
+type AIModel = {
+  key: string
+  label: string
+  value: string
+}
+
+const AI_PROVIDERS = [
+  { key: 'openai', label: 'OpenAI', value: 'openai' },
+  { key: 'anthropic', label: 'Anthropic', value: 'anthropic' },
+  { key: 'cohere', label: 'Cohere', value: 'cohere' },
+  { key: 'google', label: 'Google', value: 'google' }
+]
+
+export const AI_MODELS = {
+  openai: [
+    { key: 'gpt-4', label: 'GPT-4', value: 'gpt-4' },
+    { key: 'gpt-3.5', label: 'GPT-3.5', value: 'gpt-3.5' },
+    { key: 'davinci', label: 'Davinci', value: 'davinci' },
+    { key: 'curie', label: 'Curie', value: 'curie' }
+  ],
+  anthropic: [
+    { key: 'claude-2', label: 'Claude 2', value: 'claude-2' },
+    { key: 'claude-1', label: 'Claude 1', value: 'claude-1' }
+  ],
+  cohere: [
+    { key: 'command-r', label: 'Command-R', value: 'command-r' },
+    { key: 'command-x', label: 'Command-X', value: 'command-x' },
+    { key: 'generate', label: 'Generate', value: 'generate' }
+  ],
+  google: [
+    { key: 'palm-2', label: 'PaLM 2', value: 'palm-2' },
+    { key: 'palm-1', label: 'PaLM 1', value: 'palm-1' },
+    { key: 'bert', label: 'BERT', value: 'bert' },
+    { key: 't5', label: 'T5', value: 't5' }
+  ]
+}
+
+const FormSchema = z.object({
+  model: z.string({
+    required_error: 'You need to specify a model'
+  }),
+  provider: z.string({
+    required_error: 'You need to select a api key provider type.'
+  }),
+  apiToken: z.string({
+    required_error: 'You need to enter the api token provided by the provider'
+  }),
+  temperature: z.string(),
+  maxTokens: z.string()
+})
 
 const Page = () => {
+  const [selectedProvider, setSelectedProvider] = useState<AIProviderKey | ''>('')
+  const [availableModels, setAvailableModels] = useState<AIModel[]>([])
+
+  const handleProviderChange = (value: string) => {
+    const providerKey = value as AIProviderKey
+    setSelectedProvider(providerKey)
+    setAvailableModels(providerKey ? AI_MODELS[providerKey] : [])
+  }
+
   return (
     <div className='flex flex-col gap-6 mt-[50px] mb-[100px]'>
       <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6'>
@@ -30,12 +101,11 @@ const Page = () => {
                 <SelectValue placeholder='Select AI Model' />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value='gpt-3'>GPT-3</SelectItem>
-                <SelectItem value='gpt-4'>GPT-4</SelectItem>
-                <SelectItem value='davinci'>Davinci</SelectItem>
-                <SelectItem value='curie'>Curie</SelectItem>
-                <SelectItem value='babbage'>Babbage</SelectItem>
-                <SelectItem value='ada'>Ada</SelectItem>
+                {availableModels.map((model) => (
+                  <SelectItem key={model.key} value={model.value}>
+                    {model.label}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </CardContent>
@@ -46,15 +116,16 @@ const Page = () => {
             <CardDescription>Choose the provider for your AI services.</CardDescription>
           </CardHeader>
           <CardContent>
-            <Select>
+            <Select onValueChange={handleProviderChange}>
               <SelectTrigger>
                 <SelectValue placeholder='Select AI Provider' />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value='openai'>OpenAI</SelectItem>
-                <SelectItem value='anthropic'>Anthropic</SelectItem>
-                <SelectItem value='cohere'>Cohere</SelectItem>
-                <SelectItem value='hugging-face'>Hugging Face</SelectItem>
+                {AI_PROVIDERS.map((provider) => (
+                  <SelectItem key={provider.key} value={provider.value}>
+                    {provider.label}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </CardContent>
@@ -102,145 +173,24 @@ const Page = () => {
                 <CardHeader>
                   <CardTitle>Total Queries</CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <LineChart className='aspect-[4/3]' />
-                </CardContent>
+                <CardContent>{/* <LineChart className='aspect-[4/3]' /> */}</CardContent>
               </Card>
               <Card>
                 <CardHeader>
                   <CardTitle>Successful Responses</CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <BarChart className='aspect-[4/3]' />
-                </CardContent>
+                <CardContent>{/* <BarChart className='aspect-[4/3]' /> */}</CardContent>
               </Card>
               <Card>
                 <CardHeader>
                   <CardTitle>Error Rate</CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <LineChart className='aspect-[4/3]' />
-                </CardContent>
+                <CardContent>{/* <LineChart className='aspect-[4/3]' /> */}</CardContent>
               </Card>
             </div>
           </CardContent>
         </Card>
       </div>
-    </div>
-  )
-}
-
-function BarChart(props) {
-  return (
-    <div {...props}>
-      <ResponsiveBar
-        data={[
-          { name: 'Jan', count: 111 },
-          { name: 'Feb', count: 157 },
-          { name: 'Mar', count: 129 },
-          { name: 'Apr', count: 150 },
-          { name: 'May', count: 119 },
-          { name: 'Jun', count: 72 }
-        ]}
-        keys={['count']}
-        indexBy='name'
-        margin={{ top: 0, right: 0, bottom: 40, left: 40 }}
-        padding={0.3}
-        colors={['#020617']}
-        axisBottom={{
-          tickSize: 0,
-          tickPadding: 16
-        }}
-        axisLeft={{
-          tickSize: 0,
-          tickValues: 4,
-          tickPadding: 16
-        }}
-        gridYValues={4}
-        theme={{
-          tooltip: {
-            chip: {
-              borderRadius: '9999px'
-            },
-            container: {
-              fontSize: '12px',
-              textTransform: 'capitalize',
-              borderRadius: '6px'
-            }
-          },
-          grid: {
-            line: {
-              stroke: '#f3f4f6'
-            }
-          }
-        }}
-        tooltipLabel={({ id }) => `${id}`}
-        enableLabel={false}
-        role='application'
-        ariaLabel='A bar chart showing data'
-      />
-    </div>
-  )
-}
-
-function LineChart(props) {
-  return (
-    <div {...props}>
-      <ResponsiveLine
-        data={[
-          {
-            id: 'usage',
-            data: [
-              { x: 'Jan', y: 43 },
-              { x: 'Feb', y: 137 },
-              { x: 'Mar', y: 61 },
-              { x: 'Apr', y: 145 },
-              { x: 'May', y: 26 },
-              { x: 'Jun', y: 154 }
-            ]
-          }
-        ]}
-        margin={{ top: 10, right: 10, bottom: 40, left: 40 }}
-        xScale={{
-          type: 'point'
-        }}
-        yScale={{
-          type: 'linear'
-        }}
-        axisTop={null}
-        axisRight={null}
-        axisBottom={{
-          tickSize: 0,
-          tickPadding: 16
-        }}
-        axisLeft={{
-          tickSize: 0,
-          tickValues: 5,
-          tickPadding: 16
-        }}
-        colors={['#020617']}
-        pointSize={6}
-        useMesh={true}
-        gridYValues={6}
-        theme={{
-          tooltip: {
-            chip: {
-              borderRadius: '9999px'
-            },
-            container: {
-              fontSize: '12px',
-              textTransform: 'capitalize',
-              borderRadius: '6px'
-            }
-          },
-          grid: {
-            line: {
-              stroke: '#f3f4f6'
-            }
-          }
-        }}
-        role='application'
-      />
     </div>
   )
 }
