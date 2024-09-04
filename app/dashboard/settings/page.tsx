@@ -19,6 +19,8 @@ import { Label } from '@/components/ui/label'
 import { Slider } from '@/components/ui/slider'
 import { LineChart } from '@/components/ui/metrics/line-chart'
 import { BarChart } from '@/components/ui/metrics/bar-chart'
+import { Button } from '@/components/ui/button'
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 
 import { useStore } from '@/hooks/use-store'
 import { useConfigStore } from '@/hooks/use-config-store'
@@ -47,6 +49,7 @@ export const AI_MODELS = {
     { key: 'curie', label: 'Curie', value: 'curie' }
   ],
   anthropic: [
+    { key: 'claude-3', label: 'Claude 3', value: 'claude-3' },
     { key: 'claude-2', label: 'Claude 2', value: 'claude-2' },
     { key: 'claude-1', label: 'Claude 1', value: 'claude-1' }
   ],
@@ -78,8 +81,21 @@ const FormSchema = z.object({
 })
 
 const Page = () => {
+  const config = useStore(useConfigStore, (state) => state.config)
+  const setConfig = useConfigStore((state) => state.setConfig)
+
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema)
+  })
+
   const [selectedProvider, setSelectedProvider] = useState<AIProviderKey | ''>('')
   const [availableModels, setAvailableModels] = useState<AIModel[]>([])
+  const [provider, setProvider] = useState<string>('')
+  const [model, setModel] = useState<string>('')
+  const [encryptedKey, setEncryptedKey] = useState<string>('')
+  const [apiToken, setApiToken] = useState<string>('')
+  const [temperature, setTemperature] = useState<string>('')
+  const [maxTokens, setMaxTokens] = useState<string>('')
 
   const handleProviderChange = (value: string) => {
     const providerKey = value as AIProviderKey
@@ -87,77 +103,141 @@ const Page = () => {
     setAvailableModels(providerKey ? AI_MODELS[providerKey] : [])
   }
 
+  function onSubmit(data: z.infer<typeof FormSchema>) {
+    const { provider: dataProvider, model: dataModel, apiToken: dataApiToken } = data
+    const dataEncryptedKey = encrypt(dataApiToken)
+    const config = { provider: dataProvider, model: dataModel, encrypted_key: dataEncryptedKey }
+
+    setConfig(config)
+
+    toast('Config has been saved', {
+      description: new Date().toDateString(),
+      action: {
+        label: 'Undo',
+        onClick: () => setConfig({ provider, model, encrypted_key: encryptedKey })
+      }
+    })
+  }
+
   return (
-    <div className='flex flex-col gap-6 mt-[50px] mb-[100px]'>
-      <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6'>
-        <Card>
-          <CardHeader>
-            <CardTitle>AI Model</CardTitle>
-            <CardDescription>Select the AI model to use for your application.</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Select>
-              <SelectTrigger>
-                <SelectValue placeholder='Select AI Model' />
-              </SelectTrigger>
-              <SelectContent>
-                {availableModels.map((model) => (
-                  <SelectItem key={model.key} value={model.value}>
-                    {model.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>AI Provider</CardTitle>
-            <CardDescription>Choose the provider for your AI services.</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Select onValueChange={handleProviderChange}>
-              <SelectTrigger>
-                <SelectValue placeholder='Select AI Provider' />
-              </SelectTrigger>
-              <SelectContent>
-                {AI_PROVIDERS.map((provider) => (
-                  <SelectItem key={provider.key} value={provider.value}>
-                    {provider.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>API Token</CardTitle>
-            <CardDescription>Enter your API token for the selected provider.</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Input type='text' placeholder='Enter API Token' />
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>Additional Settings</CardTitle>
-            <CardDescription>Configure any additional AI-related settings.</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className='grid gap-4'>
-              <div className='grid gap-2'>
-                <Label htmlFor='temperature'>Temperature</Label>
-                <Slider id='temperature' min={0} max={1} step={0.1} defaultValue={[0.5]} />
-              </div>
-              <div className='grid gap-2'>
-                <Label htmlFor='max-tokens'>Max Tokens</Label>
-                <Input id='max-tokens' type='number' defaultValue={1024} />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+    <div className='flex flex-col gap-6 mb-[100px]'>
+      <Form {...form}>
+        <form className='flex flex-col gap-6'>
+          <div className='flex justify-end'>
+            <Button type='submit' onClick={form.handleSubmit(onSubmit)}>
+              Apply Changes
+            </Button>
+          </div>
+          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6'>
+            <Card>
+              <CardHeader>
+                <CardTitle>AI Model</CardTitle>
+                <CardDescription>Select the AI model to use for your application.</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <FormField
+                  control={form.control}
+                  name='model'
+                  render={({ field }) => (
+                    <FormItem className='space-y-3'>
+                      <FormControl>
+                        <Select onValueChange={field.onChange} defaultValue={model}>
+                          <SelectTrigger>
+                            <SelectValue placeholder='Select AI Model' />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {availableModels.map((model) => (
+                              <SelectItem key={model.key} value={model.value}>
+                                {model.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>AI Provider</CardTitle>
+                <CardDescription>Choose the provider for your AI services.</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <FormField
+                  control={form.control}
+                  name='provider'
+                  render={({ field }) => (
+                    <FormItem className='space-y-3'>
+                      <FormControl>
+                        <Select onValueChange={handleProviderChange} defaultValue={provider}>
+                          <SelectTrigger>
+                            <SelectValue placeholder='Select AI Provider' />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {AI_PROVIDERS.map((provider) => (
+                              <SelectItem key={provider.key} value={provider.value}>
+                                {provider.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>API Token</CardTitle>
+                <CardDescription>Enter your API token for the selected provider.</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <FormField
+                  control={form.control}
+                  name='apiToken'
+                  render={({ field }) => (
+                    <FormItem className='space-y-3'>
+                      <FormControl>
+                        <Input
+                          id='apiToken'
+                          type='text'
+                          placeholder='Enter API Token'
+                          onChange={field.onChange}
+                          defaultValue={apiToken}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>Additional Settings</CardTitle>
+                <CardDescription>Configure any additional AI-related settings.</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className='grid gap-4'>
+                  <div className='grid gap-2'>
+                    <Label htmlFor='temperature'>Temperature</Label>
+                    <Slider id='temperature' min={0} max={1} step={0.1} defaultValue={[0.5]} />
+                  </div>
+                  <div className='grid gap-2'>
+                    <Label htmlFor='max-tokens'>Max Tokens</Label>
+                    <Input id='max-tokens' type='number' defaultValue={1024} />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </form>
+      </Form>
 
       <div>
         <Card>

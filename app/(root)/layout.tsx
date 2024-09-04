@@ -1,5 +1,6 @@
 import { Header } from '@/components/shared/header'
 import { Footer } from '@/components/shared/footer'
+import { Toaster } from '@/components/ui/sonner'
 
 const Layout = ({
   children
@@ -10,6 +11,7 @@ const Layout = ({
     <>
       <Header />
       <main> {children}</main>
+      <Toaster position='bottom-center' />
       <Footer />
     </>
   )
