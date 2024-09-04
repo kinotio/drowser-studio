@@ -23,7 +23,7 @@ const Layout = ({
           {children}
         </div>
         <Footer />
-        <Toaster position='bottom-left' />
+        <Toaster position='bottom-center' />
       </div>
     </div>
   )

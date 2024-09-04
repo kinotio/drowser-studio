@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { ImportIcon } from 'lucide-react'
 import { setCookie } from 'cookies-next'
+import { toast } from 'sonner'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -42,9 +43,14 @@ const Page = () => {
   }
 
   const handleSubmit = () => {
-    if (!isValidFileContent(fileContent)) return
+    if (!isValidFileContent(fileContent)) {
+      toast('Report is not valid')
+      return
+    }
+
     setReport(JSON.stringify(fileContent))
     setCookie('session-active', true, { secure: true, expires: new Date(Date.now() + 86400000) })
+
     router.push('/dashboard')
   }
 
