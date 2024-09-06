@@ -76,8 +76,8 @@ const FormSchema = z.object({
   apiToken: z.string({
     required_error: 'You need to enter the api token provided by the provider'
   }),
-  temperature: z.string(),
-  maxTokens: z.string()
+  temperature: z.number(),
+  maxTokens: z.number()
 })
 
 const Page = () => {
@@ -94,8 +94,8 @@ const Page = () => {
   const [model, setModel] = useState<string>('')
   const [encryptedKey, setEncryptedKey] = useState<string>('')
   const [apiToken, setApiToken] = useState<string>('')
-  const [temperature, setTemperature] = useState<string>('')
-  const [maxTokens, setMaxTokens] = useState<string>('')
+  const [temperature, setTemperature] = useState<number>()
+  const [maxTokens, setMaxTokens] = useState<number>()
 
   const handleProviderChange = (value: string) => {
     const providerKey = value as AIProviderKey
@@ -104,9 +104,21 @@ const Page = () => {
   }
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    const { provider: dataProvider, model: dataModel, apiToken: dataApiToken } = data
+    const {
+      provider: dataProvider,
+      model: dataModel,
+      apiToken: dataApiToken,
+      temperature,
+      maxTokens
+    } = data
     const dataEncryptedKey = encrypt(dataApiToken)
-    const config = { provider: dataProvider, model: dataModel, encrypted_key: dataEncryptedKey }
+    const config = {
+      provider: dataProvider,
+      model: dataModel,
+      encrypted_key: dataEncryptedKey,
+      temperature,
+      maxTokens
+    }
 
     setConfig(config)
 
@@ -114,7 +126,8 @@ const Page = () => {
       description: new Date().toDateString(),
       action: {
         label: 'Undo',
-        onClick: () => setConfig({ provider, model, encrypted_key: encryptedKey })
+        onClick: () =>
+          setConfig({ provider, model, encrypted_key: encryptedKey, temperature, maxTokens })
       }
     })
   }
