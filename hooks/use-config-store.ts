@@ -6,7 +6,7 @@ type Config = {
   model: string
   encrypted_key: string
   temperature: number
-  maxTokens: number
+  maxTokens: string
 }
 
 type State = {
@@ -22,7 +22,7 @@ const useConfigStore = create(
         model: '',
         encrypted_key: '',
         temperature: 0,
-        maxTokens: 0
+        maxTokens: ''
       },
       setConfig: ({ provider, model, encrypted_key, temperature, maxTokens }: Config) =>
         set({
