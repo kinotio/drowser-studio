@@ -272,7 +272,7 @@ const Page = () => {
                             <Input
                               onChange={field.onChange}
                               id='max-tokens'
-                              type='number'
+                              type='text'
                               defaultValue={maxTokens}
                             />
                           </FormControl>
