@@ -68,16 +68,16 @@ export const AI_MODELS = {
 
 const FormSchema = z.object({
   model: z.string({
-    required_error: 'You need to specify a model'
+    required_error: 'You need to specify a model.'
   }),
   provider: z.string({
-    required_error: 'You need to select a api key provider type.'
+    required_error: 'You need to select a provider.'
   }),
   apiToken: z.string({
-    required_error: 'You need to enter the api token provided by the provider'
+    required_error: 'You need to enter the api token provided by the provider.'
   }),
-  temperature: z.number(),
-  maxTokens: z.number()
+  temperature: z.number().optional(),
+  maxTokens: z.string().optional()
 })
 
 const Page = () => {
@@ -88,36 +88,33 @@ const Page = () => {
     resolver: zodResolver(FormSchema)
   })
 
-  const [selectedProvider, setSelectedProvider] = useState<AIProviderKey | ''>('')
+  const [_, setSelectedProvider] = useState<AIProviderKey | ''>('')
   const [availableModels, setAvailableModels] = useState<AIModel[]>([])
+
   const [provider, setProvider] = useState<string>('')
   const [model, setModel] = useState<string>('')
   const [encryptedKey, setEncryptedKey] = useState<string>('')
   const [apiToken, setApiToken] = useState<string>('')
-  const [temperature, setTemperature] = useState<number>()
-  const [maxTokens, setMaxTokens] = useState<number>()
-
-  const handleProviderChange = (value: string) => {
-    const providerKey = value as AIProviderKey
-    setSelectedProvider(providerKey)
-    setAvailableModels(providerKey ? AI_MODELS[providerKey] : [])
-  }
+  const [temperature, setTemperature] = useState<number>(0.5)
+  const [maxTokens, setMaxTokens] = useState<string>('1024')
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
     const {
       provider: dataProvider,
       model: dataModel,
       apiToken: dataApiToken,
-      temperature,
-      maxTokens
+      temperature: dataTemperature,
+      maxTokens: dataMaxTokens
     } = data
+
     const dataEncryptedKey = encrypt(dataApiToken)
+
     const config = {
       provider: dataProvider,
       model: dataModel,
       encrypted_key: dataEncryptedKey,
-      temperature,
-      maxTokens
+      temperature: dataTemperature ?? temperature,
+      maxTokens: dataMaxTokens ?? maxTokens
     }
 
     setConfig(config)
@@ -132,14 +129,19 @@ const Page = () => {
     })
   }
 
+  useEffect(() => {
+    const providerKey = form.watch().provider as AIProviderKey
+    setSelectedProvider(providerKey)
+    setAvailableModels(providerKey ? AI_MODELS[providerKey] : [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [form.watch().provider])
+
   return (
     <div className='flex flex-col gap-6 mb-[100px]'>
       <Form {...form}>
-        <form className='flex flex-col gap-6'>
+        <form className='flex flex-col gap-6' onSubmit={form.handleSubmit(onSubmit)}>
           <div className='flex justify-end'>
-            <Button type='submit' onClick={form.handleSubmit(onSubmit)}>
-              Apply Changes
-            </Button>
+            <Button type='submit'>Apply Changes</Button>
           </div>
           <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6'>
             <Card>
@@ -185,7 +187,7 @@ const Page = () => {
                   render={({ field }) => (
                     <FormItem className='space-y-3'>
                       <FormControl>
-                        <Select onValueChange={handleProviderChange} defaultValue={provider}>
+                        <Select onValueChange={field.onChange} defaultValue={provider}>
                           <SelectTrigger>
                             <SelectValue placeholder='Select AI Provider' />
                           </SelectTrigger>
@@ -239,11 +241,45 @@ const Page = () => {
                 <div className='grid gap-4'>
                   <div className='grid gap-2'>
                     <Label htmlFor='temperature'>Temperature</Label>
-                    <Slider id='temperature' min={0} max={1} step={0.1} defaultValue={[0.5]} />
+                    <FormField
+                      control={form.control}
+                      name='temperature'
+                      render={({ field }) => (
+                        <FormItem className='space-y-3'>
+                          <FormControl>
+                            <Slider
+                              onChange={field.onChange}
+                              id='temperature'
+                              min={0}
+                              max={1}
+                              step={0.1}
+                              defaultValue={[temperature]}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
                   </div>
                   <div className='grid gap-2'>
                     <Label htmlFor='max-tokens'>Max Tokens</Label>
-                    <Input id='max-tokens' type='number' defaultValue={1024} />
+                    <FormField
+                      control={form.control}
+                      name='maxTokens'
+                      render={({ field }) => (
+                        <FormItem className='space-y-3'>
+                          <FormControl>
+                            <Input
+                              onChange={field.onChange}
+                              id='max-tokens'
+                              type='number'
+                              defaultValue={maxTokens}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
                   </div>
                 </div>
               </CardContent>
