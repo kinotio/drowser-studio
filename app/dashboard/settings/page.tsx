@@ -157,7 +157,7 @@ const Page = () => {
         <form className='flex flex-col gap-6' onSubmit={form.handleSubmit(onSubmit)}>
           <div className='flex justify-end gap-2'>
             <AlertDialog>
-              <AlertDialogTrigger>
+              <AlertDialogTrigger asChild>
                 <Button type='button' variant='destructive'>
                   Delete Config
                 </Button>
