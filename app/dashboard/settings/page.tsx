@@ -21,6 +21,17 @@ import { LineChart } from '@/components/ui/metrics/line-chart'
 import { BarChart } from '@/components/ui/metrics/bar-chart'
 import { Button } from '@/components/ui/button'
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger
+} from '@/components/ui/alert-dialog'
 
 import { useStore } from '@/hooks/use-store'
 import { useConfigStore } from '@/hooks/use-config-store'
@@ -129,6 +140,10 @@ const Page = () => {
     })
   }
 
+  function onContinueDelete() {
+    alert('deleted')
+  }
+
   useEffect(() => {
     const providerKey = form.watch().provider as AIProviderKey
     setSelectedProvider(providerKey)
@@ -140,7 +155,28 @@ const Page = () => {
     <div className='flex flex-col gap-6 mb-[100px]'>
       <Form {...form}>
         <form className='flex flex-col gap-6' onSubmit={form.handleSubmit(onSubmit)}>
-          <div className='flex justify-end'>
+          <div className='flex justify-end gap-2'>
+            <AlertDialog>
+              <AlertDialogTrigger>
+                <Button type='button' variant='destructive'>
+                  Delete Config
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This action cannot be undone. This will permanently delete your configuration
+                    and remove your data from our servers.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction onClick={onContinueDelete}>Continue</AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+
             <Button type='submit'>Apply Changes</Button>
           </div>
           <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6'>
