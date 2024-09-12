@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { AlertCircle } from 'lucide-react'
+import { AlertCircle, EyeIcon, EyeOffIcon } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 
 import { z } from 'zod'
@@ -41,6 +41,9 @@ type RegisterFormData = z.infer<typeof registerSchema>
 
 const Page = () => {
   const [isLogin, setIsLogin] = useState(true)
+
+  const [passwordVisibility, setPasswordVisibility] = useState<boolean>(false)
+  const [confirmPasswordVisibility, setconfirmPasswordVisibility] = useState<boolean>(false)
 
   const {
     register,
@@ -124,13 +127,31 @@ const Page = () => {
                   </div>
                   <div className='space-y-2'>
                     <Label htmlFor='password'>Password</Label>
-                    <Input
-                      id='password'
-                      type='password'
-                      placeholder='Enter your password'
-                      {...register('password')}
-                      aria-invalid={errors.password ? 'true' : 'false'}
-                    />
+                    <div className='relative'>
+                      <Input
+                        id='password'
+                        type={passwordVisibility ? 'text' : 'password'}
+                        placeholder='Enter your password'
+                        {...register('password')}
+                        aria-invalid={errors.password ? 'true' : 'false'}
+                        autoComplete='password'
+                      />
+                      <Button
+                        variant='ghost'
+                        size='icon'
+                        type='button'
+                        className='absolute top-1/2 right-3 -translate-y-1/2 h-7 w-7 hover:bg-transparent'
+                        onClick={() => setPasswordVisibility(!passwordVisibility)}
+                      >
+                        {passwordVisibility ? (
+                          <EyeOffIcon className='h-4 w-4' />
+                        ) : (
+                          <EyeIcon className='h-4 w-4' />
+                        )}
+                        <span className='sr-only'>Toggle password visibility</span>
+                      </Button>
+                    </div>
+
                     {errors.password && (
                       <p className='text-red-500 text-sm flex items-center mt-1'>
                         <AlertCircle className='w-4 h-4 mr-2' />
@@ -141,13 +162,31 @@ const Page = () => {
                   {!isLogin && (
                     <div className='space-y-2'>
                       <Label htmlFor='name'>Confirm Password</Label>
-                      <Input
-                        id='confirmPassword'
-                        type='password'
-                        placeholder='Enter your confirm password'
-                        {...register('confirmPassword')}
-                        aria-invalid={errors.confirmPassword ? 'true' : 'false'}
-                      />
+                      <div className='relative'>
+                        <Input
+                          id='confirmPassword'
+                          type={confirmPasswordVisibility ? 'text' : 'password'}
+                          placeholder='Enter your confirm password'
+                          {...register('confirmPassword')}
+                          aria-invalid={errors.confirmPassword ? 'true' : 'false'}
+                          autoComplete='confirmPassword'
+                        />
+                        <Button
+                          variant='ghost'
+                          size='icon'
+                          type='button'
+                          className='absolute top-1/2 right-3 -translate-y-1/2 h-7 w-7 hover:bg-transparent'
+                          onClick={() => setconfirmPasswordVisibility(!confirmPasswordVisibility)}
+                        >
+                          {confirmPasswordVisibility ? (
+                            <EyeOffIcon className='h-4 w-4' />
+                          ) : (
+                            <EyeIcon className='h-4 w-4' />
+                          )}
+                          <span className='sr-only'>Toggle confirm password visibility</span>
+                        </Button>
+                      </div>
+
                       {errors.confirmPassword && (
                         <p className='text-red-500 text-sm flex items-center mt-1'>
                           <AlertCircle className='w-4 h-4 mr-2' />
