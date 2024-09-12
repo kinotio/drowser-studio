@@ -42,6 +42,7 @@ create type public.app_activities_device as enum ('desktop', 'mobile');
 create table public.users (
   id          uuid not null primary key, -- UUID from auth.users
   email       text not null unique,
+  username    text not null unique,
   name        text not null,
   created_at  timestamp with time zone default timezone('utc'::text, now()) not null
 );
@@ -226,8 +227,8 @@ alter table public.activities replica identity full;
 create function public.handle_new_user()
 returns trigger as $$
 begin
-  insert into public.users (id, email, name)
-  values (new.id, new.email, new.raw_user_meta_data ->> 'name');
+  insert into public.users (id, email, username, name)
+  values (new.id, new.email, new.raw_user_meta_data ->> 'username', new.raw_user_meta_data ->> 'name');
 
   insert into public.inboxes_preferences (user_id) values (new.id);
   insert into public.user_roles (user_id, role) values (new.id, 'client');

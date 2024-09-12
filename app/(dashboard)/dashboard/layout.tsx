@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 
-import { Header } from '@/components/dashboard/header'
-import { Sidebar } from '@/components/dashboard/sidebar'
-import { Footer } from '@/components/dashboard/footer'
+import { Header } from '@/components/modules/dashboard/header'
+import { Sidebar } from '@/components/modules/dashboard/sidebar'
+import { Footer } from '@/components/modules/dashboard/footer'
 import { Toaster } from '@/components/ui/sonner'
 
 export const metadata: Metadata = {
