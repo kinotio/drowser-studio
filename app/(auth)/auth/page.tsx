@@ -21,9 +21,8 @@ import {
   CardHeader,
   CardTitle
 } from '@/components/ui/card'
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 
-import { register } from '@/app/(auth)/actions'
+import { login, register } from '@/app/(auth)/actions'
 
 const loginSchema = z.object({
   email: z.string().email({ message: 'Invalid email address' }),
@@ -62,12 +61,13 @@ const Page = () => {
   const onSubmit = async (form: LoginFormData | RegisterFormData) => {
     try {
       if (isLogin) {
-        console.log('login')
+        toast.promise(login(form as LoginFormData), {
+          loading: 'Login'
+        })
       } else {
         toast.promise(register(form as RegisterFormData), {
           loading: 'Registering',
           success: (data) => (data.error ? data.error : ''),
-          error: 'error',
           style: {
             background: 'red',
             color: 'white'
