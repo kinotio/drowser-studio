@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-import { KinotioLogo } from '@/components/logos/kinotio-logo'
+import { KinotioLogo } from '@/components/svg/kinotio-logo'
 
 const Footer = () => {
   return (
@@ -9,7 +9,7 @@ const Footer = () => {
         <div className='flex items-center pl-4 gap-2'>
           <span className='text-sm font-semibold'>By</span>
           <Link href={'https://github.com/kinotio'}>
-          <KinotioLogo width={100} height={50} />
+            <KinotioLogo width={100} height={50} />
           </Link>
         </div>
       </div>

@@ -22,10 +22,10 @@ import { Badge } from '@/components/ui/badge'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import { Button } from '@/components/ui/button'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
-import { DrowserStudioLogo } from '@/components/logos/drowser-studio-logo'
+import { DrowserStudioLogo } from '@/components/svg/drowser-studio-logo'
 
-import { Import } from '@/components/dashboard/import'
-import { Settings } from '@/components/dashboard/settings'
+import { Import } from '@/components/modules/dashboard/import'
+import { Settings } from '@/components/modules/dashboard/settings'
 
 import { APP_VERSION, PATH } from '@/lib/constants'
 
