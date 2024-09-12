@@ -61,7 +61,7 @@ const Page = () => {
   const onSubmit = async (form: LoginFormData | RegisterFormData) => {
     try {
       if (isLogin) {
-        toast.promise(login(form as RegisterFormData), {
+        toast.promise(login(form as LoginFormData), {
           loading: 'Login'
         })
       } else {
