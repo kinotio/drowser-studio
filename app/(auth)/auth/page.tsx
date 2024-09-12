@@ -7,6 +7,8 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 
+import { toast } from 'sonner'
+
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -19,6 +21,9 @@ import {
   CardHeader,
   CardTitle
 } from '@/components/ui/card'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+
+import { register } from '@/app/(auth)/actions'
 
 const loginSchema = z.object({
   email: z.string().email({ message: 'Invalid email address' }),
@@ -36,17 +41,17 @@ const registerSchema = loginSchema
     path: ['confirmPassword']
   })
 
-type LoginFormData = z.infer<typeof loginSchema>
-type RegisterFormData = z.infer<typeof registerSchema>
+export type LoginFormData = z.infer<typeof loginSchema>
+export type RegisterFormData = z.infer<typeof registerSchema>
 
 const Page = () => {
-  const [isLogin, setIsLogin] = useState(true)
+  const [isLogin, setIsLogin] = useState<boolean>(true)
 
   const [passwordVisibility, setPasswordVisibility] = useState<boolean>(false)
   const [confirmPasswordVisibility, setconfirmPasswordVisibility] = useState<boolean>(false)
 
   const {
-    register,
+    register: formRegister,
     handleSubmit,
     formState: { errors },
     reset
@@ -54,11 +59,25 @@ const Page = () => {
     resolver: zodResolver(isLogin ? loginSchema : registerSchema)
   })
 
-  const onSubmit = (data: LoginFormData | RegisterFormData) => {
-    // Here you would typically handle the login or registration logic
-    console.log(isLogin ? 'Logging in...' : 'Registering...', data)
-    // Reset the form after submission
-    reset()
+  const onSubmit = async (form: LoginFormData | RegisterFormData) => {
+    try {
+      if (isLogin) {
+        console.log('login')
+      } else {
+        toast.promise(register(form as RegisterFormData), {
+          loading: 'Registering',
+          success: (data) => (data.error ? data.error : ''),
+          error: 'error',
+          style: {
+            background: 'red',
+            color: 'white'
+          },
+          className: 'class'
+        })
+      }
+    } finally {
+      reset()
+    }
   }
 
   return (
@@ -82,7 +101,7 @@ const Page = () => {
                         <Input
                           id='name'
                           placeholder='Enter your name'
-                          {...register('name')}
+                          {...formRegister('name')}
                           aria-invalid={errors.name ? 'true' : 'false'}
                         />
                         {errors.name && (
@@ -97,7 +116,7 @@ const Page = () => {
                         <Input
                           id='username'
                           placeholder='Choose a username'
-                          {...register('username')}
+                          {...formRegister('username')}
                           aria-invalid={errors.username ? 'true' : 'false'}
                         />
                         {errors.username && (
@@ -115,7 +134,7 @@ const Page = () => {
                       id='email'
                       type='email'
                       placeholder='Enter your email'
-                      {...register('email')}
+                      {...formRegister('email')}
                       aria-invalid={errors.email ? 'true' : 'false'}
                     />
                     {errors.email && (
@@ -132,7 +151,7 @@ const Page = () => {
                         id='password'
                         type={passwordVisibility ? 'text' : 'password'}
                         placeholder='Enter your password'
-                        {...register('password')}
+                        {...formRegister('password')}
                         aria-invalid={errors.password ? 'true' : 'false'}
                         autoComplete='password'
                       />
@@ -167,7 +186,7 @@ const Page = () => {
                           id='confirmPassword'
                           type={confirmPasswordVisibility ? 'text' : 'password'}
                           placeholder='Enter your confirm password'
-                          {...register('confirmPassword')}
+                          {...formRegister('confirmPassword')}
                           aria-invalid={errors.confirmPassword ? 'true' : 'false'}
                           autoComplete='confirmPassword'
                         />
