@@ -8,6 +8,10 @@ export const CASE_STATUS: Record<string, string> = {
 }
 
 export const PATH = {
+  HOME: '/',
+
+  AUTH: '/auth',
+
   DASHBOARD: '/dashboard',
   DASHBOARD_CASES: '/dashboard/cases',
   DASHBOARD_CASE: '/dashboard/cases/:id'

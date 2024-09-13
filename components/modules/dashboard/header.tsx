@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect } from 'react'
 import Link from 'next/link'
 // import { SearchIcon } from 'lucide-react'
 
@@ -7,7 +8,16 @@ import Link from 'next/link'
 import { Badge } from '@/components/ui/badge'
 import { ToggleTheme } from '@/components/shared/toogle-theme'
 
+import { useUser } from '@/hooks/use-user'
+
 const Header = () => {
+  const { user, getUser } = useUser()
+
+  useEffect(() => {
+    getUser()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
     <header className='flex h-14 lg:h-[60px] items-center gap-4 border-b px-6'>
       <div className='flex flex-1 items-center gap-4 md:ml-auto md:gap-2 lg:gap-4'>
@@ -31,6 +41,10 @@ const Header = () => {
 
           <ToggleTheme />
         </div>
+
+        <Badge variant='secondary' className='py-2'>
+          {user?.name}
+        </Badge>
       </div>
     </header>
   )
