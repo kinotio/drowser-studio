@@ -4,7 +4,6 @@ import { redirect } from 'next/navigation'
 import { supabase } from '@/lib/supabase/server'
 
 import { LoginFormData, RegisterFormData } from '@/app/(auth)/auth/page'
-import { revalidatePath } from 'next/cache'
 
 export const login = async (form: LoginFormData) => {
   const { error } = await supabase.auth.signInWithPassword({
@@ -16,7 +15,7 @@ export const login = async (form: LoginFormData) => {
     return { error: `An error occurred while signin: ${error.message}` }
   }
 
-  redirect('/')
+  redirect('/dashboard')
 }
 
 export const register = async (form: RegisterFormData) => {
