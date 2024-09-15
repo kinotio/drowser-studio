@@ -36,7 +36,7 @@ const handleUnauthenticatedClient = (user: User | null, request: NextRequest): N
     (user && request.nextUrl.pathname === PATH.HOME) ||
     (user && request.nextUrl.pathname.startsWith(PATH.AUTH))
   ) {
-    url.pathname = PATH.DASHBOARD
+    url.pathname = PATH.DASHBOARD_REPORTS
     return NextResponse.redirect(url)
   }
 

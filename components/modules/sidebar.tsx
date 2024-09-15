@@ -17,14 +17,12 @@ import { useRouter, usePathname, useParams } from 'next/navigation'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 
-import { PATH } from '@/lib/constants'
-
 import { useStore } from '@/hooks/use-store'
 import { useReportStore } from '@/hooks/use-report-store'
 
 import { TDrowserReport, TContentCase } from '@/lib/definitions'
-
 import { readableTimestamp } from '@/lib/utils'
+import { PATH } from '@/lib/constants'
 
 const Sidebar = () => {
   const report = useStore(useReportStore, (state) => state.content)
@@ -48,16 +46,16 @@ const Sidebar = () => {
     <div className='flex-1 overflow-auto border-r'>
       <nav className='grid items-start px-4 text-sm font-medium'>
         <Link
-          className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${pathName === PATH.DASHBOARD ? 'text-black dark:text-white' : ''}`}
-          href='/dashboard'
+          className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${pathName === PATH.DASHBOARD_REPORT ? 'text-black dark:text-white' : ''}`}
+          href={PATH.DASHBOARD_REPORT}
         >
           <BarChartBigIcon className='h-4 w-4' />
-          Dashboard
+          Overwiew
         </Link>
 
         <Collapsible className='grid'>
           <CollapsibleTrigger
-            className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${pathName.startsWith(PATH.DASHBOARD_CASES) ? 'text-black dark:text-white' : ''}`}
+            className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${pathName.startsWith(PATH.DASHBOARD_REPORT_CASES) ? 'text-black dark:text-white' : ''}`}
           >
             <div className='flex items-center gap-3'>
               <ClipboardListIcon className='h-4 w-4' />
@@ -68,7 +66,7 @@ const Sidebar = () => {
             {uniqueBrowsers.map((browser, idx) => (
               <Collapsible key={idx} className='grid'>
                 <CollapsibleTrigger
-                  className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${pathName.startsWith(PATH.DASHBOARD_CASES) ? 'text-black dark:text-white' : ''}`}
+                  className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${pathName.startsWith(PATH.DASHBOARD_REPORT_CASES) ? 'text-black dark:text-white' : ''}`}
                 >
                   <div className='flex items-center gap-3 capitalize'>
                     <GlobeIcon className='h-4 w-4' />
@@ -81,7 +79,7 @@ const Sidebar = () => {
                       {c.browser === browser ? (
                         <Link
                           key={c.id}
-                          className={`ml-6 flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${pathName.startsWith(PATH.DASHBOARD_CASES) && params.id === c.id ? 'text-black dark:text-white' : ''}`}
+                          className={`ml-6 flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${pathName.startsWith(PATH.DASHBOARD_REPORT_CASES) && params.id === c.id ? 'text-black dark:text-white' : ''}`}
                           href={`/dashboard/cases/${c.id}`}
                         >
                           <ClipboardIcon className='h-4 w-4' />
@@ -99,7 +97,7 @@ const Sidebar = () => {
         <div className='flex'>
           <Link
             className='flex items-center gap-3 rounded-lg px-3 py-2 transition-all'
-            href='/dashboard/visualize'
+            href={PATH.DASHBOARD_REPORT_VISUALIZE}
           >
             <NetworkIcon className='h-4 w-4 -rotate-90' />
             Visualize
@@ -109,7 +107,7 @@ const Sidebar = () => {
         <div className='flex'>
           <Link
             className='pointer-events-none flex items-center gap-3 rounded-lg px-3 py-2 transition-all'
-            href='/dashboard/ia'
+            href={PATH.DASHBOARD_REPORT_AI}
           >
             <FlaskConicalIcon className='h-4 w-4' />
             Drowser AI
@@ -129,7 +127,7 @@ const Sidebar = () => {
         <div className='flex'>
           <Link
             className='pointer-events-none flex items-center gap-3 rounded-lg px-3 py-2 transition-all'
-            href='/dashboard/playground'
+            href={PATH.DASHBOARD_REPORT_PLAYGROUND}
           >
             <PencilIcon className='h-4 w-4' />
             Playground

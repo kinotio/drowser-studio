@@ -12,9 +12,15 @@ export const PATH = {
 
   AUTH: '/auth',
 
-  DASHBOARD: '/dashboard',
-  DASHBOARD_CASES: '/dashboard/cases',
-  DASHBOARD_CASE: '/dashboard/cases/:id',
+  DASHBOARD_REPORTS: '/dashboard/reports',
+
+  DASHBOARD_REPORT: '/dashboard/reports/:reportId',
+  DASHBOARD_REPORT_CASES: '/dashboard/reports/:reportId/cases',
+  DASHBOARD_REPORT_CASE: '/dashboard/reports/:reportId/cases/:caseId',
+  DASHBOARD_REPORT_VISUALIZE: '/dashboard/reports/:reportId/visualize',
+  DASHBOARD_REPORT_PLAYGROUND: '/dashboard/reports/:reportId/playground',
+  DASHBOARD_REPORT_AI: '/dashboard/reports/:reportId/ai',
+
   DASHBOARD_ACTIVITIES: '/dashboard/activities',
   DASHBOARD_SETTINGS: '/dashboard/settings'
 }

@@ -3,16 +3,16 @@
 import { isEmpty } from 'lodash'
 import { BarChartBigIcon } from 'lucide-react'
 
-import { useMetrics } from '@/hooks/use-metrics'
-
 import { CardTitle, CardDescription, CardHeader, CardContent, Card } from '@/components/ui/card'
 import { LineChart } from '@/components/ui/metrics/line-chart'
 import { BarChart } from '@/components/ui/metrics/bar-chart'
 import { LabelledpieChart } from '@/components/ui/metrics/labelled-pie-chart'
 
+import { useMetrics } from '@/hooks/use-metrics'
+
 import { humanizeDuration } from '@/lib/utils'
 
-const Page = () => {
+const Page = ({ params }: { params: { id: string } }) => {
   const { metrics } = useMetrics()
 
   return (
