@@ -5,6 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { toast } from 'sonner'
+import { SettingsIcon } from 'lucide-react'
 
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card'
 import {
@@ -32,6 +33,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger
 } from '@/components/ui/alert-dialog'
+import { Badge } from '@/components/ui/badge'
 
 import { useStore } from '@/hooks/use-store'
 import { useConfigStore } from '@/hooks/use-config-store'
@@ -155,29 +157,36 @@ const Page = () => {
     <div className='container mx-auto flex flex-col gap-6 mb-[100px]'>
       <Form {...form}>
         <form className='flex flex-col gap-6' onSubmit={form.handleSubmit(onSubmit)}>
-          <div className='flex justify-end gap-2'>
-            <AlertDialog>
-              <AlertDialogTrigger asChild>
-                <Button type='button' variant='destructive'>
-                  Delete Config
-                </Button>
-              </AlertDialogTrigger>
-              <AlertDialogContent>
-                <AlertDialogHeader>
-                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                  <AlertDialogDescription>
-                    This action cannot be undone. This will permanently delete your configuration
-                    and remove your data from our servers.
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction onClick={onContinueDelete}>Continue</AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
+          <div className='flex justify-between items-center'>
+            <Badge variant='secondary' className='flex gap-2'>
+              <SettingsIcon size={20} />
+              <span className='text-2xl font-bold'>Settings</span>
+            </Badge>
 
-            <Button type='submit'>Apply Changes</Button>
+            <div className='flex justify-end gap-2'>
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button type='button' variant='destructive'>
+                    Delete Config
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      This action cannot be undone. This will permanently delete your configuration
+                      and remove your data from our servers.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction onClick={onContinueDelete}>Continue</AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+
+              <Button type='submit'>Apply Changes</Button>
+            </div>
           </div>
           <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6'>
             <Card>

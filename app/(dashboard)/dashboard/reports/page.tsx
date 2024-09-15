@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { ChevronDownIcon, LayoutListIcon, LayoutGridIcon } from 'lucide-react'
+import { ChevronDownIcon, LayoutListIcon, LayoutGridIcon, FilesIcon } from 'lucide-react'
 
 import { Card, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -11,6 +11,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
+import { Badge } from '@/components/ui/badge'
 
 type ViewType = 'list' | 'card'
 
@@ -49,7 +50,13 @@ const Page = () => {
   return (
     <div className='container mx-auto p-4'>
       <div className='flex justify-between items-center mb-6'>
-        <h1 className='text-2xl font-bold'>Reports</h1>
+        <div>
+          <Badge variant='secondary' className='flex gap-2'>
+            <FilesIcon size={20} />
+            <span className='text-2xl font-bold'>Reports</span>
+          </Badge>
+        </div>
+
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant='outline'>
