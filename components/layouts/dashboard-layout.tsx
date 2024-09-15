@@ -19,8 +19,7 @@ import {
 import { Badge } from '@/components/ui/badge'
 import { Navigation } from '@/components/shared/navigation'
 
-import { Sidebar } from '@/components/modules/dashboard/sidebar'
-import { Import } from '@/components/modules/dashboard/import'
+import { Import } from '@/components/modules/import'
 
 import { USER_INBOXES_PREFERENCES, PATH, EVENT_TYPES, APP_VERSION } from '@/lib/constants'
 import { MenuType, Event } from '@/lib/definitions'
@@ -36,40 +35,25 @@ const DashboardLayout = ({
   children: React.ReactNode
 }>) => {
   return (
-    <div className='flex h-screen'>
-      <div className='w-1/6 lg:block'>
-        <div className='flex flex-col h-full'>
-          <div className='flex h-[60px] items-center px-6 border-b gap-6'>
-            <Link className='flex items-center font-bold' href='/dashboard'>
+    <div className='flex flex-col h-screen'>
+      <div className='flex flex-col'>
+        <div className='flex h-[60px] items-center px-6 border-b gap-6 justify-between'>
+          <div className='flex gap-4 items-center'>
+            <Link className='flex items-center font-bold' href={PATH.DASHBOARD_REPORTS}>
               <DrowserStudioLogo width={200} height={100} />
             </Link>
             <Navigation menus={menus} />
           </div>
-
-          <Sidebar />
-
-          <div className='flex h-14 lg:h-[60px] border-t flex-col'>
-            <div className='flex h-[60px] py-6 px-6 items-center justify-between'>
-              <Badge>{APP_VERSION}</Badge>
-              <div className='flex items-center gap-2'>
-                <Link href={'https://github.com/kinotio/drowser-studio'}>
-                  <GithubIcon size={20} />
-                </Link>
-              </div>
-            </div>
-          </div>
+          <Header />
         </div>
       </div>
 
-      <div className='flex flex-col w-full'>
-        <Header />
+      <main className='flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6 overflow-auto'>
+        {children}
+      </main>
 
-        <main className='flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6 overflow-auto'>
-          {children}
-        </main>
-        <Footer />
-        <Toaster position='bottom-center' />
-      </div>
+      <Footer />
+      <Toaster position='bottom-center' />
     </div>
   )
 }
@@ -221,8 +205,19 @@ const UserSettings = () => {
 
 const Footer = () => {
   return (
-    <footer className='flex h-14 lg:h-[60px] items-center gap-4 px-6 border-t'>
-      <div className='flex flex-1 items-center justify-end'>
+    <footer className='flex h-14 lg:h-[60px] items-center border-t'>
+      <div className='flex flex-1 items-center justify-between px-4 w-full'>
+        <div className='flex lg:h-[60px] border-t flex-col'>
+          <div className='flex py-6 px-6 items-center justify-between gap-4'>
+            <Badge>{APP_VERSION}</Badge>
+            <div className='flex items-center gap-2'>
+              <Link href={'https://github.com/kinotio/drowser-studio'}>
+                <GithubIcon size={20} />
+              </Link>
+            </div>
+          </div>
+        </div>
+
         <div className='flex items-center pl-4 gap-2'>
           <span className='text-sm font-semibold'>By</span>
           <Link href={'https://github.com/kinotio'}>

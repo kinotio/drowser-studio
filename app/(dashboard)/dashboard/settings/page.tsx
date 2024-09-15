@@ -152,7 +152,7 @@ const Page = () => {
   }, [form.watch().provider])
 
   return (
-    <div className='flex flex-col gap-6 mb-[100px]'>
+    <div className='container mx-auto flex flex-col gap-6 mb-[100px]'>
       <Form {...form}>
         <form className='flex flex-col gap-6' onSubmit={form.handleSubmit(onSubmit)}>
           <div className='flex justify-end gap-2'>
