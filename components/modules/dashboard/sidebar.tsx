@@ -10,8 +10,7 @@ import {
   PencilIcon,
   NetworkIcon,
   GlobeIcon,
-  ConstructionIcon,
-  SettingsIcon
+  ConstructionIcon
 } from 'lucide-react'
 import { useRouter, usePathname, useParams } from 'next/navigation'
 
@@ -146,14 +145,6 @@ const Sidebar = () => {
             </Tooltip>
           </TooltipProvider>
         </div>
-
-        <Link
-          className='flex items-center gap-3 rounded-lg px-3 py-2 transition-all'
-          href='/dashboard/settings'
-        >
-          <SettingsIcon className='h-4 w-4' />
-          Settings
-        </Link>
       </nav>
     </div>
   )
