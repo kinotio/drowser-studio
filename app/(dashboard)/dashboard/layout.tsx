@@ -1,32 +1,38 @@
 import type { Metadata } from 'next'
 
-import { Header } from '@/components/modules/dashboard/header'
-import { Sidebar } from '@/components/modules/dashboard/sidebar'
-import { Footer } from '@/components/modules/dashboard/footer'
-import { Toaster } from '@/components/ui/sonner'
+import { DashboardLayout } from '@/components/layouts/dashboard-layout'
+
+import { PATH } from '@/lib/constants'
+import { MenuType } from '@/lib/definitions'
 
 export const metadata: Metadata = {
   title: 'Drowser Studio | Dashboard'
 }
 
-const Layout = ({
+const menus = [
+  {
+    label: 'Reports',
+    path: PATH.HOME,
+    icon: 'Files'
+  },
+  {
+    label: 'Activities',
+    path: PATH.DASHBOARD_ACTIVITIES,
+    icon: 'Activity'
+  },
+  {
+    label: 'Settings',
+    path: PATH.DASHBOARD_SETTINGS,
+    icon: 'Settings'
+  }
+] as MenuType[]
+
+const SubLayout = ({
   children
 }: Readonly<{
   children: React.ReactNode
 }>) => {
-  return (
-    <div className='flex h-screen'>
-      <Sidebar />
-      <div className='flex flex-col w-full'>
-        <Header />
-        <div className='flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6 overflow-auto'>
-          {children}
-        </div>
-        <Footer />
-        <Toaster position='bottom-center' />
-      </div>
-    </div>
-  )
+  return <DashboardLayout menus={menus}>{children}</DashboardLayout>
 }
 
-export default Layout
+export default SubLayout
