@@ -88,21 +88,7 @@ const Settings = () => {
   const [apiKey, setApiKey] = useState<string>('')
   const [passwordVisibility, setPasswordVisibility] = useState<boolean>(false)
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    const { provider: dataProvider, model: dataModel, apiKey: dataApiKey } = data
-    const dataEncryptedKey = encrypt(dataApiKey)
-    const config = { provider: dataProvider, model: dataModel, encrypted_key: dataEncryptedKey }
-
-    setConfig(config)
-
-    toast('Config has been saved', {
-      description: new Date().toDateString(),
-      action: {
-        label: 'Undo',
-        onClick: () => setConfig({ provider, model, encrypted_key: encryptedKey })
-      }
-    })
-  }
+  function onSubmit(data: z.infer<typeof FormSchema>) {}
 
   useEffect(() => {
     if (config !== undefined) {

@@ -1,6 +1,6 @@
 import { AuthLayout } from '@/components/layouts/auth-layout'
 
-const Layout = ({
+const SubLayout = ({
   children
 }: Readonly<{
   children: React.ReactNode
@@ -8,4 +8,4 @@ const Layout = ({
   return <AuthLayout>{children}</AuthLayout>
 }
 
-export default Layout
+export default SubLayout

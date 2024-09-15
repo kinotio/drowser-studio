@@ -14,8 +14,8 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger
 } from '@/components/ui/alert-dialog'
-import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { Badge } from '@/components/ui/badge'
 
 import { useReportStore } from '@/hooks/use-report-store'
 
@@ -59,9 +59,7 @@ const Import = () => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button size='lg' variant='default' className='my-4 mx-4'>
-          Import Reports <ImportIcon className='ml-2' />
-        </Button>
+        <Badge className='h-8 cursor-pointer'>Import Report</Badge>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
