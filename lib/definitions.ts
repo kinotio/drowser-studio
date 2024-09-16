@@ -6,6 +6,7 @@ export type TDrowserReport = {
   drowser: {
     metrics: Record<string, any>
     cases: TContentCase[]
+    metadata: { [key: string]: any }
   }
 }
 
@@ -106,5 +107,13 @@ export type User = {
 export type Inboxe = {
   id: number
   message: string
+  created_at: string
+}
+
+export type Report = {
+  id: string
+  name: string
+  slug: string
+  metadata: any
   created_at: string
 }
