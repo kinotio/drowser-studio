@@ -63,3 +63,18 @@ export const readableTimestamp = (timestamp: string): string => {
 }
 
 export const getCurrentYear = () => new Date().getFullYear()
+
+export const formatToReadable = (text: string): string => {
+  return text
+    .replace(/_/g, ' ') // Replace underscores with spaces
+    .replace(/\b\w/g, (char) => char.toUpperCase()) // Capitalize the first letter of each word
+}
+
+export function getDeviceType(req: NextApiRequest): 'mobile' | 'desktop' {
+  const userAgent = req.headers['user-agent'] || ''
+  const isMobile = /Mobi|Android|iPhone|iPad|iPod|BlackBerry|Opera Mini|IEMobile|WPDesktop/i.test(
+    userAgent
+  )
+
+  return isMobile ? 'mobile' : 'desktop'
+}
