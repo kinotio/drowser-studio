@@ -44,7 +44,7 @@ const Sidebar = () => {
 
   return (
     <div className='flex-1 overflow-auto border-r'>
-      <nav className='grid items-start px-4 text-sm font-medium'>
+      <nav className='grid items-start px-4 text-sm font-medium mt-2'>
         <Link
           className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${pathName === PATH.DASHBOARD_REPORT ? 'text-black dark:text-white' : ''}`}
           href={PATH.DASHBOARD_REPORT}

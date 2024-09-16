@@ -57,29 +57,32 @@ const Page = () => {
           </Badge>
         </div>
 
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant='outline'>
-              {viewType === 'list' ? (
+        <div className='flex items-center gap-2'>
+          <Button>Import Report</Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant='outline'>
+                {viewType === 'list' ? (
+                  <LayoutListIcon className='mr-2 h-4 w-4' />
+                ) : (
+                  <LayoutGridIcon className='mr-2 h-4 w-4' />
+                )}
+                View
+                <ChevronDownIcon className='ml-2 h-4 w-4' />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem onClick={() => setViewType('list')}>
                 <LayoutListIcon className='mr-2 h-4 w-4' />
-              ) : (
+                List View
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setViewType('card')}>
                 <LayoutGridIcon className='mr-2 h-4 w-4' />
-              )}
-              View
-              <ChevronDownIcon className='ml-2 h-4 w-4' />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuItem onClick={() => setViewType('list')}>
-              <LayoutListIcon className='mr-2 h-4 w-4' />
-              List View
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setViewType('card')}>
-              <LayoutGridIcon className='mr-2 h-4 w-4' />
-              Card View
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+                Card View
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </div>
 
       {viewType === 'list' ? <ListView reports={reports} /> : <CardView reports={reports} />}
