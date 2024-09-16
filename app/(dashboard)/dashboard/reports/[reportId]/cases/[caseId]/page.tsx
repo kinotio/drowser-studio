@@ -28,7 +28,7 @@ import { useStore } from '@/hooks/use-store'
 import { useReportStore } from '@/hooks/use-report-store'
 import { Button } from '@/components/ui/button'
 
-const Page = () => {
+const Page = ({ params }: { params: { caseId: string } }) => {
   const report = useStore(useReportStore, (state) => state.content)
 
   const { id } = useParams()
