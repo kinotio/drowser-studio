@@ -27,6 +27,8 @@ import { MenuType, Event } from '@/lib/definitions'
 import { useUser } from '@/hooks/use-user'
 import { useEvents } from '@/hooks/use-events'
 
+import { logout } from '@/app/(auth)/actions'
+
 const DashboardLayout = ({
   menus,
   children
@@ -168,7 +170,7 @@ const Inboxes = () => {
 const UserSettings = () => {
   const { user, getUser } = useUser()
 
-  const logout = () => alert('logout')
+  const handleLogout = () => logout()
 
   useEffect(() => {
     getUser()
@@ -190,7 +192,7 @@ const UserSettings = () => {
           <Button
             className='flex items-center gap-2 hover:bg-muted/50 px-2 py-1 rounded-md w-full'
             variant='outline'
-            onClick={logout}
+            onClick={handleLogout}
           >
             <LogOutIcon className='h-4 w-4' />
             <span>Logout</span>
