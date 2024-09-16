@@ -67,12 +67,7 @@ const Page = () => {
       } else {
         toast.promise(register(form as RegisterFormData), {
           loading: 'Registering',
-          success: (data) => (data.error ? data.error : ''),
-          style: {
-            background: 'red',
-            color: 'white'
-          },
-          className: 'class'
+          success: (data) => (data.error ? data.error : 'Please log in now')
         })
       }
     } finally {

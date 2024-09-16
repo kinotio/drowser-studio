@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { toast } from 'sonner'
 
 import {
   AlertDialog,
@@ -14,18 +14,13 @@ import {
   AlertDialogTrigger
 } from '@/components/ui/alert-dialog'
 import { Input } from '@/components/ui/input'
-import { Badge } from '@/components/ui/badge'
-
-import { useReportStore } from '@/hooks/use-report-store'
 
 import { TFileContent } from '@/lib/definitions'
 import { isValidFileContent } from '@/lib/utils'
 
+import { saveReport } from '@/app/(dashboard)/actions'
+
 const Import = ({ children }: { children: React.ReactElement }) => {
-  const setReport = useReportStore((state) => state.setReport)
-
-  const router = useRouter()
-
   const [fileContent, setFileContent] = useState<TFileContent | null>(null)
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
@@ -50,9 +45,15 @@ const Import = ({ children }: { children: React.ReactElement }) => {
   }
 
   const handleSubmit = () => {
-    if (!isValidFileContent(fileContent)) return
-    console.log(fileContent)
-    router.push('/dashboard')
+    if (!isValidFileContent(fileContent)) {
+      toast.error('Invalid report format')
+      return
+    }
+
+    toast.promise(saveReport({ metadata: fileContent }), {
+      loading: 'Saving report',
+      success: (data) => (data?.error ? data.error : 'Report imported')
+    })
   }
 
   return (
