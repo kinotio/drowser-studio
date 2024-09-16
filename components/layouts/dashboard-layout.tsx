@@ -63,7 +63,9 @@ const Header = () => {
     <header className='flex h-14 lg:h-[60px] items-center gap-4 border-b px-6'>
       <div className='flex flex-1 items-center gap-4 md:ml-auto md:gap-2 lg:gap-4'>
         <div className='ml-auto flex items-center gap-4'>
-          <Import />
+          <Import>
+            <Badge className='h-8 cursor-pointer'>Import Report</Badge>
+          </Import>
 
           <Badge variant='outline' className='h-8 cursor-pointer'>
             <Link href={'https://github.com/kinotio/drowser-studio/issues'} target='_blank'>

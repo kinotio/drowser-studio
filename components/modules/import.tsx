@@ -1,8 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { ImportIcon } from 'lucide-react'
 
 import {
   AlertDialog,
@@ -22,7 +21,7 @@ import { useReportStore } from '@/hooks/use-report-store'
 import { TFileContent } from '@/lib/definitions'
 import { isValidFileContent } from '@/lib/utils'
 
-const Import = () => {
+const Import = ({ children }: { children: React.ReactElement }) => {
   const setReport = useReportStore((state) => state.setReport)
 
   const router = useRouter()
@@ -52,15 +51,13 @@ const Import = () => {
 
   const handleSubmit = () => {
     if (!isValidFileContent(fileContent)) return
-    setReport(JSON.stringify(fileContent))
+    console.log(fileContent)
     router.push('/dashboard')
   }
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger asChild>
-        <Badge className='h-8 cursor-pointer'>Import Report</Badge>
-      </AlertDialogTrigger>
+      <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Import new reports ?</AlertDialogTitle>

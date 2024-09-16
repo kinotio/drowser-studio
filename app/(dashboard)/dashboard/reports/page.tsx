@@ -13,6 +13,8 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Badge } from '@/components/ui/badge'
 
+import { Import } from '@/components/modules/import'
+
 type ViewType = 'list' | 'card'
 
 type Report = {
@@ -58,7 +60,10 @@ const Page = () => {
         </div>
 
         <div className='flex items-center gap-2'>
-          <Button>Import Report</Button>
+          <Import>
+            <Button>Import Report</Button>
+          </Import>
+
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant='outline'>
