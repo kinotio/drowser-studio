@@ -1,33 +1,47 @@
 import { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
-import { deleteCookie } from 'cookies-next'
+import { isEmpty } from 'lodash'
 
-import { useStore } from '@/hooks/use-store'
-import { useReportStore } from '@/hooks/use-report-store'
-
+import { supabase } from '@/lib/supabase/client'
 import { TDrowserReport } from '@/lib/definitions'
 
-const useReport = () => {
-  const report = useStore(useReportStore, (state) => state.content) as string
-
-  const router = useRouter()
-
-  const [content, setContent] = useState<TDrowserReport>()
+const useReport = ({ reportId }: { reportId: string }) => {
+  const [report, setReport] = useState<TDrowserReport>()
+  const [loading, setLoading] = useState<boolean>()
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    if (report && report !== '') {
+    const fetchReport = async () => {
+      setLoading(true)
+
       try {
-        const parsedJson = JSON.parse(report)
-        setContent(parsedJson)
-      } catch (error) {
-        deleteCookie('active-session')
-        router.push('/')
+        const {
+          data: { user }
+        } = await supabase.auth.getUser()
+
+        const { data, error } = await supabase
+          .from('reports')
+          .select('*')
+          .eq('user_id', user?.id)
+          .eq('id', reportId)
+          .limit(1)
+
+        if (!isEmpty(error)) {
+          setError(error.message)
+          return { error: error.message }
+        }
+
+        const report = data?.[0]
+
+        setReport(report.metadata as TDrowserReport)
+      } finally {
+        setLoading(false)
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [report])
 
-  return { content }
+    fetchReport()
+  }, [reportId])
+
+  return { report, loading, error }
 }
 
 export { useReport }

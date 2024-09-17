@@ -3,13 +3,13 @@ import { isEmpty } from 'lodash'
 
 import { useReport } from '@/hooks/use-report'
 
-const useMetrics = () => {
+const useMetrics = ({ reportId }: { reportId: string }) => {
   const [metrics, setMetrics] = useState<Record<string, any>>()
-  const { content } = useReport()
+  const { report } = useReport({ reportId })
 
   useEffect(() => {
-    if (!isEmpty(content)) setMetrics(content?.drowser?.metrics)
-  }, [content])
+    if (!isEmpty(report)) setMetrics(report?.drowser?.metrics)
+  }, [report])
 
   return { metrics }
 }
