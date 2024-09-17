@@ -37,7 +37,7 @@ const DashboardLayout = ({
   children: React.ReactNode
 }>) => {
   return (
-    <div className='flex flex-col h-screen'>
+    <div className='flex flex-col h-screen fixed top-0 w-full'>
       <div className='flex flex-col'>
         <div className='flex h-[60px] items-center px-6 border-b gap-6 justify-between'>
           <div className='flex gap-4 items-center'>
@@ -207,7 +207,7 @@ const UserSettings = () => {
 
 const Footer = () => {
   return (
-    <footer className='flex h-14 lg:h-[60px] items-center border-t'>
+    <footer className='flex h-14 lg:h-[60px] items-center border-t fixed bottom-0 w-full bg-white dark:bg-slate-950'>
       <div className='flex flex-1 items-center justify-between px-4 w-full'>
         <div className='flex lg:h-[60px] border-t flex-col'>
           <div className='flex py-6 px-6 items-center justify-between gap-4'>
