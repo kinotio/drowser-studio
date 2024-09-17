@@ -19,29 +19,29 @@ import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.share
 import { CardTitle, CardDescription, CardHeader, Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip'
-
-import { humanizeDuration, readableTimestamp } from '@/lib/utils'
-import { CASE_STATUS } from '@/lib/constants'
-import { TContentCase, TContentSubCase } from '@/lib/definitions'
-
-import { useStore } from '@/hooks/use-store'
-import { useReportStore } from '@/hooks/use-report-store'
 import { Button } from '@/components/ui/button'
 
-const Page = ({ params }: { params: { caseId: string } }) => {
-  const report = useStore(useReportStore, (state) => state.content)
+import { humanizeDuration, readableTimestamp } from '@/lib/utils'
+import { CASE_STATUS, PATH } from '@/lib/constants'
+import { TContentCase, TContentSubCase } from '@/lib/definitions'
 
-  const { id } = useParams()
+import { useReport } from '@/hooks/use-report'
+
+const Page = () => {
+  const { reportId, caseId } = useParams()
   const router = useRouter()
+
+  const paramsReportId = reportId as string
+  const { report } = useReport({ reportId: paramsReportId })
 
   const [content, setContent] = useState<TContentCase>()
   const [goupedByStatus, setGoupedByStatus] = useState<any>()
 
   useEffect(() => {
     try {
-      setContent(JSON.parse(report as string)?.drowser.cases.filter((c: any) => c.id === id)[0])
+      setContent(report?.drowser.cases.filter((c: any) => c.id === caseId)[0])
     } catch (error) {}
-  }, [id, report])
+  }, [caseId, report])
 
   useEffect(() => {
     if (!isEmpty(content)) {
@@ -52,7 +52,7 @@ const Page = ({ params }: { params: { caseId: string } }) => {
   return (
     <div className='flex flex-col gap-4 p-4 md:gap-8 md:p-6'>
       <CaseMetrics content={content} goupedByStatus={goupedByStatus} />
-      <CardList content={content} router={router} />
+      <CardList content={content} router={router} paramsReportId={paramsReportId} />
     </div>
   )
 }
@@ -137,10 +137,12 @@ const CaseMetrics = ({
 
 const CardList = ({
   content,
-  router
+  router,
+  paramsReportId
 }: {
   content: TContentCase | undefined
   router: AppRouterInstance
+  paramsReportId: string
 }) => {
   return (
     <>
@@ -194,7 +196,11 @@ const CardList = ({
                             <Button
                               variant='outline'
                               className='text-primary px-4 py-2 rounded-full hover:bg-primary/90 hover:text-white focus:outline-none focus:ring-1 focus:ring-primary'
-                              onClick={() => router.push(`/dashboard/visualize?node=${c.id}`)}
+                              onClick={() =>
+                                router.push(
+                                  `${PATH.DASHBOARD_REPORTS}/${paramsReportId}/visualize?node=${c.id}`
+                                )
+                              }
                             >
                               <NetworkIcon className='h-4 w-4 -rotate-90' />
                             </Button>
