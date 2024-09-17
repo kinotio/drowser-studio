@@ -6,7 +6,7 @@ import { TDrowserReport } from '@/lib/definitions'
 
 const useReport = ({ reportId }: { reportId: string }) => {
   const [report, setReport] = useState<TDrowserReport>()
-  const [loading, setLoading] = useState<boolean>()
+  const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
