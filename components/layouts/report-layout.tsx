@@ -7,7 +7,7 @@ const ReportLayout = ({
 }>) => {
   return (
     <div className='flex h-screen'>
-      <div className='w-1/6 lg:block'>
+      <div className='w-1/4 lg:block'>
         <div className='flex flex-col h-full'>
           <Sidebar />
         </div>

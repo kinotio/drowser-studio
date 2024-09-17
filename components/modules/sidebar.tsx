@@ -1,6 +1,5 @@
 'use client'
 
-import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import {
   ClipboardIcon,
@@ -12,35 +11,26 @@ import {
   GlobeIcon,
   ConstructionIcon
 } from 'lucide-react'
-import { useRouter, usePathname, useParams } from 'next/navigation'
+import { usePathname, useParams } from 'next/navigation'
 
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 
-import { useStore } from '@/hooks/use-store'
-import { useReportStore } from '@/hooks/use-report-store'
-
-import { TDrowserReport, TContentCase } from '@/lib/definitions'
+import { TContentCase } from '@/lib/definitions'
 import { readableTimestamp } from '@/lib/utils'
 import { PATH } from '@/lib/constants'
 
-const Sidebar = () => {
-  const report = useStore(useReportStore, (state) => state.content)
+import { useReport } from '@/hooks/use-report'
 
-  const router = useRouter()
+const Sidebar = () => {
   const pathName = usePathname()
   const params = useParams()
 
-  const [content, setContent] = useState<TDrowserReport>()
+  const paramsReportId = params.reportId as string
+  const { report } = useReport({ reportId: paramsReportId })
 
-  const browserCases = content?.drowser.cases.map((c: TContentCase) => c.browser)
+  const browserCases = report?.drowser.cases.map((c: TContentCase) => c.browser)
   const uniqueBrowsers = Array.from(new Set(browserCases))
-
-  useEffect(() => {
-    try {
-      setContent(JSON.parse(report as string))
-    } catch (error) {}
-  }, [report])
 
   return (
     <div className='flex-1 overflow-auto border-r'>
@@ -74,7 +64,7 @@ const Sidebar = () => {
                   </div>
                 </CollapsibleTrigger>
                 <CollapsibleContent>
-                  {content?.drowser.cases.map((c: TContentCase, idx) => (
+                  {report?.drowser.cases.map((c: TContentCase, idx) => (
                     <div key={idx}>
                       {c.browser === browser ? (
                         <Link

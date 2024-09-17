@@ -8,7 +8,7 @@ import { useRealtime } from '@/hooks/use-realtime'
 
 const useReports = () => {
   const [reports, setReports] = useState<Report[]>([])
-  const [loading, setLoading] = useState<boolean>(true)
+  const [loading, setLoading] = useState<boolean>()
   const [error, setError] = useState<string | null>(null)
 
   const { newData } = useRealtime<Report>({ table: 'reports' })
