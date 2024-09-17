@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef, MutableRefObject } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams, useParams } from 'next/navigation'
 import { Canvas, CanvasPosition, CanvasRef, Node as ReaflowNode } from 'reaflow'
 import {
   ZoomInIcon,
@@ -28,7 +28,7 @@ import { useReport } from '@/hooks/use-report'
 
 import { TContentCase, TContentSubCase } from '@/lib/definitions'
 import { humanizeDuration, readableTimestamp } from '@/lib/utils'
-import { CASE_STATUS } from '@/lib/constants'
+import { CASE_STATUS, PATH } from '@/lib/constants'
 
 type Node = {
   id: string
@@ -46,11 +46,15 @@ type Edge = {
 }
 
 const Page = () => {
-  const ref = useRef<CanvasRef | null>(null)
   const router = useRouter()
   const query = useSearchParams()
+  const params = useParams()
+
+  const ref = useRef<CanvasRef | null>(null)
   const [zoom, setZoom] = useState<number>(0.7)
-  const { content } = useReport()
+
+  const paramsReportId = params.reportId as string
+  const { report } = useReport({ reportId: paramsReportId })
 
   const root: Node = {
     id: 'root',
@@ -58,7 +62,7 @@ const Page = () => {
     data: {
       name: 'Root'
     },
-    nodes: content?.drowser.cases.map((group) => ({
+    nodes: report?.drowser.cases.map((group) => ({
       id: group.id,
       text: group.id,
       data: { ...group },
@@ -118,7 +122,7 @@ const Page = () => {
         edges={edges}
         className='p-0 m-0 border'
         onZoomChange={(z) => setZoom(z)}
-        node={renderNode({ router, nodeIdQuery })}
+        node={renderNode({ router, nodeIdQuery, paramsReportId })}
       />
       <ZoomControls passedRef={ref} nodeIdQuery={nodeIdQuery} clearSeachParams={clearSeachParams} />
     </div>
@@ -127,10 +131,12 @@ const Page = () => {
 
 const renderNode = ({
   router,
-  nodeIdQuery
+  nodeIdQuery,
+  paramsReportId
 }: {
   router: AppRouterInstance
   nodeIdQuery: string | null
+  paramsReportId: string
 }) => {
   return (
     <ReaflowNode>
@@ -144,7 +150,9 @@ const renderNode = ({
                 className={`${!event.node.data.name && event.node.data.name !== 'Root' ? 'cursor-pointer' : ''} ${isNodeQueryId ? 'border-primary border-2 bg-primary' : 'bg-white'} h-full w-full flex items-center justify-center flex-col  rounded-none`}
                 onClick={() => {
                   if (!event.node.data.name && event.node.data.name !== 'Root') {
-                    router.push('/dashboard/cases/' + event.node.id)
+                    router.push(
+                      `${PATH.DASHBOARD_REPORTS}/${paramsReportId}/cases/${event.node.id}`
+                    )
                   }
                 }}
               >
