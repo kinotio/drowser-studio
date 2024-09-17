@@ -62,7 +62,8 @@ const Page = () => {
     try {
       if (isLogin) {
         toast.promise(login(form as LoginFormData), {
-          loading: 'Login'
+          loading: 'Login',
+          success: (data) => (data.error ? data.error : 'Logged in')
         })
       } else {
         toast.promise(register(form as RegisterFormData), {
