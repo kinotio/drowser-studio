@@ -61,7 +61,7 @@ const Import = ({ children }: { children: React.ReactElement }) => {
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Import new reports ?</AlertDialogTitle>
+          <AlertDialogTitle>Import new report ?</AlertDialogTitle>
         </AlertDialogHeader>
 
         <div>
@@ -75,7 +75,7 @@ const Import = ({ children }: { children: React.ReactElement }) => {
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction onClick={handleSubmit}>
-            {isLoading ? 'Loading...' : 'Import Reports'}
+            {isLoading ? 'Loading...' : 'Import Report'}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
