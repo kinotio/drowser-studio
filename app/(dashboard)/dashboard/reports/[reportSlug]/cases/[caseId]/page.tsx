@@ -28,11 +28,11 @@ import { TContentCase, TContentSubCase } from '@/lib/definitions'
 import { useReport } from '@/hooks/use-report'
 
 const Page = () => {
-  const { reportId, caseId } = useParams()
+  const { reportSlug, caseId } = useParams()
   const router = useRouter()
 
-  const paramsReportId = reportId as string
-  const { report } = useReport({ reportId: paramsReportId })
+  const paramsReportSlug = reportSlug as string
+  const { report } = useReport({ reportSlug: paramsReportSlug })
 
   const [content, setContent] = useState<TContentCase>()
   const [goupedByStatus, setGoupedByStatus] = useState<any>()
@@ -52,7 +52,7 @@ const Page = () => {
   return (
     <div className='flex flex-col gap-4 p-4 md:gap-8 md:p-6'>
       <CaseMetrics content={content} goupedByStatus={goupedByStatus} />
-      <CardList content={content} router={router} paramsReportId={paramsReportId} />
+      <CardList content={content} router={router} paramsReportSlug={paramsReportSlug} />
     </div>
   )
 }
@@ -138,11 +138,11 @@ const CaseMetrics = ({
 const CardList = ({
   content,
   router,
-  paramsReportId
+  paramsReportSlug
 }: {
   content: TContentCase | undefined
   router: AppRouterInstance
-  paramsReportId: string
+  paramsReportSlug: string
 }) => {
   return (
     <>
@@ -198,7 +198,7 @@ const CardList = ({
                               className='text-primary px-4 py-2 rounded-full hover:bg-primary/90 hover:text-white focus:outline-none focus:ring-1 focus:ring-primary'
                               onClick={() =>
                                 router.push(
-                                  `${PATH.DASHBOARD_REPORTS}/${paramsReportId}/visualize?node=${c.id}`
+                                  `${PATH.DASHBOARD_REPORTS}/${paramsReportSlug}/visualize?node=${c.id}`
                                 )
                               }
                             >

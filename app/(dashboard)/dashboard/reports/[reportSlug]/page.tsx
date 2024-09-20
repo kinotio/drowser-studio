@@ -12,8 +12,8 @@ import { useMetrics } from '@/hooks/use-metrics'
 
 import { humanizeDuration } from '@/lib/utils'
 
-const Page = ({ params }: { params: { reportId: string } }) => {
-  const { metrics } = useMetrics({ reportId: params.reportId })
+const Page = ({ params }: { params: { reportSlug: string } }) => {
+  const { metrics } = useMetrics({ reportSlug: params.reportSlug })
 
   return (
     <div>

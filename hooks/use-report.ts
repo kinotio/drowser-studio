@@ -4,7 +4,7 @@ import { isEmpty } from 'lodash'
 import { supabase } from '@/lib/supabase/client'
 import { TDrowserReport } from '@/lib/definitions'
 
-const useReport = ({ reportId }: { reportId: string }) => {
+const useReport = ({ reportSlug }: { reportSlug: string }) => {
   const [report, setReport] = useState<TDrowserReport>()
   const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<string | null>(null)
@@ -22,7 +22,7 @@ const useReport = ({ reportId }: { reportId: string }) => {
           .from('reports')
           .select('*')
           .eq('user_id', user?.id)
-          .eq('id', reportId)
+          .eq('slug', reportSlug)
           .limit(1)
 
         if (!isEmpty(error)) {
@@ -32,14 +32,14 @@ const useReport = ({ reportId }: { reportId: string }) => {
 
         const report = data?.[0]
 
-        setReport(report.metadata as TDrowserReport)
+        setReport(report?.metadata as TDrowserReport)
       } finally {
         setLoading(false)
       }
     }
 
     fetchReport()
-  }, [reportId])
+  }, [reportSlug])
 
   return { report, loading, error }
 }
