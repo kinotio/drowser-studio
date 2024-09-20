@@ -26,8 +26,8 @@ const Sidebar = () => {
   const pathName = usePathname()
   const params = useParams()
 
-  const paramsReportId = params.reportId as string
-  const { report } = useReport({ reportId: paramsReportId })
+  const paramsReportSlug = params.reportSlug as string
+  const { report } = useReport({ reportSlug: paramsReportSlug })
 
   const browserCases = report?.drowser.cases.map((c: TContentCase) => c.browser)
   const uniqueBrowsers = Array.from(new Set(browserCases))
@@ -37,7 +37,7 @@ const Sidebar = () => {
       <nav className='grid items-start px-4 text-sm font-medium mt-2'>
         <Link
           className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${pathName === PATH.DASHBOARD_REPORT ? 'text-black dark:text-white' : ''}`}
-          href={`${PATH.DASHBOARD_REPORTS}/${paramsReportId}`}
+          href={`${PATH.DASHBOARD_REPORTS}/${paramsReportSlug}`}
         >
           <BarChartBigIcon className='h-4 w-4' />
           Overwiew
@@ -70,7 +70,7 @@ const Sidebar = () => {
                         <Link
                           key={c.id}
                           className={`ml-6 flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${pathName.startsWith(PATH.DASHBOARD_REPORT_CASES) && params.id === c.id ? 'text-black dark:text-white' : ''}`}
-                          href={`${PATH.DASHBOARD_REPORTS}/${paramsReportId}/cases/${c.id}`}
+                          href={`${PATH.DASHBOARD_REPORTS}/${paramsReportSlug}/cases/${c.id}`}
                         >
                           <ClipboardIcon className='h-4 w-4' />
                           {readableTimestamp(c.time)}
@@ -87,7 +87,7 @@ const Sidebar = () => {
         <div className='flex'>
           <Link
             className='flex items-center gap-3 rounded-lg px-3 py-2 transition-all'
-            href={`${PATH.DASHBOARD_REPORTS}/${paramsReportId}/visualize`}
+            href={`${PATH.DASHBOARD_REPORTS}/${paramsReportSlug}/visualize`}
           >
             <NetworkIcon className='h-4 w-4 -rotate-90' />
             Visualize
@@ -97,7 +97,7 @@ const Sidebar = () => {
         <div className='flex'>
           <Link
             className='pointer-events-none flex items-center gap-3 rounded-lg px-3 py-2 transition-all'
-            href={`${PATH.DASHBOARD_REPORTS}/${paramsReportId}/ai`}
+            href={`${PATH.DASHBOARD_REPORTS}/${paramsReportSlug}/ai`}
           >
             <FlaskConicalIcon className='h-4 w-4' />
             Drowser AI
@@ -117,7 +117,7 @@ const Sidebar = () => {
         <div className='flex'>
           <Link
             className='pointer-events-none flex items-center gap-3 rounded-lg px-3 py-2 transition-all'
-            href={`${PATH.DASHBOARD_REPORTS}/${paramsReportId}/playground`}
+            href={`${PATH.DASHBOARD_REPORTS}/${paramsReportSlug}/playground`}
           >
             <PencilIcon className='h-4 w-4' />
             Playground

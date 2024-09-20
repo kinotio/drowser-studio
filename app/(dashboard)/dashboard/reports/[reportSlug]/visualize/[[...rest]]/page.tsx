@@ -53,8 +53,8 @@ const Page = () => {
   const ref = useRef<CanvasRef | null>(null)
   const [zoom, setZoom] = useState<number>(0.7)
 
-  const paramsReportId = params.reportId as string
-  const { report } = useReport({ reportId: paramsReportId })
+  const paramsReportSlug = params.reportSlug as string
+  const { report } = useReport({ reportSlug: paramsReportSlug })
 
   const root: Node = {
     id: 'root',
@@ -122,7 +122,7 @@ const Page = () => {
         edges={edges}
         className='p-0 m-0 border'
         onZoomChange={(z) => setZoom(z)}
-        node={renderNode({ router, nodeIdQuery, paramsReportId })}
+        node={renderNode({ router, nodeIdQuery, paramsReportSlug })}
       />
       <ZoomControls passedRef={ref} nodeIdQuery={nodeIdQuery} clearSeachParams={clearSeachParams} />
     </div>
@@ -132,11 +132,11 @@ const Page = () => {
 const renderNode = ({
   router,
   nodeIdQuery,
-  paramsReportId
+  paramsReportSlug
 }: {
   router: AppRouterInstance
   nodeIdQuery: string | null
-  paramsReportId: string
+  paramsReportSlug: string
 }) => {
   return (
     <ReaflowNode>
@@ -151,7 +151,7 @@ const renderNode = ({
                 onClick={() => {
                   if (!event.node.data.name && event.node.data.name !== 'Root') {
                     router.push(
-                      `${PATH.DASHBOARD_REPORTS}/${paramsReportId}/cases/${event.node.id}`
+                      `${PATH.DASHBOARD_REPORTS}/${paramsReportSlug}/cases/${event.node.id}`
                     )
                   }
                 }}

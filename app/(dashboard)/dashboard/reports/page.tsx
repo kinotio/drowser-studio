@@ -79,7 +79,7 @@ function ListView({ reports }: { reports: Report[] }) {
   return (
     <ul className='space-y-4 flex flex-col gap-2'>
       {reports.map((report) => (
-        <Link href={`${PATH.DASHBOARD_REPORTS}/${report.id}`} key={report.id}>
+        <Link href={`${PATH.DASHBOARD_REPORTS}/${report.slug}`} key={report.id}>
           <li className='border rounded-lg p-4 hover:bg-gray-50'>
             <h2 className='text-lg font-semibold'>{report.name}</h2>
             <p className='text-sm'>{report.slug}</p>
@@ -97,7 +97,7 @@ function CardView({ reports }: { reports: Report[] }) {
   return (
     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
       {reports.map((report) => (
-        <Link href={`${PATH.DASHBOARD_REPORTS}/${report.id}`} key={report.id}>
+        <Link href={`${PATH.DASHBOARD_REPORTS}/${report.slug}`} key={report.id}>
           <Card>
             <CardHeader>
               <CardTitle>{report.name}</CardTitle>
