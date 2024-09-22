@@ -10,7 +10,7 @@ if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
 
 type HandleNewValueType = (payload: any) => void
 
-const supabase = createServerClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+export const supabase = createServerClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
   cookies: {
     getAll() {
       return cookies().getAll()
@@ -60,5 +60,3 @@ export const onDeleteListener = ({
 export const removeListener = ({ listener }: { listener: any }) => {
   supabase.removeChannel(supabase.channel(listener))
 }
-
-export { supabase }

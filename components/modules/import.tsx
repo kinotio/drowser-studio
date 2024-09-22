@@ -22,7 +22,7 @@ import { saveReport } from '@/app/(dashboard)/actions'
 
 const Import = ({ children }: { children: React.ReactElement }) => {
   const [fileContent, setFileContent] = useState<TFileContent | null>(null)
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(false)
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files) return
@@ -30,17 +30,17 @@ const Import = ({ children }: { children: React.ReactElement }) => {
     const file = event.target.files[0]
     if (!file || file.type !== 'application/json') return
 
-    setIsLoading(true)
+    setLoading(true)
 
     const fileReader = new FileReader()
     fileReader.readAsText(file, 'UTF-8')
     fileReader.onload = (e: ProgressEvent<FileReader>) => {
       setFileContent(JSON.parse(e.target?.result as string))
-      setIsLoading(false)
+      setLoading(false)
     }
     fileReader.onerror = () => {
       console.error('An error occurred while loading file')
-      setIsLoading(false)
+      setLoading(false)
     }
   }
 
@@ -75,7 +75,7 @@ const Import = ({ children }: { children: React.ReactElement }) => {
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction onClick={handleSubmit}>
-            {isLoading ? 'Loading...' : 'Import Report'}
+            {loading ? 'Loading...' : 'Import Report'}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
