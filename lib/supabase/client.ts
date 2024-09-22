@@ -11,7 +11,7 @@ const createClient = () => {
   return createBrowserClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 }
 
-const supabase = createClient()
+export const supabase = createClient()
 
 type HandleNewValueType = (payload: any) => void
 
@@ -48,5 +48,3 @@ export const onDeleteListener = ({
 export const removeListener = ({ listener }: { listener: any }) => {
   supabase.removeChannel(supabase.channel(listener))
 }
-
-export { supabase }
