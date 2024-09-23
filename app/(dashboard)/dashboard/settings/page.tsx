@@ -35,10 +35,9 @@ import {
 } from '@/components/ui/alert-dialog'
 import { Badge } from '@/components/ui/badge'
 
-import { useStore } from '@/hooks/use-store'
-import { useConfigStore } from '@/hooks/use-config-store'
-
 import { encrypt, decrypt } from '@/lib/crypto'
+
+import { saveSettings } from '@/app/(dashboard)/actions'
 
 type AIProviderKey = keyof typeof AI_MODELS
 type AIModel = {
@@ -93,11 +92,10 @@ const FormSchema = z.object({
   maxTokens: z.string().optional()
 })
 
-const Page = () => {
-  const config = useStore(useConfigStore, (state) => state.config)
-  const setConfig = useConfigStore((state) => state.setConfig)
+export type FormSchemaType = z.infer<typeof FormSchema>
 
-  const form = useForm<z.infer<typeof FormSchema>>({
+const Page = () => {
+  const form = useForm<FormSchemaType>({
     resolver: zodResolver(FormSchema)
   })
 
@@ -111,7 +109,7 @@ const Page = () => {
   const [temperature, setTemperature] = useState<number>(0.5)
   const [maxTokens, setMaxTokens] = useState<string>('1024')
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
+  const onSubmit = async (data: z.infer<typeof FormSchema>) => {
     const {
       provider: dataProvider,
       model: dataModel,
@@ -130,19 +128,13 @@ const Page = () => {
       maxTokens: dataMaxTokens ?? maxTokens
     }
 
-    setConfig(config)
-
-    toast('Config has been saved', {
-      description: new Date().toDateString(),
-      action: {
-        label: 'Undo',
-        onClick: () =>
-          setConfig({ provider, model, encrypted_key: encryptedKey, temperature, maxTokens })
-      }
+    toast.promise(saveSettings(config), {
+      loading: 'Saving configurations',
+      success: (data) => (data?.error ? data.error : 'Saved configurations')
     })
   }
 
-  function onContinueDelete() {
+  const onContinueDelete = () => {
     alert('deleted')
   }
 
