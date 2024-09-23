@@ -2,9 +2,18 @@
 
 import { User } from '@supabase/supabase-js'
 import { uniqueNamesGenerator, colors, animals, adjectives } from 'unique-names-generator'
+import { isEmpty } from 'lodash'
 
 import { supabase } from '@/lib/supabase/server'
 import { ActivitiesType, TFileContent } from '@/lib/definitions'
+
+type Config = {
+  provider: string
+  model: string
+  encrypted_key: string
+  temperature: number
+  maxTokens: string
+}
 
 export const saveReport = async ({ metadata }: { metadata: TFileContent }) => {
   const {
@@ -52,6 +61,31 @@ export const saveActivity = async ({
 
   if (error) {
     return { error: `An error occurred while saving activity: ${error.message}` }
+  }
+
+  return data
+}
+
+export const saveSettings = async (config: Config) => {
+  const {
+    data: { user: userFromSession }
+  } = await supabase.auth.getUser()
+
+  const { provider, model, encrypted_key, temperature, maxTokens } = config
+
+  const { data, error } = await supabase.from('ai_configurations').insert({
+    provider,
+    model,
+    temperature,
+    encrypted_key,
+    max_tokens: maxTokens,
+    user_id: userFromSession?.id
+  })
+
+  if (!isEmpty(error)) {
+    return {
+      error: `An error occurred while saving ai configuration: ${error.message}`
+    }
   }
 
   return data
