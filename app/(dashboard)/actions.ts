@@ -90,3 +90,22 @@ export const saveSettings = async (config: Config) => {
 
   return data
 }
+
+export const removeSettings = async () => {
+  const {
+    data: { user: userFromSession }
+  } = await supabase.auth.getUser()
+
+  const { error } = await supabase
+    .from('ai_configurations')
+    .delete()
+    .eq('user_id', userFromSession?.id)
+
+  if (!isEmpty(error)) {
+    return {
+      error: `An error occurred while deleting ai configuration: ${error.message}`
+    }
+  }
+
+  return { success: true }
+}
