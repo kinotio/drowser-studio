@@ -37,7 +37,7 @@ import { Badge } from '@/components/ui/badge'
 
 import { encrypt, decrypt } from '@/lib/crypto'
 
-import { saveSettings } from '@/app/(dashboard)/actions'
+import { saveSettings, removeSettings } from '@/app/(dashboard)/actions'
 
 type AIProviderKey = keyof typeof AI_MODELS
 type AIModel = {
@@ -135,7 +135,10 @@ const Page = () => {
   }
 
   const onContinueDelete = () => {
-    alert('deleted')
+    toast.promise(removeSettings(), {
+      loading: 'Removing configurations',
+      success: (data) => (data?.error ? data.error : 'Removed configurations')
+    })
   }
 
   useEffect(() => {
