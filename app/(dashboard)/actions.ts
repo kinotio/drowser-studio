@@ -66,9 +66,28 @@ export const saveActivity = async ({
   return data
 }
 
+export const getSettings = async () => {
+  const {
+    data: { user }
+  } = await supabase.auth.getUser()
+
+  const { data, error } = await supabase
+    .from('ai_configurations')
+    .select('*')
+    .eq('user_id', user?.id)
+
+  if (!isEmpty(error)) {
+    return {
+      error: `An error occurred while getting ai configuration: ${error.message}`
+    }
+  }
+
+  return data
+}
+
 export const saveSettings = async (config: Config) => {
   const {
-    data: { user: userFromSession }
+    data: { user }
   } = await supabase.auth.getUser()
 
   const { provider, model, encrypted_key, temperature, maxTokens } = config
@@ -79,7 +98,7 @@ export const saveSettings = async (config: Config) => {
     temperature,
     encrypted_key,
     max_tokens: maxTokens,
-    user_id: userFromSession?.id
+    user_id: user?.id
   })
 
   if (!isEmpty(error)) {
@@ -93,13 +112,10 @@ export const saveSettings = async (config: Config) => {
 
 export const removeSettings = async () => {
   const {
-    data: { user: userFromSession }
+    data: { user }
   } = await supabase.auth.getUser()
 
-  const { error } = await supabase
-    .from('ai_configurations')
-    .delete()
-    .eq('user_id', userFromSession?.id)
+  const { error } = await supabase.from('ai_configurations').delete().eq('user_id', user?.id)
 
   if (!isEmpty(error)) {
     return {
