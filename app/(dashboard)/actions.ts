@@ -66,25 +66,6 @@ export const saveActivity = async ({
   return data
 }
 
-export const getSettings = async () => {
-  const {
-    data: { user }
-  } = await supabase.auth.getUser()
-
-  const { data, error } = await supabase
-    .from('ai_configurations')
-    .select('*')
-    .eq('user_id', user?.id)
-
-  if (!isEmpty(error)) {
-    return {
-      error: `An error occurred while getting ai configuration: ${error.message}`
-    }
-  }
-
-  return data
-}
-
 export const saveSettings = async (config: Config) => {
   const {
     data: { user }
