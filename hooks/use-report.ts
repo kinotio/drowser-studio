@@ -4,7 +4,7 @@ import { isEmpty } from 'lodash'
 import { supabase } from '@/lib/supabase/client'
 import { TDrowserReport } from '@/lib/definitions'
 
-const useReport = ({ reportSlug }: { reportSlug: string }) => {
+export const useReport = ({ reportSlug }: { reportSlug: string }) => {
   const [report, setReport] = useState<TDrowserReport>()
   const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<string | null>(null)
@@ -43,5 +43,3 @@ const useReport = ({ reportSlug }: { reportSlug: string }) => {
 
   return { report, loading, error }
 }
-
-export { useReport }

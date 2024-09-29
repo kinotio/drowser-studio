@@ -117,3 +117,12 @@ export type Report = {
   metadata: any
   created_at: string
 }
+
+export type Setting = {
+  id: number
+  provider: string
+  model: string
+  temperature: number
+  max_tokens: string
+  encrypted_key: string
+}
