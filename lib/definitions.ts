@@ -118,8 +118,7 @@ export type Report = {
   created_at: string
 }
 
-export type Setting = {
-  id: number
+export type Settings = {
   provider: string
   model: string
   temperature: number

@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react'
 import { isEmpty } from 'lodash'
 
 import { supabase } from '@/lib/supabase/client'
-import { Setting } from '@/lib/definitions'
+import { Settings } from '@/lib/definitions'
 
 export const useSettings = () => {
-  const [settings, setSettings] = useState<Setting | null>()
+  const [settings, setSettings] = useState<Settings | null>()
   const [error, setError] = useState<string>()
   const [loading, setLoading] = useState<boolean>(false)
 
@@ -20,7 +20,7 @@ export const useSettings = () => {
 
         const { data, error } = await supabase
           .from('ai_configurations')
-          .select('id, provider, model, temperature, max_tokens, encrypted_key')
+          .select('provider, model, temperature, max_tokens, encrypted_key')
           .eq('user_id', user?.id)
           .limit(1)
 
@@ -30,9 +30,9 @@ export const useSettings = () => {
           return { error: msg }
         }
 
-        const setting = data?.[0]
+        const settings = data?.[0]
 
-        setSettings(setting)
+        setSettings(settings)
       } finally {
         setLoading(false)
       }

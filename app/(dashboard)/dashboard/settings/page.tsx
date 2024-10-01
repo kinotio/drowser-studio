@@ -39,6 +39,8 @@ import { encrypt, decrypt } from '@/lib/crypto'
 
 import { saveSettings, removeSettings } from '@/app/(dashboard)/actions'
 
+import { useSettings } from '@/hooks/use-settings'
+
 type AIProviderKey = keyof typeof AI_MODELS
 type AIModel = {
   key: string
@@ -98,6 +100,9 @@ const Page = () => {
   const form = useForm<FormSchemaType>({
     resolver: zodResolver(FormSchema)
   })
+
+  const { settings, loading } = useSettings()
+  console.log(settings)
 
   const [_, setSelectedProvider] = useState<AIProviderKey | ''>('')
   const [availableModels, setAvailableModels] = useState<AIModel[]>([])
