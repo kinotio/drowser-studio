@@ -97,6 +97,35 @@ export const DATA = {
       name: 'Your company'
     }
   ],
+  features: {
+    lib: {},
+    studio: [
+      {
+        title: 'Monitoring',
+        description:
+          'Easily monitor application performance with real-time insights, powered by Drowser’s automated testing capabilities.',
+        icon: 'MonitorCheck'
+      },
+      {
+        title: 'Friendly User Interface',
+        description:
+          'Access and visualize test reports through a user-friendly interface designed for clarity and ease of use.',
+        icon: 'Handshake'
+      },
+      {
+        title: 'Productivity',
+        description:
+          'Improve your workflow by quickly analyzing test results and making informed decisions with streamlined reporting tools.',
+        icon: 'TrendingUp'
+      },
+      {
+        title: 'Graph Visualization',
+        description:
+          'Easily interpret test results with dynamic graph visualizations, turning complex data into clear, actionable insights.',
+        icon: 'Share2'
+      }
+    ]
+  },
   faq: [
     {
       question: 'What is this package used for?',
