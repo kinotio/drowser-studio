@@ -5,16 +5,26 @@ import Link from 'next/link'
 import { icons } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
+import { Icon } from '@/components/ui/icon'
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger
+} from '@/components/ui/accordion'
+
 import FlickeringGrid from '@/components/ui/flickering-grid'
 import BlurFade from '@/components/ui/blur-fade'
 import AnimatedGradientText from '@/components/ui/animated-gradient-text'
-import { Icon } from '@/components/ui/icon'
+
+import { DATA } from '@/data'
 
 const Home = () => {
   return (
     <>
       <Hero />
       <Features />
+      <FAQ />
     </>
   )
 }
@@ -83,33 +93,6 @@ const Hero = () => {
 }
 
 const Features = () => {
-  const features: { title: string; description: string; icon: string }[] = [
-    {
-      title: 'Monitoring',
-      description:
-        'Easily monitor application performance with real-time insights, powered by Drowser’s automated testing capabilities.',
-      icon: 'MonitorCheck'
-    },
-    {
-      title: 'Friendly User Interface',
-      description:
-        'Access and visualize test reports through a user-friendly interface designed for clarity and ease of use.',
-      icon: 'Handshake'
-    },
-    {
-      title: 'Productivity',
-      description:
-        'Improve your workflow by quickly analyzing test results and making informed decisions with streamlined reporting tools.',
-      icon: 'TrendingUp'
-    },
-    {
-      title: 'Graph Visualization',
-      description:
-        'Easily interpret test results with dynamic graph visualizations, turning complex data into clear, actionable insights.',
-      icon: 'Share2'
-    }
-  ]
-
   return (
     <section id='studio' className='w-full py-12 md:py-24 lg:py-32 flex justify-center'>
       <div className='container px-4 md:px-6'>
@@ -126,7 +109,7 @@ const Features = () => {
               </p>
             </div>
             <div className='grid grid-cols-4 gap-4'>
-              {features.map((feature) => (
+              {DATA.features.studio.map((feature) => (
                 <div key={feature.title} className='rounded-lg border bg-background p-4 shadow-sm'>
                   <div className='flex h-12 w-12 items-center justify-center rounded-full bg-primary'>
                     <Icon
@@ -143,6 +126,26 @@ const Features = () => {
           </div>
         </div>
       </div>
+    </section>
+  )
+}
+
+const FAQ = () => {
+  return (
+    <section id='faq' className='container md:w-[700px] py-24 sm:py-32 m-auto'>
+      <div className='text-center mb-8'>
+        <h2 className='text-lg text-primary text-center mb-2 tracking-wider'>FAQS</h2>
+        <h2 className='text-3xl md:text-4xl text-center font-bold'>Common Questions</h2>
+      </div>
+
+      <Accordion type='single' collapsible className='AccordionRoot'>
+        {DATA.faq.map(({ question, answer }, idx) => (
+          <AccordionItem key={idx} value={idx.toString()}>
+            <AccordionTrigger className='text-left'>{question}</AccordionTrigger>
+            <AccordionContent>{answer}</AccordionContent>
+          </AccordionItem>
+        ))}
+      </Accordion>
     </section>
   )
 }
