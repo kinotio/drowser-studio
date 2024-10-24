@@ -93,6 +93,10 @@ const Header = () => {
           >
             <Github size={20} />
           </Link>
+
+          <Link href='/login'>
+            <Button>Log In</Button>
+          </Link>
         </div>
       </div>
     </header>
