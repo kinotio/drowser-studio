@@ -1,10 +1,11 @@
 'use client'
 
 import { useState, SetStateAction, Dispatch } from 'react'
-import { Github, Menu, icons } from 'lucide-react'
+import { Github, Menu, GithubIcon } from 'lucide-react'
 import Link from 'next/link'
-import { SignInButton, SignedOut, ClerkLoaded } from '@clerk/nextjs'
+import { UserButton, ClerkLoaded } from '@clerk/nextjs'
 
+import { Badge } from '@/components/ui/badge'
 import {
   Sheet,
   SheetContent,
@@ -21,12 +22,12 @@ import {
   NavigationMenuList
 } from '@/components/ui/navigation-menu'
 import { Button } from '@/components/ui/button'
-import { Drowser } from '@/components/icons/drowser'
-import { Icon } from '@/components/ui/icon'
+import { DrowserStudio } from '@/components/icons/drowser-studio'
+import { Kinotio } from '@/components/icons/kinotio'
 
 import { ToggleTheme } from '@/components/toogle-theme'
 
-import { getCurrentYear } from '@/lib/utils'
+import { APP_VERSION } from '@/lib/constants'
 
 import { DATA } from '@/data'
 
@@ -42,7 +43,7 @@ const routeList: RouteProps[] = [
   }
 ]
 
-export const RootLayout = ({
+export const StudioLayout = ({
   children
 }: Readonly<{
   children: React.ReactNode
@@ -63,7 +64,7 @@ const Header = () => {
     <header className='w-full top-0 mx-auto sticky z-40 p-4 flex justify-center items-center bg-card border-b border-secondary'>
       <div className='w-[90%] md:w-[70%] lg:w-[75%] lg:max-w-screen-xl flex justify-between items-center'>
         <Link href='/' className='flex items-center'>
-          <Drowser width={100} height={50} />
+          <DrowserStudio width={200} height={50} />
         </Link>
         {/* <!-- Mobile --> */}
         <MobileMenu isOpen={isOpen} setIsOpen={setIsOpen} />
@@ -96,11 +97,7 @@ const Header = () => {
           </Link>
 
           <ClerkLoaded>
-            <SignedOut>
-              <SignInButton>
-                <Button>Sign In</Button>
-              </SignInButton>
-            </SignedOut>
+            <UserButton />
           </ClerkLoaded>
         </div>
       </div>
@@ -110,61 +107,23 @@ const Header = () => {
 
 const Footer = () => {
   return (
-    <footer id='footer' className='bg-card border-t border-secondary w-full flex justify-center'>
-      <div className='container py-24 sm:py-32 p-10 w-full place-items-stretch'>
-        <div className='grid grid-cols-1 sm:grid-cols-4 md:grid-cols-4 xl:grid-cols-6 gap-x-12 gap-y-8 z-50'>
-          <div className='col-span-full xl:col-span-2'>
-            <Link href='/' className='flex font-bold items-center'>
-              <Drowser width={100} height={50} />
+    <footer className='flex h-14 lg:h-[60px] items-center border-t fixed bottom-0 w-full'>
+      <div className='flex flex-1 items-center justify-between px-4 w-full'>
+        <div className='flex flex-col'>
+          <div className='flex px-6 items-center justify-between gap-4'>
+            <Badge>{APP_VERSION}</Badge>
+            <Link href={'https://github.com/kinotio/drowser-studio'}>
+              <GithubIcon size={20} />
             </Link>
-          </div>
-
-          <div className='flex flex-col gap-2'>
-            <h3 className='font-bold text-lg'>Contact</h3>
-            {DATA.footer.contact.map((contact, idx) => (
-              <Link
-                key={idx}
-                href={contact.href}
-                className='flex gap-2 items-center opacity-60 hover:opacity-100'
-              >
-                <Icon name={contact.icon as keyof typeof icons} size={20} />
-                {contact.label}
-              </Link>
-            ))}
-          </div>
-
-          <div className='flex flex-col gap-2'>
-            <h3 className='font-bold text-lg'>Help</h3>
-            {DATA.footer.help.map((help, idx) => (
-              <Link key={idx} href={help.href} className='opacity-60 hover:opacity-100'>
-                {help.name}
-              </Link>
-            ))}
-          </div>
-
-          <div className='flex flex-col gap-2'>
-            <h3 className='font-bold text-lg'>Socials</h3>
-            {DATA.footer.socials.map((social, idx) => (
-              <Link key={idx} href={social.href} className='opacity-60 hover:opacity-100'>
-                {social.label}
-              </Link>
-            ))}
           </div>
         </div>
 
-        <section className='my-6'>
-          <h3>
-            Copyright
-            {` © ${getCurrentYear()} `}
-            <Link
-              target='_blank'
-              href={DATA.social_url.github}
-              className='text-primary transition-all border-primary hover:border-b-2 ml-1'
-            >
-              Developed by Kinotio.
-            </Link>
-          </h3>
-        </section>
+        <div className='flex items-center pl-4 gap-2'>
+          <span className='text-sm font-semibold'>By</span>
+          <Link href={'https://github.com/kinotio'}>
+            <Kinotio width={100} height={50} />
+          </Link>
+        </div>
       </div>
     </footer>
   )
@@ -192,7 +151,7 @@ const MobileMenu = ({
             <SheetHeader className='mb-4 ml-4'>
               <SheetTitle className='flex items-center'>
                 <Link href='/' className='flex items-center'>
-                  <Drowser width={100} height={50} />
+                  <DrowserStudio width={200} height={50} />
                 </Link>
               </SheetTitle>
             </SheetHeader>
