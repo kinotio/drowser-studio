@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export type BrowserKey = 'chrome' | 'firefox' | 'safari' | 'edge'
 
 export type TFileContent = { drowser: { metrics: any; cases: any[] } }
