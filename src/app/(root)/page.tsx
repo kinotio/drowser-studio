@@ -19,7 +19,7 @@ import AnimatedGradientText from '@/components/ui/animated-gradient-text'
 
 import { DATA } from '@/data'
 
-const Home = () => {
+const Page = () => {
   return (
     <>
       <Hero />
@@ -150,4 +150,4 @@ const FAQ = () => {
   )
 }
 
-export default Home
+export default Page
