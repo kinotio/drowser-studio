@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, SetStateAction, Dispatch } from 'react'
-import { Github, Menu, GithubIcon } from 'lucide-react'
+import { Menu, GithubIcon } from 'lucide-react'
 import Link from 'next/link'
 import { UserButton, ClerkLoaded } from '@clerk/nextjs'
 
@@ -15,33 +15,16 @@ import {
   SheetTrigger
 } from '@/components/ui/sheet'
 import { Separator } from '@/components/ui/separator'
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList
-} from '@/components/ui/navigation-menu'
-import { Button } from '@/components/ui/button'
+import { Toaster } from '@/components/ui/sonner'
+
 import { DrowserStudio } from '@/components/icons/drowser-studio'
 import { Kinotio } from '@/components/icons/kinotio'
 
 import { ToggleTheme } from '@/components/toogle-theme'
 
+import { ImportReport } from '@/components/import-report'
+
 import { APP_VERSION } from '@/lib/constants'
-
-import { DATA } from '@/data'
-
-interface RouteProps {
-  href: string
-  label: string
-}
-
-const routeList: RouteProps[] = [
-  {
-    href: 'docs',
-    label: 'Docs'
-  }
-]
 
 export const StudioLayout = ({
   children
@@ -51,8 +34,9 @@ export const StudioLayout = ({
   return (
     <>
       <Header />
-      <main>{children}</main>
+      <main className='flex flex-1 flex-col overflow-auto'>{children}</main>
       <Footer />
+      <Toaster position='bottom-center' />
     </>
   )
 }
@@ -71,30 +55,17 @@ const Header = () => {
 
         {/* <!-- Desktop --> */}
         <div className='hidden lg:flex justify-center items-center gap-4'>
-          <NavigationMenu className='hidden lg:block mx-auto'>
-            <NavigationMenuList>
-              <NavigationMenuItem>
-                {routeList.map(({ href, label }) => (
-                  <NavigationMenuLink key={href} asChild>
-                    <Link href={href} className='text-base px-2'>
-                      {label}
-                    </Link>
-                  </NavigationMenuLink>
-                ))}
-              </NavigationMenuItem>
-            </NavigationMenuList>
-          </NavigationMenu>
+          <ImportReport>
+            <Badge className='h-8 cursor-pointer'>Import Report</Badge>
+          </ImportReport>
+
+          <Badge variant='outline' className='h-8 cursor-pointer'>
+            <Link href={'https://github.com/kinotio/drowser-studio/issues'} target='_blank'>
+              Feedback
+            </Link>
+          </Badge>
 
           <ToggleTheme />
-
-          <Link
-            aria-label='View on GitHub'
-            href={DATA.repo}
-            target='_blank'
-            aria-labelledby='View on GitHub'
-          >
-            <Github size={20} />
-          </Link>
 
           <ClerkLoaded>
             <UserButton />
@@ -155,20 +126,6 @@ const MobileMenu = ({
                 </Link>
               </SheetTitle>
             </SheetHeader>
-
-            <div className='flex flex-col gap-2'>
-              {routeList.map(({ href, label }) => (
-                <Button
-                  key={href}
-                  onClick={() => setIsOpen(false)}
-                  asChild
-                  variant='ghost'
-                  className='justify-start text-base'
-                >
-                  <Link href={href}>{label}</Link>
-                </Button>
-              ))}
-            </div>
           </div>
 
           <SheetFooter className='flex-col sm:flex-col justify-start items-start'>
