@@ -1,0 +1,20 @@
+version: 2
+
+updates:
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+  - package-ecosystem: npm
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+    open-pull-requests-limit: 10
+    versioning-strategy: increase-if-necessary
+    reviewers:
+      - 'andostronaut'
+    assignees:
+      - 'andostronaut'
+    labels:
+      - 'dependencies'
+      - 'pnpm'
