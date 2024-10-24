@@ -1,36 +1,37 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<p align="center">
+  <img
+    src="drowser-studio.png"
+    alt="Drowser Studio"
+    style="width:100%;"
+  />
+</p>
 
-## Getting Started
+![build](https://github.com/kinotio/drowser-studio/workflows/build/badge.svg)
+![license](https://img.shields.io/github/license/kinotio/drowser-studio?color=success)
+![tags](https://ghcr-badge.egpl.dev/kinotio/drowser-studio/tags?trim=major&color=chocolate)
+![latest](https://ghcr-badge.egpl.dev/kinotio/drowser-studio/latest_tag?trim=major&label=latest&color=blueviolet)
+![size](https://ghcr-badge.egpl.dev/kinotio/drowser-studio/size?color=blue)
 
-First, run the development server:
+Drowser Studio is a robust and intuitive app designed to help users track, visualize, and analyze the performance of various tests over time. 📈🚀
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+> This Drowser Studio depend from reports collected from the Drowser Deno Package who is available on Denoland 🦕
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+You can find the `Drowser` lib from Denoland [here](https://deno.land/x/drowser)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Features
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Visualize
 
-## Learn More
+We're still working with this feature to get able to visualize the report data 👁️‍🗨️
 
-To learn more about Next.js, take a look at the following resources:
+### Drowser AI
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+We're still working with this feature to get able to ask the AI to get a prediction and analyse from the test data 🛠️🤖
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Playground
 
-## Deploy on Vercel
+We're still working with this feature to get able to write directly from the platform app instead of using the [Drowser](https://deno.land/x/drowser) Deno lib 🛠️✍🏻
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
