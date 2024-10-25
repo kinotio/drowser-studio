@@ -56,6 +56,12 @@ export const DATA = {
         name: 'Issues'
       }
     ],
+    terms: [
+      {
+        href: '/privacy-policy',
+        name: 'Privacy Policy'
+      }
+    ],
     socials: [
       {
         icon: 'Github',
