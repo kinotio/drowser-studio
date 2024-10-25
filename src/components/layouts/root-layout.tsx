@@ -143,6 +143,15 @@ const Footer = () => {
           </div>
 
           <div className='flex flex-col gap-2'>
+            <h3 className='font-bold text-lg'>Terms</h3>
+            {DATA.footer.terms.map((term, idx) => (
+              <Link key={idx} href={term.href} className='opacity-60 hover:opacity-100'>
+                {term.name}
+              </Link>
+            ))}
+          </div>
+
+          <div className='flex flex-col gap-2'>
             <h3 className='font-bold text-lg'>Socials</h3>
             {DATA.footer.socials.map((social, idx) => (
               <Link key={idx} href={social.href} className='opacity-60 hover:opacity-100'>
