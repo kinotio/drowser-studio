@@ -51,7 +51,7 @@ export const StudioLayout = ({
   return (
     <>
       <Header />
-      <main className='flex flex-1 flex-col overflow-auto'>{children}</main>
+      <main className='flex flex-1 flex-col overflow-auto max-w-[60%] m-auto'>{children}</main>
       <Footer />
       <Toaster position='bottom-center' />
     </>
