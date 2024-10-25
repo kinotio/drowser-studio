@@ -78,7 +78,7 @@ const Header = () => {
 
 const Footer = () => {
   return (
-    <footer className='flex h-14 lg:h-[60px] items-center border-t fixed bottom-0 w-full'>
+    <footer className='flex h-14 lg:h-[60px] items-center border-t fixed bottom-0 w-full bg-white dark:bg-black'>
       <div className='flex flex-1 items-center justify-between px-4 w-full'>
         <div className='flex flex-col'>
           <div className='flex px-6 items-center justify-between gap-4'>
@@ -89,11 +89,17 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className='flex items-center pl-4 gap-2'>
-          <span className='text-sm font-semibold'>By</span>
-          <Link href={'https://github.com/kinotio'}>
-            <Kinotio width={100} height={50} />
+        <div className='flex gap-3 items-center'>
+          <Link href='/studio/privacy-policy' className='text-sm'>
+            Privacy Policy
           </Link>
+
+          <div className='flex items-center pl-4 gap-2'>
+            <span className='text-sm font-semibold'>By</span>
+            <Link href={'https://github.com/kinotio'}>
+              <Kinotio width={100} height={50} />
+            </Link>
+          </div>
         </div>
       </div>
     </footer>
