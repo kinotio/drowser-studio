@@ -16,15 +16,32 @@ import {
 } from '@/components/ui/sheet'
 import { Separator } from '@/components/ui/separator'
 import { Toaster } from '@/components/ui/sonner'
-
 import { DrowserStudio } from '@/components/icons/drowser-studio'
 import { Kinotio } from '@/components/icons/kinotio'
-
 import { ToggleTheme } from '@/components/toogle-theme'
-
 import { ImportReport } from '@/components/import-report'
+import { Navigation } from '@/components/navigation'
 
 import { APP_VERSION } from '@/lib/constants'
+import { MenuType } from '@/lib/definitions'
+
+const menus = [
+  {
+    label: 'Reports',
+    path: '/',
+    icon: 'Files'
+  },
+  {
+    label: 'Activities',
+    path: '/studio/activities',
+    icon: 'Activity'
+  },
+  {
+    label: 'Settings',
+    path: '/studio/settings',
+    icon: 'Settings'
+  }
+] as MenuType[]
 
 export const StudioLayout = ({
   children
@@ -45,11 +62,15 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <header className='w-full top-0 mx-auto sticky z-40 p-4 flex justify-center items-center bg-card border-b border-secondary'>
+    <header className='w-full top-0 mx-auto sticky z-40 p-2 flex justify-center items-center bg-card border-b border-secondary flex-col'>
       <div className='w-[90%] md:w-[70%] lg:w-[75%] lg:max-w-screen-xl flex justify-between items-center'>
-        <Link href='/' className='flex items-center'>
-          <DrowserStudio width={200} height={50} />
-        </Link>
+        <div className='flex items-center justify-between gap-4'>
+          <Link href='/' className='flex items-center gap-4'>
+            <DrowserStudio width={200} height={50} />
+          </Link>
+
+          <Navigation menus={menus} />
+        </div>
         {/* <!-- Mobile --> */}
         <MobileMenu isOpen={isOpen} setIsOpen={setIsOpen} />
 
@@ -90,7 +111,7 @@ const Footer = () => {
         </div>
 
         <div className='flex gap-3 items-center'>
-          <Link href='/studio/privacy-policy' className='text-sm'>
+          <Link href='/studio/privacy-policy' className='text-sm hidden md:block'>
             Privacy Policy
           </Link>
 
@@ -132,11 +153,29 @@ const MobileMenu = ({
                 </Link>
               </SheetTitle>
             </SheetHeader>
+
+            <div className='flex flex-col gap-2'>
+              <ImportReport>
+                <Badge className='h-8 cursor-pointer'>Import Report</Badge>
+              </ImportReport>
+
+              <Badge variant='outline' className='h-8 cursor-pointer'>
+                <Link href={'https://github.com/kinotio/drowser-studio/issues'} target='_blank'>
+                  Feedback
+                </Link>
+              </Badge>
+            </div>
           </div>
 
           <SheetFooter className='flex-col sm:flex-col justify-start items-start'>
             <Separator className='mb-2' />
-            <ToggleTheme />
+            <div className='flex justify-between w-full items-center'>
+              <ToggleTheme />
+
+              <ClerkLoaded>
+                <UserButton />
+              </ClerkLoaded>
+            </div>
           </SheetFooter>
         </SheetContent>
       </Sheet>
