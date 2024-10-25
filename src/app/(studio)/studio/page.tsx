@@ -138,7 +138,7 @@ const Page = () => {
         <CardView reports={reports} isLoading={isLoading} />
       )}
 
-      {!isLoading ? (
+      {!isLoading && reports.length !== 0 ? (
         <PagePagination
           currentPage={currentPage}
           totalPages={totalPages}
