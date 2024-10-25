@@ -51,7 +51,7 @@ export const StudioLayout = ({
   return (
     <>
       <Header />
-      <main className='flex flex-1 flex-col overflow-auto'>{children}</main>
+      <main className='flex flex-1 flex-col overflow-auto max-w-[60%] m-auto'>{children}</main>
       <Footer />
       <Toaster position='bottom-center' />
     </>
@@ -69,7 +69,9 @@ const Header = () => {
             <DrowserStudio width={200} height={50} />
           </Link>
 
-          <Navigation menus={menus} />
+          <div className='hidden lg:flex'>
+            <Navigation menus={menus} />
+          </div>
         </div>
         {/* <!-- Mobile --> */}
         <MobileMenu isOpen={isOpen} setIsOpen={setIsOpen} />
@@ -153,6 +155,10 @@ const MobileMenu = ({
                 </Link>
               </SheetTitle>
             </SheetHeader>
+
+            {/* <div className='ml-6'>
+              <Navigation menus={menus} />
+            </div> */}
 
             <div className='flex flex-col gap-2'>
               <ImportReport>

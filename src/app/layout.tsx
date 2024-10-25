@@ -23,7 +23,7 @@ export default function Layout({
   children: React.ReactNode
 }>) {
   return (
-    <ClerkProvider>
+    <ClerkProvider dynamic>
       <html lang='en'>
         <body className={`${inter.className}`}>
           <ThemeProvider

@@ -2,6 +2,8 @@
 
 import React, { useState } from 'react'
 import { toast } from 'sonner'
+import { uniqueNamesGenerator, colors, animals, adjectives } from 'unique-names-generator'
+import { useAuth } from '@clerk/nextjs'
 
 import {
   AlertDialog,
@@ -14,13 +16,18 @@ import {
   AlertDialogTrigger
 } from '@/components/ui/alert-dialog'
 import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 
 import { TFileContent } from '@/lib/definitions'
 import { isValidFileContent } from '@/lib/utils'
+import { pocketbase } from '@/lib/pocketbase'
 
 export const ImportReport = ({ children }: { children: React.ReactElement }) => {
-  const [fileContent, setFileContent] = useState<TFileContent | null>(null)
   const [loading, setLoading] = useState<boolean>(false)
+  const [reportName, setReportName] = useState<string>()
+  const [reportContent, setReportContent] = useState<TFileContent | null>(null)
+
+  const { userId } = useAuth()
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files) return
@@ -33,7 +40,7 @@ export const ImportReport = ({ children }: { children: React.ReactElement }) => 
     const fileReader = new FileReader()
     fileReader.readAsText(file, 'UTF-8')
     fileReader.onload = (e: ProgressEvent<FileReader>) => {
-      setFileContent(JSON.parse(e.target?.result as string))
+      setReportContent(JSON.parse(e.target?.result as string))
       setLoading(false)
     }
     fileReader.onerror = () => {
@@ -43,15 +50,27 @@ export const ImportReport = ({ children }: { children: React.ReactElement }) => 
   }
 
   const handleSubmit = () => {
-    if (!isValidFileContent(fileContent)) {
+    if (!isValidFileContent(reportContent)) {
       toast.error('Invalid report format')
       return
     }
 
-    // toast.promise(saveReport({ metadata: fileContent }), {
-    //   loading: 'Saving report',
-    //   success: (data) => (data?.error ? data.error : 'Report imported')
-    // })
+    const reportSlug = uniqueNamesGenerator({
+      dictionaries: [colors, animals, adjectives],
+      separator: '-'
+    })
+
+    const data = {
+      name: reportName,
+      slug: reportSlug,
+      metadata: reportContent,
+      user_id: userId
+    }
+
+    toast.promise(pocketbase.collection('reports').create(data), {
+      loading: 'Saving report',
+      success: (data) => (data?.error ? data.error : 'Report imported')
+    })
   }
 
   return (
@@ -62,12 +81,29 @@ export const ImportReport = ({ children }: { children: React.ReactElement }) => 
           <AlertDialogTitle>Import new report ?</AlertDialogTitle>
         </AlertDialogHeader>
 
-        <div>
-          <Input
-            className='flex h-10 w-full rounded-md border border-input px-3 py-2 text-sm'
-            type='file'
-            onChange={handleFileChange}
-          />
+        <div className='flex flex-col gap-4'>
+          <div className='flex flex-col gap-2'>
+            <Label htmlFor='name'>Report Name</Label>
+            <Input
+              id='name'
+              name='name'
+              className='flex h-10 w-full rounded-md border border-input px-3 py-2 text-sm'
+              type='text'
+              onChange={(e) => setReportName(e.target.value)}
+              placeholder='Name of report'
+            />
+          </div>
+
+          <div className='flex flex-col gap-2'>
+            <Label htmlFor='report'>Report File</Label>
+            <Input
+              id='report'
+              name='report'
+              className='flex h-10 w-full rounded-md border border-input px-3 py-2 text-sm'
+              type='file'
+              onChange={handleFileChange}
+            />
+          </div>
         </div>
 
         <AlertDialogFooter>
