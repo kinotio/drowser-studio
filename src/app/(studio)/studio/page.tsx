@@ -60,7 +60,6 @@ const Page = () => {
   const [reports, setReports] = useState<ReportItem[]>([])
   const [viewType, setViewType] = useState<ViewType>('card')
   const [isLoading, setIsLoading] = useState<boolean>(true)
-  /* eslint-disable @typescript-eslint/no-unused-vars */
   const [searchTerm, setSearchTerm] = useState<string>('')
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [total, setTotal] = useState<number>(0)
