@@ -60,8 +60,7 @@ const Page = () => {
   const [reports, setReports] = useState<ReportItem[]>([])
   const [viewType, setViewType] = useState<ViewType>('card')
   const [isLoading, setIsLoading] = useState<boolean>(true)
-  /* eslint-disable @typescript-eslint/no-unused-vars */
-  const [_, setSearchTerm] = useState<string>('')
+  const [searchTerm, setSearchTerm] = useState<string>('')
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [total, setTotal] = useState<number>(0)
 
@@ -74,14 +73,17 @@ const Page = () => {
   useEffect(() => {
     pocketbase
       .collection('reports')
-      .getList(currentPage, itemsPerPage, { requestKey: null, filter: `user_id = "${userId}"` })
+      .getList(currentPage, itemsPerPage, {
+        requestKey: null,
+        filter: `name ~ "${searchTerm}" && user_id = "${userId}"`
+      })
       .then((data) => {
         setReports(data.items as ReportItem[])
         setTotal(data.totalItems)
       })
       .catch((err) => console.log(err))
       .finally(() => setIsLoading(false))
-  }, [userId, currentPage])
+  }, [userId, currentPage, searchTerm])
 
   return (
     <div className='container mx-auto p-4'>
