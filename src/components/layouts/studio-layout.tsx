@@ -113,8 +113,12 @@ const Footer = () => {
         </div>
 
         <div className='flex gap-3 items-center'>
-          <Link href='/studio/privacy-policy' className='text-sm hidden md:block'>
-            Privacy Policy
+          <Link href='/studio/legal/terms' className='text-xs hidden md:block'>
+            Terms
+          </Link>
+
+          <Link href='/studio/legal/privacy' className='text-xs hidden md:block'>
+            Privacy
           </Link>
 
           <div className='flex items-center pl-4 gap-2'>

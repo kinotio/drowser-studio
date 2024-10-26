@@ -56,10 +56,14 @@ export const DATA = {
         name: 'Issues'
       }
     ],
-    terms: [
+    legal: [
       {
-        href: '/privacy-policy',
-        name: 'Privacy Policy'
+        href: '/legal/terms',
+        name: 'Terms'
+      },
+      {
+        href: '/legal/privacy',
+        name: 'Privacy'
       }
     ],
     socials: [
