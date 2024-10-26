@@ -28,7 +28,7 @@ import { MenuType } from '@/lib/definitions'
 const menus = [
   {
     label: 'Reports',
-    path: '/',
+    path: '/studio/reports',
     icon: 'Files'
   },
   {
