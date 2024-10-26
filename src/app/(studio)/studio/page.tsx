@@ -14,7 +14,6 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
 import { Badge } from '@/components/ui/badge'
-import { ImportReport } from '@/components/import-report'
 import { Skeleton } from '@/components/ui/skeleton'
 import {
   Pagination,
@@ -101,10 +100,6 @@ const Page = () => {
             placeholder='Search report...'
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-
-          <ImportReport>
-            <Button>Import Report</Button>
-          </ImportReport>
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
