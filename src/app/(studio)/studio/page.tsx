@@ -200,7 +200,7 @@ const PagePagination = ({
   handlePageChange: (page: number) => void
 }) => {
   return (
-    <Pagination>
+    <Pagination className='my-20'>
       <PaginationContent>
         <PaginationItem>
           {currentPage !== 1 ? (
