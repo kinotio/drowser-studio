@@ -2,6 +2,8 @@ import { Webhook } from 'svix'
 import { headers } from 'next/headers'
 import { WebhookEvent } from '@clerk/nextjs/server'
 
+import { pocketbase } from '@/lib/pocketbase'
+
 export const POST = async (req: Request) => {
   const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET
 
@@ -40,10 +42,35 @@ export const POST = async (req: Request) => {
     })
   }
 
-  const { id } = evt.data
-  const eventType = evt.type
-  console.log(`Webhook with and ID of ${id} and type of ${eventType}`)
-  console.log('Webhook body:', body)
+  if (evt.type === 'user.created') {
+    const activity = {
+      type: 'account_created',
+      description: 'User account created',
+      user_id: evt.data.id,
+      device: 'laptop'
+    }
+    pocketbase.collection('activities').create(activity)
+  }
+
+  if (evt.type === 'session.created') {
+    const activity = {
+      type: 'login',
+      description: 'Account logged in',
+      user_id: evt.data.id,
+      device: 'laptop'
+    }
+    pocketbase.collection('activities').create(activity)
+  }
+
+  if (evt.type === 'session.ended') {
+    const activity = {
+      type: 'logout',
+      description: 'Account logged out',
+      user_id: evt.data.id,
+      device: 'laptop'
+    }
+    pocketbase.collection('activities').create(activity)
+  }
 
   return new Response('', { status: 200 })
 }
