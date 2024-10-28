@@ -63,7 +63,7 @@ export const POST = async (req: Request) => {
     pocketbase.collection('activities').create(activity)
   }
 
-  if (evt.type === 'session.ended') {
+  if (evt.type === 'session.removed') {
     const activity = {
       type: 'logout',
       description: 'Account logged out',
