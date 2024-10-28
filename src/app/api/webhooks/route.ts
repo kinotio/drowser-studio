@@ -3,6 +3,7 @@ import { headers } from 'next/headers'
 import { WebhookEvent } from '@clerk/nextjs/server'
 
 import { pocketbase } from '@/lib/pocketbase'
+import { getDeviceType } from '@/lib/utils'
 
 export const POST = async (req: Request) => {
   const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET
@@ -47,7 +48,7 @@ export const POST = async (req: Request) => {
       type: 'account_created',
       description: 'User account created',
       user_id: evt.data.id,
-      device: 'laptop'
+      device: getDeviceType(req.headers.get('user-agent') || '')
     }
     pocketbase.collection('activities').create(activity)
   }
@@ -57,7 +58,7 @@ export const POST = async (req: Request) => {
       type: 'login',
       description: 'Account logged in',
       user_id: evt.data.id,
-      device: 'laptop'
+      device: getDeviceType(req.headers.get('user-agent') || '')
     }
     pocketbase.collection('activities').create(activity)
   }
@@ -67,7 +68,7 @@ export const POST = async (req: Request) => {
       type: 'logout',
       description: 'Account logged out',
       user_id: evt.data.id,
-      device: 'laptop'
+      device: getDeviceType(req.headers.get('user-agent') || '')
     }
     pocketbase.collection('activities').create(activity)
   }

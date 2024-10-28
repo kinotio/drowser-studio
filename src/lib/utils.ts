@@ -35,3 +35,26 @@ export const readableTimestamp = (timestamp: string): string => {
 
   return readableTimestamp
 }
+
+export const getDeviceType = (userAgent: string) => {
+  const mobileKeywords = [
+    'Android',
+    'iPhone',
+    'iPad',
+    'iPod',
+    'BlackBerry',
+    'Opera Mini',
+    'IEMobile',
+    'Mobile',
+    'Windows Phone'
+  ]
+  const desktopKeywords = ['Macintosh', 'Windows NT', 'Linux']
+
+  if (mobileKeywords.some((keyword) => userAgent.includes(keyword))) {
+    return 'mobile'
+  } else if (desktopKeywords.some((keyword) => userAgent.includes(keyword))) {
+    return 'desktop'
+  } else {
+    return 'unknown'
+  }
+}
