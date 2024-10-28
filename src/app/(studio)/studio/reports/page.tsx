@@ -136,7 +136,7 @@ const Page = () => {
       )}
 
       {!isLoading && reports.length !== 0 ? (
-        <PagePagination
+        <ReportsPagination
           currentPage={currentPage}
           totalPages={totalPages}
           handlePageChange={handlePageChange}
@@ -192,7 +192,7 @@ const CardView = ({ reports, isLoading }: { reports: ReportItem[]; isLoading: bo
   )
 }
 
-const PagePagination = ({
+const ReportsPagination = ({
   currentPage,
   totalPages,
   handlePageChange
