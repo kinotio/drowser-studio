@@ -3,6 +3,7 @@ import '@/app/globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { ClerkProvider } from '@clerk/nextjs'
+import Script from 'next/script'
 
 import { ThemeProvider } from '@/components/theme-provider'
 
@@ -25,6 +26,11 @@ export default function Layout({
   return (
     <ClerkProvider dynamic>
       <html lang='en'>
+        <Script
+          async
+          src='https://umami.kinotio.io/script.js'
+          data-website-id='fde4f1d0-5af3-444a-a568-906dfc44cc1f'
+        />
         <body className={`${inter.className}`}>
           <ThemeProvider
             attribute='class'
