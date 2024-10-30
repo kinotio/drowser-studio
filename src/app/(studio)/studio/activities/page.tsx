@@ -109,8 +109,8 @@ const Page = () => {
   }, [userId, currentPage, searchTerm, filters])
 
   return (
-    <div className='container flex flex-1 flex-col gap-8 p-6 md:gap-12 md:p-12 mb-[100px]'>
-      <section className='w-[900px] mx-auto pb-12 md:pb-16 lg:pb-20 px-4 md:px-6 gap-6 flex flex-col'>
+    <div className='flex flex-1 flex-col gap-8 mb-[100px] w-full py-4 px-3'>
+      <section className='w-full mx-auto pb-12 md:pb-16 lg:pb-20 gap-6 flex flex-col'>
         <div className='grid gap-8'>
           <div className='gap-2 flex items-center'>
             <Badge className='flex gap-2' variant='secondary'>
@@ -293,32 +293,27 @@ const ActivitiesTablePagination = ({
   handlePageChange: (page: number) => void
 }) => {
   return (
-    <>
-      <Pagination className='justify-end'>
-        <PaginationContent>
-          <PaginationItem>
-            {currentPage !== 1 ? (
-              <PaginationPrevious href='#' onClick={() => handlePageChange(currentPage - 1)} />
-            ) : null}
+    <Pagination>
+      <PaginationContent>
+        <PaginationItem>
+          {currentPage !== 1 ? (
+            <PaginationPrevious href='#' onClick={() => handlePageChange(currentPage - 1)} />
+          ) : null}
+        </PaginationItem>
+        {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+          <PaginationItem key={page}>
+            <PaginationLink isActive={page === currentPage} onClick={() => handlePageChange(page)}>
+              {page}
+            </PaginationLink>
           </PaginationItem>
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-            <PaginationItem key={page}>
-              <PaginationLink
-                isActive={page === currentPage}
-                onClick={() => handlePageChange(page)}
-              >
-                {page}
-              </PaginationLink>
-            </PaginationItem>
-          ))}
-          <PaginationItem>
-            {currentPage !== totalPages ? (
-              <PaginationNext onClick={() => handlePageChange(currentPage + 1)} />
-            ) : null}
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
-    </>
+        ))}
+        <PaginationItem>
+          {currentPage !== totalPages ? (
+            <PaginationNext onClick={() => handlePageChange(currentPage + 1)} />
+          ) : null}
+        </PaginationItem>
+      </PaginationContent>
+    </Pagination>
   )
 }
 
