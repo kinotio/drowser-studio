@@ -1,9 +1,10 @@
 'use client'
 
 import { useState, SetStateAction, Dispatch } from 'react'
-import { Menu, GithubIcon } from 'lucide-react'
+import { Menu, GithubIcon, Slash } from 'lucide-react'
 import Link from 'next/link'
 import { UserButton, ClerkLoaded } from '@clerk/nextjs'
+import { usePathname } from 'next/navigation'
 
 import { Badge } from '@/components/ui/badge'
 import {
@@ -21,6 +22,14 @@ import { Kinotio } from '@/components/icons/kinotio'
 import { ToggleTheme } from '@/components/toogle-theme'
 import { ImportReport } from '@/components/import-report'
 import { Navigation } from '@/components/navigation'
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator
+} from '@/components/ui/breadcrumb'
 
 import { APP_VERSION } from '@/lib/constants'
 import { MenuType } from '@/lib/definitions'
@@ -48,10 +57,46 @@ export const StudioLayout = ({
 }: Readonly<{
   children: React.ReactNode
 }>) => {
+  const pathname = usePathname()
+  const pathSegments = pathname.split('/').filter((segment) => segment)
+
   return (
     <>
       <Header />
-      <main className='flex flex-1 flex-col overflow-auto max-w-[60%] m-auto'>{children}</main>
+
+      <main className='flex flex-1 flex-col overflow-auto max-w-[60%] m-auto'>
+        <div className='flex flex-col'>
+          <Breadcrumb className='w-full m-auto px-4 py-6'>
+            <BreadcrumbList>
+              {pathSegments.map((segment, index) => {
+                const href = '/' + pathSegments.slice(0, index + 1).join('/')
+                return (
+                  <>
+                    <BreadcrumbItem key={href}>
+                      {index === pathSegments.length - 1 ? (
+                        <BreadcrumbPage>
+                          {segment.charAt(0).toUpperCase() + segment.slice(1)}{' '}
+                        </BreadcrumbPage>
+                      ) : (
+                        <BreadcrumbLink href={href}>
+                          {segment.charAt(0).toUpperCase() + segment.slice(1)}{' '}
+                        </BreadcrumbLink>
+                      )}
+                    </BreadcrumbItem>
+                    {index < pathSegments.length - 1 && (
+                      <BreadcrumbSeparator>
+                        <Slash />
+                      </BreadcrumbSeparator>
+                    )}
+                  </>
+                )
+              })}
+            </BreadcrumbList>
+          </Breadcrumb>
+
+          {children}
+        </div>
+      </main>
       <Footer />
       <Toaster position='bottom-center' />
     </>
