@@ -8,9 +8,6 @@
 
 ![build](https://github.com/kinotio/drowser-studio/workflows/build/badge.svg)
 ![license](https://img.shields.io/github/license/kinotio/drowser-studio?color=success)
-![tags](https://ghcr-badge.egpl.dev/kinotio/drowser-studio/tags?trim=major&color=chocolate)
-![latest](https://ghcr-badge.egpl.dev/kinotio/drowser-studio/latest_tag?trim=major&label=latest&color=blueviolet)
-![size](https://ghcr-badge.egpl.dev/kinotio/drowser-studio/size?color=blue)
 
 Drowser Studio is a robust and intuitive app designed to help users track, visualize, and analyze the performance of various tests over time. 📈🚀
 
