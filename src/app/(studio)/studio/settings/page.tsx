@@ -63,7 +63,7 @@ const AI_PROVIDERS = [
   { key: 'google', label: 'Google', value: 'google' }
 ]
 
-export const AI_MODELS = {
+const AI_MODELS = {
   openai: [
     { key: 'gpt-4', label: 'GPT-4', value: 'gpt-4' },
     { key: 'gpt-3.5', label: 'GPT-3.5', value: 'gpt-3.5' },
