@@ -136,7 +136,7 @@ const Page = () => {
     defaultValues: {
       provider: settings.provider,
       model: settings.model,
-      apiToken: settings.apiToken,
+      apiToken: settings.encryptedKey,
       temperature: settings.temperature,
       maxTokens: settings.maxTokens
     },
