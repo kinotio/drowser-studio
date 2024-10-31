@@ -71,8 +71,8 @@ export const StudioLayout = ({
               {pathSegments.map((segment, index) => {
                 const href = '/' + pathSegments.slice(0, index + 1).join('/')
                 return (
-                  <>
-                    <BreadcrumbItem key={href}>
+                  <div key={href} className='flex items-center gap-2'>
+                    <BreadcrumbItem>
                       {index === pathSegments.length - 1 ? (
                         <BreadcrumbPage>
                           {segment.charAt(0).toUpperCase() + segment.slice(1)}{' '}
@@ -88,7 +88,7 @@ export const StudioLayout = ({
                         <Slash />
                       </BreadcrumbSeparator>
                     )}
-                  </>
+                  </div>
                 )
               })}
             </BreadcrumbList>

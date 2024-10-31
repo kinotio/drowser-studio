@@ -28,7 +28,7 @@ export default function Layout({
       <html lang='en'>
         <Script
           async
-          src='https://umami.kinotio.io/script.js'
+          src='https://analytics.kinotio.io/script.js'
           data-website-id='fde4f1d0-5af3-444a-a568-906dfc44cc1f'
         />
         <body className={`${inter.className}`}>
