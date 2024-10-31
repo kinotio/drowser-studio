@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
+import { useForm, useWatch } from 'react-hook-form'
 import { z } from 'zod'
 import { toast } from 'sonner'
 import { SettingsIcon } from 'lucide-react'
@@ -108,18 +108,12 @@ const DEFAULT_TEMPERATURE = 0.5
 const DEFAULT_MAX_TOKENS = '1024'
 
 const Page = () => {
-  const { userId } = useAuth()
-
-  const form = useForm<FormSchemaType>({
-    resolver: zodResolver(FormSchema)
-  })
-
   const [, setSelectedProvider] = useState<AIProviderKey | ''>('')
   const [availableModels, setAvailableModels] = useState<AIModel[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(true)
 
   const [settings, setSettings] = useState<{
-    id: string | null
+    id: string
     provider: string
     model: string
     encryptedKey: string
@@ -127,13 +121,31 @@ const Page = () => {
     temperature: number
     maxTokens: string
   }>({
-    id: null,
+    id: '',
     provider: '',
     model: '',
     encryptedKey: '',
     apiToken: '',
     temperature: DEFAULT_TEMPERATURE,
     maxTokens: DEFAULT_MAX_TOKENS
+  })
+
+  const { userId } = useAuth()
+
+  const form = useForm<FormSchemaType>({
+    defaultValues: {
+      provider: settings.provider,
+      model: settings.model,
+      apiToken: settings.apiToken,
+      temperature: settings.temperature,
+      maxTokens: settings.maxTokens
+    },
+    resolver: zodResolver(FormSchema)
+  })
+
+  const provider = useWatch({
+    control: form.control,
+    name: 'provider'
   })
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
@@ -148,7 +160,10 @@ const Page = () => {
       user_id: userId
     }
 
-    toast.promise(pocketbase.collection('settings').create(config), {
+    const collection = pocketbase.collection('settings')
+    const save = settings.id ? collection.update(settings.id, config) : collection.create(config)
+
+    toast.promise(save, {
       loading: 'Saving settings',
       success: (data) =>
         data?.error ? `An error occured while saving settings: ${data.error}` : 'Saved settings'
@@ -156,7 +171,7 @@ const Page = () => {
   }
 
   const onContinueDelete = () => {
-    toast.promise(pocketbase.collection('settings').delete('id'), {
+    toast.promise(pocketbase.collection('settings').delete(settings.id), {
       loading: 'Removing settings',
       success: (data) => (data ? 'Removed settings' : 'An error occured while removing settings')
     })
@@ -176,16 +191,19 @@ const Page = () => {
           maxTokens: data.max_tokens
         })
       )
-      .catch((err) => console.log(err))
+      .catch((err) => toast.error('An error occured while loading settings:', err))
       .finally(() => setIsLoading(false))
   }, [userId])
 
   useEffect(() => {
-    const providerKey = form.watch().provider as AIProviderKey
+    const providerKey = provider as AIProviderKey
     setSelectedProvider(providerKey)
     setAvailableModels(providerKey ? AI_MODELS[providerKey] : [])
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [form.watch().provider])
+  }, [provider])
+
+  useEffect(() => {
+    form.reset(settings)
+  }, [settings, form])
 
   return (
     <div className='mx-auto flex flex-col gap-6 mb-[100px] mt-4 px-3 w-full'>
@@ -194,30 +212,6 @@ const Page = () => {
           <SettingsIcon size={20} />
           <span className='text-xl font-bold'>Settings</span>
         </Badge>
-        <div className='flex justify-end gap-2'>
-          <AlertDialog>
-            <AlertDialogTrigger asChild>
-              <Button type='button' variant='destructive'>
-                Delete Settings
-              </Button>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                <AlertDialogDescription>
-                  This action cannot be undone. This will permanently delete your settings and
-                  remove your data from our servers.
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction onClick={onContinueDelete}>Continue</AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
-
-          <Button type='submit'>Apply Changes</Button>
-        </div>
       </div>
 
       {isLoading ? (
@@ -226,6 +220,30 @@ const Page = () => {
         <div className='w-full flex flex-col gap-6'>
           <Form {...form}>
             <form className='flex flex-col gap-6' onSubmit={form.handleSubmit(onSubmit)}>
+              <div className='flex justify-end gap-2'>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button type='button' variant='destructive'>
+                      Delete Settings
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        This action cannot be undone. This will permanently delete your settings and
+                        remove your data from our servers.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction onClick={onContinueDelete}>Continue</AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+
+                <Button type='submit'>Apply Changes</Button>
+              </div>
               <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6'>
                 <Card>
                   <CardHeader>
