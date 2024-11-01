@@ -57,7 +57,7 @@ export const POST = async (req: Request) => {
     const activity = {
       type: 'login',
       description: 'Account logged in',
-      user_id: evt.data.id,
+      user_id: evt.data.user_id,
       device: getDeviceType(req.headers.get('user-agent') || '')
     }
     pocketbase.collection('activities').create(activity)
@@ -67,7 +67,7 @@ export const POST = async (req: Request) => {
     const activity = {
       type: 'logout',
       description: 'Account logged out',
-      user_id: evt.data.id,
+      user_id: evt.data.user_id,
       device: getDeviceType(req.headers.get('user-agent') || '')
     }
     pocketbase.collection('activities').create(activity)

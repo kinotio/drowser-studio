@@ -23,41 +23,18 @@ import {
   PaginationNext,
   PaginationPrevious
 } from '@/components/ui/pagination'
+import { Input } from '@/components/ui/input'
 
 import { readableTimestamp } from '@/lib/utils'
 import { pocketbase } from '@/lib/pocketbase'
-import { Input } from '@/components/ui/input'
+import { Report } from '@/lib/definitions'
 
 type ViewType = 'list' | 'card'
-
-type ReportMetadata = {
-  drowser?: Record<string, unknown>
-}
-
-type ReportItem = {
-  collectionId: string
-  collectionName: string
-  created: string
-  id: string
-  metadata: ReportMetadata
-  name: string
-  slug: string
-  updated: string
-  user_id: string
-}
-
-// type ReportList = {
-//   items: Array<ReportItem>
-//   page: number
-//   perPage: number
-//   totalItems: number
-//   totalPages: number
-// }
 
 const Page = () => {
   const { userId } = useAuth()
 
-  const [reports, setReports] = useState<ReportItem[]>([])
+  const [reports, setReports] = useState<Report[]>([])
   const [viewType, setViewType] = useState<ViewType>('card')
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [searchTerm, setSearchTerm] = useState<string>('')
@@ -78,7 +55,7 @@ const Page = () => {
         filter: `name ~ "${searchTerm}" && user_id = "${userId}"`
       })
       .then((data) => {
-        setReports(data.items as ReportItem[])
+        setReports(data.items as Report[])
         setTotal(data.totalItems)
       })
       .catch((err) => console.log(err))
@@ -146,7 +123,7 @@ const Page = () => {
   )
 }
 
-const ListView = ({ reports }: { reports: ReportItem[] }) => {
+const ListView = ({ reports }: { reports: Report[] }) => {
   return (
     <ul className='space-y-4 flex flex-col gap-2'>
       {reports.map((report) => (
@@ -162,20 +139,22 @@ const ListView = ({ reports }: { reports: ReportItem[] }) => {
   )
 }
 
-const CardView = ({ reports, isLoading }: { reports: ReportItem[]; isLoading: boolean }) => {
+const CardView = ({ reports, isLoading }: { reports: Report[]; isLoading: boolean }) => {
   return (
     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
       {isLoading ? (
         <>
           {Array.from({ length: 3 }).map((_, idx) => (
-            <Skeleton key={idx} className='h-[150px] w-[340px] rounded-xl' />
+            <Card key={idx}>
+              <Skeleton className='h-[175px] rounded-xl' />
+            </Card>
           ))}
         </>
       ) : (
         <>
           {reports.map((report) => (
             <Link href={`/studio/reports/${report.slug}`} key={report.id}>
-              <Card>
+              <Card className='h-[175px]'>
                 <CardHeader>
                   <CardTitle>{report.name}</CardTitle>
                   <CardDescription>{report.slug}</CardDescription>

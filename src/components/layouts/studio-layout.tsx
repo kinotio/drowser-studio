@@ -64,9 +64,9 @@ export const StudioLayout = ({
     <>
       <Header />
 
-      <main className='flex flex-1 flex-col overflow-auto max-w-[60%] m-auto'>
+      <main className='flex flex-1 flex-col overflow-auto lg:max-w-[60%] m-auto'>
         <div className='flex flex-col'>
-          <Breadcrumb className='w-full m-auto px-4 py-6'>
+          <Breadcrumb className='container w-full m-auto px-4 py-6'>
             <BreadcrumbList>
               {pathSegments.map((segment, index) => {
                 const href = '/' + pathSegments.slice(0, index + 1).join('/')
