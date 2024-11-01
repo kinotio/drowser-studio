@@ -111,18 +111,38 @@ export type Inboxe = {
   created_at: string
 }
 
-export type Report = {
-  id: string
-  name: string
-  slug: string
-  metadata: any
-  created_at: string
-}
-
 export type Settings = {
   provider: string
   model: string
   temperature: number
   max_tokens: string
   encrypted_key: string
+}
+
+export type Report = {
+  collectionId: string
+  collectionName: string
+  created: string
+  id: string
+  metadata: ReportMetadata
+  name: string
+  slug: string
+  updated: string
+  user_id: string
+}
+
+type ReportMetadata = {
+  drowser?: Record<string, unknown>
+}
+
+export type Activity = {
+  collectionId: string
+  collectionName: string
+  created: string
+  description: string
+  device: string
+  id: string
+  type: string
+  updated: string
+  user_id: string
 }

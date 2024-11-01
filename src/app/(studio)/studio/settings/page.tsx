@@ -191,7 +191,7 @@ const Page = () => {
           maxTokens: data.max_tokens
         })
       )
-      .catch((err) => toast.error('An error occured while loading settings:', err))
+      .catch(() => toast.error(`No settings has been found`))
       .finally(() => setIsLoading(false))
   }, [userId])
 

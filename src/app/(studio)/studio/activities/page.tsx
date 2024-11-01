@@ -45,23 +45,13 @@ import { Calendar } from '@/components/ui/calendar'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Icon } from '@/components/ui/icon'
 import { Badge } from '@/components/ui/badge'
+import { Skeleton } from '@/components/ui/skeleton'
 
 import { readableTimestamp, formatToReadable, cn } from '@/lib/utils'
 import { ACTIVITIES_TYPES } from '@/lib/constants'
 
 import { pocketbase } from '@/lib/pocketbase'
-
-interface Activity {
-  collectionId: string
-  collectionName: string
-  created: string // Consider using Date if you want to handle date objects
-  description: string
-  device: string
-  id: string
-  type: string
-  updated: string // Consider using Date if you want to handle date objects
-  user_id: string
-}
+import { Activity } from '@/lib/definitions'
 
 const deviceIcons = {
   desktop: 'Laptop',
@@ -98,7 +88,7 @@ const Page = () => {
       .collection('activities')
       .getList(currentPage, itemsPerPage, {
         requestKey: null,
-        filter: `type ~ "${searchTerm}" || description ~ "${searchTerm}"`
+        filter: `user_id = "${userId}" && type ~ "${searchTerm}" && description ~ "${searchTerm}"`
       })
       .then((data) => {
         setActivities(data.items as Activity[])
@@ -251,8 +241,8 @@ const ActivitiesTable = ({
       <TableHeader>
         <TableRow>
           <TableHead>Activity Type</TableHead>
-          <TableHead>Timestamp</TableHead>
           <TableHead>Description</TableHead>
+          <TableHead>Timestamp</TableHead>
           <TableHead>Device</TableHead>
         </TableRow>
       </TableHeader>
@@ -264,8 +254,8 @@ const ActivitiesTable = ({
             {activities.map((activity) => (
               <TableRow key={activity.id}>
                 <TableCell>{formatToReadable(activity.type)}</TableCell>
-                <TableCell>{readableTimestamp(activity.created)}</TableCell>
                 <TableCell>{activity.description}</TableCell>
+                <TableCell>{readableTimestamp(activity.created)}</TableCell>
                 <TableCell>
                   <Icon
                     name={
@@ -324,7 +314,7 @@ const SkeletonLoader = () => {
         <TableRow key={idx}>
           {Array.from({ length: 4 }).map((_, idx) => (
             <TableCell key={idx}>
-              <div className='h-6 w-full rounded-md bg-muted' />
+              <Skeleton className='h-6 w-full rounded-md bg-muted' />
             </TableCell>
           ))}
         </TableRow>
