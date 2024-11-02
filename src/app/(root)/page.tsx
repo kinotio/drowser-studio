@@ -148,7 +148,7 @@ const Plans = () => {
         </p>
       </div>
       <div className='grid md:grid-cols-3 gap-6'>
-        <Card className='w-[450px] h-[500px] flex flex-col m-auto'>
+        <Card className='w-full flex flex-col'>
           <CardHeader>
             <CardTitle className='text-2xl'>Free Plan</CardTitle>
             <CardDescription>Perfect for individuals and small teams</CardDescription>
@@ -160,7 +160,7 @@ const Plans = () => {
             <ul className='space-y-2'>
               <li className='flex items-center'>
                 <Check className='mr-2 h-4 w-4 text-green-500' />
-                <span>Up to 5 reports</span>
+                <span>Up to 5 users</span>
               </li>
               <li className='flex items-center'>
                 <Check className='mr-2 h-4 w-4 text-green-500' />
@@ -181,19 +181,19 @@ const Plans = () => {
           </CardFooter>
         </Card>
 
-        <Card className='w-[450px] h-[500px] flex flex-col m-auto'>
+        <Card className='w-full flex flex-col'>
           <CardHeader>
             <CardTitle className='text-2xl'>Pro Plan</CardTitle>
             <CardDescription>Ideal for growing businesses</CardDescription>
           </CardHeader>
           <CardContent className='flex-grow'>
             <p className='text-4xl font-bold mb-4'>
-              $10<span className='text-xl font-normal'>/month</span>
+              $29<span className='text-xl font-normal'>/month</span>
             </p>
             <ul className='space-y-2'>
               <li className='flex items-center'>
                 <Check className='mr-2 h-4 w-4 text-green-500' />
-                <span>Up to 20 reports</span>
+                <span>Up to 20 users</span>
               </li>
               <li className='flex items-center'>
                 <Check className='mr-2 h-4 w-4 text-green-500' />
@@ -214,11 +214,11 @@ const Plans = () => {
             </ul>
           </CardContent>
           <CardFooter className='mt-auto'>
-            <Button className='w-full'>Get Started</Button>
+            <Button className='w-full'>Upgrade to Pro</Button>
           </CardFooter>
         </Card>
 
-        <Card className='w-[450px] h-[500px] flex flex-col m-auto'>
+        <Card className='w-full flex flex-col'>
           <CardHeader>
             <CardTitle className='text-2xl'>Enterprise Plan</CardTitle>
             <CardDescription>For large organizations with advanced needs</CardDescription>
@@ -234,7 +234,7 @@ const Plans = () => {
               </li>
               <li className='flex items-center'>
                 <Check className='mr-2 h-4 w-4 text-green-500' />
-                <span>Advanced features</span>
+                <span>All features</span>
               </li>
               <li className='flex items-center'>
                 <Check className='mr-2 h-4 w-4 text-green-500' />
