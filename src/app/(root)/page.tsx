@@ -2,7 +2,7 @@
 
 import { ChevronRight, Github } from 'lucide-react'
 import Link from 'next/link'
-import { icons } from 'lucide-react'
+import { icons, Check } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { Icon } from '@/components/ui/icon'
@@ -12,10 +12,17 @@ import {
   AccordionItem,
   AccordionTrigger
 } from '@/components/ui/accordion'
-
 import FlickeringGrid from '@/components/ui/flickering-grid'
 import BlurFade from '@/components/ui/blur-fade'
 import AnimatedGradientText from '@/components/ui/animated-gradient-text'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle
+} from '@/components/ui/card'
 
 import { DATA } from '@/data'
 
@@ -24,6 +31,7 @@ const Page = () => {
     <>
       <Hero />
       <Features />
+      <Plans />
       <FAQ />
     </>
   )
@@ -125,6 +133,126 @@ const Features = () => {
             </div>
           </div>
         </div>
+      </div>
+    </section>
+  )
+}
+
+const Plans = () => {
+  return (
+    <section className='container mx-auto py-10'>
+      <h2 className='text-3xl font-bold text-center mb-10'>Choose Your Plan</h2>
+      <div className='grid md:grid-cols-3 gap-6'>
+        <Card className='w-[450px] h-[500px] flex flex-col m-auto'>
+          <CardHeader>
+            <CardTitle className='text-2xl'>Free Plan</CardTitle>
+            <CardDescription>Perfect for individuals and small teams</CardDescription>
+          </CardHeader>
+          <CardContent className='flex-grow'>
+            <p className='text-4xl font-bold mb-4'>
+              $0<span className='text-xl font-normal'>/month</span>
+            </p>
+            <ul className='space-y-2'>
+              <li className='flex items-center'>
+                <Check className='mr-2 h-4 w-4 text-green-500' />
+                <span>Up to 5 reports</span>
+              </li>
+              <li className='flex items-center'>
+                <Check className='mr-2 h-4 w-4 text-green-500' />
+                <span>Basic features</span>
+              </li>
+              <li className='flex items-center'>
+                <Check className='mr-2 h-4 w-4 text-green-500' />
+                <span>1GB storage</span>
+              </li>
+              <li className='flex items-center'>
+                <Check className='mr-2 h-4 w-4 text-green-500' />
+                <span>Community support</span>
+              </li>
+            </ul>
+          </CardContent>
+          <CardFooter className='mt-auto'>
+            <Button className='w-full'>Get Started</Button>
+          </CardFooter>
+        </Card>
+
+        <Card className='w-[450px] h-[500px] flex flex-col m-auto'>
+          <CardHeader>
+            <CardTitle className='text-2xl'>Pro Plan</CardTitle>
+            <CardDescription>Ideal for growing businesses</CardDescription>
+          </CardHeader>
+          <CardContent className='flex-grow'>
+            <p className='text-4xl font-bold mb-4'>
+              $10<span className='text-xl font-normal'>/month</span>
+            </p>
+            <ul className='space-y-2'>
+              <li className='flex items-center'>
+                <Check className='mr-2 h-4 w-4 text-green-500' />
+                <span>Up to 20 reports</span>
+              </li>
+              <li className='flex items-center'>
+                <Check className='mr-2 h-4 w-4 text-green-500' />
+                <span>Advanced features</span>
+              </li>
+              <li className='flex items-center'>
+                <Check className='mr-2 h-4 w-4 text-green-500' />
+                <span>10GB storage</span>
+              </li>
+              <li className='flex items-center'>
+                <Check className='mr-2 h-4 w-4 text-green-500' />
+                <span>Priority email support</span>
+              </li>
+              <li className='flex items-center'>
+                <Check className='mr-2 h-4 w-4 text-green-500' />
+                <span>Analytics dashboard</span>
+              </li>
+            </ul>
+          </CardContent>
+          <CardFooter className='mt-auto'>
+            <Button className='w-full'>Get Started</Button>
+          </CardFooter>
+        </Card>
+
+        <Card className='w-[450px] h-[500px] flex flex-col m-auto'>
+          <CardHeader>
+            <CardTitle className='text-2xl'>Enterprise Plan</CardTitle>
+            <CardDescription>For large organizations with advanced needs</CardDescription>
+          </CardHeader>
+          <CardContent className='flex-grow'>
+            <p className='text-4xl font-bold mb-4'>
+              Custom<span className='text-xl font-normal'> pricing</span>
+            </p>
+            <ul className='space-y-2'>
+              <li className='flex items-center'>
+                <Check className='mr-2 h-4 w-4 text-green-500' />
+                <span>Unlimited users</span>
+              </li>
+              <li className='flex items-center'>
+                <Check className='mr-2 h-4 w-4 text-green-500' />
+                <span>Advanced features</span>
+              </li>
+              <li className='flex items-center'>
+                <Check className='mr-2 h-4 w-4 text-green-500' />
+                <span>Unlimited storage</span>
+              </li>
+              <li className='flex items-center'>
+                <Check className='mr-2 h-4 w-4 text-green-500' />
+                <span>24/7 Priority support</span>
+              </li>
+              <li className='flex items-center'>
+                <Check className='mr-2 h-4 w-4 text-green-500' />
+                <span>Custom integrations</span>
+              </li>
+              <li className='flex items-center'>
+                <Check className='mr-2 h-4 w-4 text-green-500' />
+                <span>Dedicated account manager</span>
+              </li>
+            </ul>
+          </CardContent>
+          <CardFooter className='mt-auto'>
+            <Button className='w-full'>Contact Sales</Button>
+          </CardFooter>
+        </Card>
       </div>
     </section>
   )
