@@ -141,7 +141,12 @@ const Features = () => {
 const Plans = () => {
   return (
     <section className='container mx-auto py-10'>
-      <h2 className='text-3xl font-bold text-center mb-10'>Choose Your Plan</h2>
+      <div className='text-center mb-10'>
+        <h2 className='text-3xl font-bold mb-2'>Flexible Plans for Every Need</h2>
+        <p className='text-xl text-muted-foreground'>
+          Choose the perfect plan to power your projects. Scale as you grow.
+        </p>
+      </div>
       <div className='grid md:grid-cols-3 gap-6'>
         <Card className='w-[450px] h-[500px] flex flex-col m-auto'>
           <CardHeader>
