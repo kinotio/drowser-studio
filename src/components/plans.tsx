@@ -46,7 +46,9 @@ export const Plans = () => {
   return (
     <section className='container mx-auto py-10'>
       <div className='text-center mb-10'>
-        <h2 className='text-3xl font-bold mb-2'>Flexible Plans for Every Need</h2>
+        <h2 className='text-3xl font-bold mb-2' id='plans'>
+          Flexible Plans for Every Need
+        </h2>
         <p className='text-xl text-muted-foreground'>
           Choose the perfect plan to power your projects. Scale as you grow.
         </p>

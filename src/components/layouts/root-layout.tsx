@@ -37,6 +37,10 @@ interface RouteProps {
 
 const routeList: RouteProps[] = [
   {
+    href: '#plans',
+    label: 'Pricing'
+  },
+  {
     href: 'docs',
     label: 'Docs'
   }
