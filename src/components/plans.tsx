@@ -88,9 +88,15 @@ export const Plans = () => {
                     ))}
                   </ul>
                 </CardContent>
-                <CardFooter className='mt-auto'>
-                  <Button className='w-full'>Get Started</Button>
-                </CardFooter>
+                {plan.type === 'entreprise' ? (
+                  <CardFooter className='mt-auto'>
+                    <Button className='w-full'>Contact Sales</Button>
+                  </CardFooter>
+                ) : (
+                  <CardFooter className='mt-auto'>
+                    <Button className='w-full'>Get Started</Button>
+                  </CardFooter>
+                )}
               </Card>
             ))}
           </>
