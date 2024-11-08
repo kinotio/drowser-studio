@@ -99,7 +99,7 @@ const Page = () => {
                   <Card key={report.id} className='flex flex-col justify-between'>
                     <CardHeader>
                       <CardTitle className='text-lg'>{report.name}</CardTitle>
-                      <CardDescription>{report.created}</CardDescription>
+                      <CardDescription>{readableTimestamp(report.created)}</CardDescription>
                     </CardHeader>
                   </Card>
                 ))}
