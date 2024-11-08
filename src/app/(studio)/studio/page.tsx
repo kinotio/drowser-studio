@@ -18,6 +18,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 
 import { pocketbase } from '@/lib/pocketbase'
 import { Report, Activity } from '@/lib/definitions'
+import { readableTimestamp } from '@/lib/utils'
 
 const data = [
   { name: 'Jan', total: 1200 },
@@ -126,6 +127,7 @@ const Page = () => {
                     <TableRow key={activity.id}>
                       <TableCell>{activity.type}</TableCell>
                       <TableCell>{activity.description}</TableCell>
+                      <TableCell>{readableTimestamp(activity.created)}</TableCell>
                       <TableCell>{activity.device}</TableCell>
                     </TableRow>
                   ))}
