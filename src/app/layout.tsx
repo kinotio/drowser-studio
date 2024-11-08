@@ -2,7 +2,7 @@ import '@/app/globals.css'
 
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import { ClerkProvider } from '@clerk/nextjs'
+import { ClerkProvider, ClerkLoaded } from '@clerk/nextjs'
 import Script from 'next/script'
 
 import { ThemeProvider } from '@/components/theme-provider'
@@ -38,7 +38,7 @@ export default function Layout({
             enableSystem
             disableTransitionOnChange
           >
-            {children}
+            <ClerkLoaded>{children}</ClerkLoaded>
           </ThemeProvider>
         </body>
       </html>
