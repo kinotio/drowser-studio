@@ -61,14 +61,6 @@ export type MenuType = {
   icon: string
 }
 
-export type ActivityType = {
-  id: number
-  type: string
-  description: string
-  device: 'desktop' | 'mobile'
-  timestamp: string
-}
-
 type BaseEventType =
   | 'unknown'
   | 'login'
