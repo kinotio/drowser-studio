@@ -18,6 +18,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 
 import { pocketbase } from '@/lib/pocketbase'
 import { Report, Activity } from '@/lib/definitions'
+import { readableTimestamp } from '@/lib/utils'
 
 const data = [
   { name: 'Jan', total: 1200 },
@@ -98,7 +99,7 @@ const Page = () => {
                   <Card key={report.id} className='flex flex-col justify-between'>
                     <CardHeader>
                       <CardTitle className='text-lg'>{report.name}</CardTitle>
-                      <CardDescription>{report.created}</CardDescription>
+                      <CardDescription>{readableTimestamp(report.created)}</CardDescription>
                     </CardHeader>
                   </Card>
                 ))}
@@ -126,6 +127,7 @@ const Page = () => {
                     <TableRow key={activity.id}>
                       <TableCell>{activity.type}</TableCell>
                       <TableCell>{activity.description}</TableCell>
+                      <TableCell>{readableTimestamp(activity.created)}</TableCell>
                       <TableCell>{activity.device}</TableCell>
                     </TableRow>
                   ))}
