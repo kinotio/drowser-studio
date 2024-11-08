@@ -215,7 +215,7 @@ const Page = () => {
       </div>
 
       {isLoading ? (
-        <SketelonLoader />
+        <SkeletonLoader />
       ) : (
         <div className='w-full flex flex-col gap-6'>
           <Form {...form}>
@@ -431,7 +431,7 @@ const Page = () => {
   )
 }
 
-const SketelonLoader = () => {
+const SkeletonLoader = () => {
   return (
     <div className='flex flex-col gap-6 w-full'>
       <Skeleton className='h-72 w-full' />

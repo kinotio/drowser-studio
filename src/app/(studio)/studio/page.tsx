@@ -57,7 +57,7 @@ const Page = () => {
     <div className='container mx-auto p-4 mb-20'>
       <h1 className='text-3xl font-bold mb-6'>Welcome back, {user?.firstName}</h1>
       {isLoading ? (
-        <SketelonLoader />
+        <SkeletonLoader />
       ) : (
         <div className='flex flex-col space-y-6'>
           <Card>
@@ -139,7 +139,7 @@ const Page = () => {
   )
 }
 
-const SketelonLoader = () => {
+const SkeletonLoader = () => {
   return (
     <div className='flex flex-col space-y-6'>
       <Skeleton className='h-[400px] w-full rounded-md bg-muted' />
