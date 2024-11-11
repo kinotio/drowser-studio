@@ -3,7 +3,7 @@
 import { useState, SetStateAction, Dispatch } from 'react'
 import { Menu, GithubIcon, Slash } from 'lucide-react'
 import Link from 'next/link'
-import { UserButton, ClerkLoaded } from '@clerk/nextjs'
+import { UserButton } from '@clerk/nextjs'
 import { usePathname } from 'next/navigation'
 
 import { Badge } from '@/components/ui/badge'
@@ -30,6 +30,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb'
+import { Subs } from '@/components/subs'
 
 import { APP_VERSION } from '@/lib/constants'
 import { MenuType } from '@/lib/definitions'
@@ -135,9 +136,9 @@ const Header = () => {
 
           <ToggleTheme />
 
-          <ClerkLoaded>
-            <UserButton />
-          </ClerkLoaded>
+          <UserButton />
+
+          <Subs />
         </div>
       </div>
     </header>
@@ -227,9 +228,7 @@ const MobileMenu = ({
             <div className='flex justify-between w-full items-center'>
               <ToggleTheme />
 
-              <ClerkLoaded>
-                <UserButton />
-              </ClerkLoaded>
+              <UserButton />
             </div>
           </SheetFooter>
         </SheetContent>

@@ -3,7 +3,7 @@
 import { useState, SetStateAction, Dispatch } from 'react'
 import { Github, Menu, icons } from 'lucide-react'
 import Link from 'next/link'
-import { SignInButton, SignedOut, ClerkLoaded } from '@clerk/nextjs'
+import { SignInButton, SignedOut } from '@clerk/nextjs'
 
 import {
   Sheet,
@@ -99,13 +99,11 @@ const Header = () => {
             <Github size={20} />
           </Link>
 
-          <ClerkLoaded>
-            <SignedOut>
-              <SignInButton>
-                <Button>Sign In</Button>
-              </SignInButton>
-            </SignedOut>
-          </ClerkLoaded>
+          <SignedOut>
+            <SignInButton>
+              <Button>Sign In</Button>
+            </SignInButton>
+          </SignedOut>
         </div>
       </div>
     </header>

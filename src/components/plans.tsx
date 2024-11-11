@@ -16,21 +16,7 @@ import { Button } from '@/components/ui/button'
 import { Skeleton } from './ui/skeleton'
 
 import { pocketbase } from '@/lib/pocketbase'
-
-type Plan = {
-  collectionId: string
-  collectionName: string
-  created: string
-  description: string
-  duration: string
-  id: string
-  metadata: { options: string[] }
-  name: string
-  price: number
-  type: string
-  updated: string
-  link: string
-}
+import { Plan } from '@/lib/definitions'
 
 export const Plans = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true)
@@ -71,7 +57,10 @@ export const Plans = () => {
                 </CardHeader>
                 <CardContent className='flex-grow'>
                   <p className='text-4xl font-bold mb-4'>
-                    {`$${plan.price}`}
+                    {new Intl.NumberFormat('en-US', {
+                      style: 'currency',
+                      currency: 'USD'
+                    }).format(plan.price)}
                     <span className='text-xl font-normal'>/{plan.duration}</span>
                   </p>
                   <ul className='space-y-2'>
@@ -84,9 +73,9 @@ export const Plans = () => {
                   </ul>
                 </CardContent>
                 <CardFooter className='mt-auto'>
-                  <Button className='w-full'>
-                    <Link href={plan.link}>Get Started</Link>
-                  </Button>
+                  <Link href={plan.link} className='w-full'>
+                    <Button className='w-full'>Get Started</Button>+{' '}
+                  </Link>
                 </CardFooter>
               </Card>
             ))}
