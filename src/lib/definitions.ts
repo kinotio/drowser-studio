@@ -138,3 +138,18 @@ export type Activity = {
   updated: string
   user_id: string
 }
+
+export type Plan = {
+  collectionId: string
+  collectionName: string
+  created: string
+  description: string
+  duration: string
+  id: string
+  metadata: { options: string[] }
+  name: string
+  price: number
+  type: string
+  updated: string
+  link: string
+}
