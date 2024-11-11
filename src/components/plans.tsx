@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { Check } from 'lucide-react'
+import Link from 'next/link'
 
 import {
   Card,
@@ -28,6 +29,7 @@ type Plan = {
   price: number
   type: string
   updated: string
+  link: string
 }
 
 export const Plans = () => {
@@ -53,10 +55,9 @@ export const Plans = () => {
           Choose the perfect plan to power your projects. Scale as you grow.
         </p>
       </div>
-      <div className='grid md:grid-cols-3 gap-6'>
+      <div className='grid md:grid-cols-2 gap-6 w-2/4 m-auto'>
         {isLoading ? (
           <>
-            <Skeleton className='w-full h-[425px] rounded-md' />
             <Skeleton className='w-full h-[425px] rounded-md' />
             <Skeleton className='w-full h-[425px] rounded-md' />
           </>
@@ -69,16 +70,10 @@ export const Plans = () => {
                   <CardDescription>{plan.description}</CardDescription>
                 </CardHeader>
                 <CardContent className='flex-grow'>
-                  {plan.type === 'entreprise' ? (
-                    <p className='text-4xl font-bold mb-4'>
-                      Custom<span className='text-xl font-normal'>/pricing</span>
-                    </p>
-                  ) : (
-                    <p className='text-4xl font-bold mb-4'>
-                      {`$${plan.price}`}
-                      <span className='text-xl font-normal'>/{plan.duration}</span>
-                    </p>
-                  )}
+                  <p className='text-4xl font-bold mb-4'>
+                    {`$${plan.price}`}
+                    <span className='text-xl font-normal'>/{plan.duration}</span>
+                  </p>
                   <ul className='space-y-2'>
                     {plan.metadata.options.map((opt, idx) => (
                       <li key={idx} className='flex items-center'>
@@ -88,15 +83,11 @@ export const Plans = () => {
                     ))}
                   </ul>
                 </CardContent>
-                {plan.type === 'entreprise' ? (
-                  <CardFooter className='mt-auto'>
-                    <Button className='w-full'>Contact Sales</Button>
-                  </CardFooter>
-                ) : (
-                  <CardFooter className='mt-auto'>
-                    <Button className='w-full'>Get Started</Button>
-                  </CardFooter>
-                )}
+                <CardFooter className='mt-auto'>
+                  <Button className='w-full'>
+                    <Link href={plan.link}>Get Started</Link>
+                  </Button>
+                </CardFooter>
               </Card>
             ))}
           </>
