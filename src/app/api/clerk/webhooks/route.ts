@@ -51,6 +51,13 @@ export const POST = async (req: Request) => {
       device: getDeviceType(req.headers.get('user-agent') || '')
     }
     pocketbase.collection('activities').create(activity)
+    pocketbase
+      .collection('plans')
+      .getFirstListItem(`type = "free"`, { requestKey: null })
+      .then((data) => {
+        const planId = data.id
+        pocketbase.collection('subs').create({ user_id: evt.data.id, plan_id: planId })
+      })
   }
 
   if (evt.type === 'session.created') {
