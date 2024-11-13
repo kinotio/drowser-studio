@@ -74,7 +74,7 @@ export const Plans = () => {
                 </CardContent>
                 <CardFooter className='mt-auto'>
                   <Link href={plan.link} className='w-full'>
-                    <Button className='w-full'>Get Started</Button>+{' '}
+                    <Button className='w-full'>Get Started</Button>
                   </Link>
                 </CardFooter>
               </Card>

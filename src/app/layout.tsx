@@ -29,7 +29,7 @@ export default function Layout({
         <Script
           async
           src='https://analytics.kinotio.io/script.js'
-          data-website-id='d8631cd7-570b-4f43-9d09-03f27e46c999'
+          data-website-id='c5168dda-d0db-468c-b8c0-3d70fab4cfd8'
         />
         <body className={`${inter.className}`}>
           <ThemeProvider
