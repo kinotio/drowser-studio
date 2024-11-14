@@ -64,16 +64,16 @@ export const Plans = () => {
                     <span className='text-xl font-normal'>/{plan.duration}</span>
                   </p>
                   <ul className='space-y-2'>
-                    {plan.metadata.options.map((opt, idx) => (
+                    {plan.metadata.features.map((feat, idx) => (
                       <li key={idx} className='flex items-center'>
                         <Check className='mr-2 h-4 w-4 text-green-500' />
-                        <span>{opt}</span>
+                        <span>{feat}</span>
                       </li>
                     ))}
                   </ul>
                 </CardContent>
                 <CardFooter className='mt-auto'>
-                  <Link href={plan.link} className='w-full'>
+                  <Link href={''} className='w-full'>
                     <Button className='w-full'>Get Started</Button>
                   </Link>
                 </CardFooter>
