@@ -146,10 +146,9 @@ export type Plan = {
   description: string
   duration: string
   id: string
-  metadata: { options: string[] }
+  metadata: { features: string[] }
   name: string
   price: number
   type: string
   updated: string
-  link: string
 }
