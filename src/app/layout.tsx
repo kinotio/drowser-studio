@@ -18,11 +18,11 @@ export const metadata: Metadata = {
   description: 'A easy way to implement and write Selenium with TypeScript using Deno'
 }
 
-export default function Layout({
+const Layout = ({
   children
 }: Readonly<{
   children: React.ReactNode
-}>) {
+}>) => {
   return (
     <ClerkProvider dynamic>
       <html lang='en'>
@@ -45,3 +45,5 @@ export default function Layout({
     </ClerkProvider>
   )
 }
+
+export default Layout

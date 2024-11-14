@@ -25,3 +25,16 @@ export const EVENT_TYPES: { [key: string]: string } = {
   profileInformationChange: 'profile_information_change',
   logout: 'logout'
 }
+
+export const PATH = {
+  HOME: '/',
+  STUDIO_REPORTS: '/studio/reports',
+  STUDIO_REPORT: '/studio/reports/:reportId',
+  STUDIO_REPORT_CASES: '/studio/reports/:reportId/cases',
+  STUDIO_REPORT_CASE: '/studio/reports/:reportId/cases/:caseId',
+  STUDIO_REPORT_VISUALIZE: '/studio/reports/:reportId/visualize',
+  STUDIO_REPORT_PLAYGROUND: '/studio/reports/:reportId/playground',
+  STUDIO_REPORT_AI: '/studio/reports/:reportId/ai',
+  STUDIO_ACTIVITIES: '/studio/activities',
+  STUDIO_SETTINGS: '/studio/settings'
+}
