@@ -152,3 +152,38 @@ export type Plan = {
   type: string
   updated: string
 }
+
+export type Metric = {
+  avg_test_duration: number
+  failed_tests: number
+  flaky_tests: number
+  graphs: {
+    avg_test_duration: Array<{
+      count: number
+      name: string
+    }>
+    failed_tests: Array<{
+      count: number
+      name: string
+    }>
+    flaky_tests: Array<{
+      id: string
+      value: number
+    }>
+    passing_tests: Array<{
+      count: number
+      name: string
+    }>
+    test_coverage: Array<{
+      count: number
+      name: string
+    }>
+    total_tests: Array<{
+      data: Array<any>
+      id: string
+    }>
+  }
+  passing_tests: number
+  test_coverage: number
+  total_tests: number
+}
