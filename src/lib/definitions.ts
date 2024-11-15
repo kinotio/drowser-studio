@@ -126,6 +126,7 @@ export type Report = {
 type ReportMetadata = {
   drowser?: {
     cases: TContentCase[]
+    metrics: Metric
   }
 }
 
@@ -203,4 +204,9 @@ export type MonthlyMetric = {
   total: number
   created?: string
   updated?: string
+}
+
+export type ChartDataItem = {
+  name: string
+  total: number
 }
