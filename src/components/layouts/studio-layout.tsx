@@ -95,7 +95,7 @@ export const StudioLayout = ({
             </BreadcrumbList>
           </Breadcrumb>
 
-          {children}
+          <div className='overflow-hidden'>{children}</div>
         </div>
       </main>
       <Footer />
