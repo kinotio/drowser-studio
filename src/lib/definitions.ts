@@ -194,3 +194,13 @@ export type Subscription = {
   plan_id: string
   user_id: string
 }
+
+export type MonthlyMetric = {
+  id: string
+  user_id: string
+  month: number
+  year: number
+  total: number
+  created?: string
+  updated?: string
+}
