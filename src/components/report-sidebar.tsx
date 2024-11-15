@@ -41,16 +41,17 @@ export const ReportSidebar = () => {
   useEffect(() => {
     pocketbase
       .collection('reports')
-      .getFirstListItem(`user_id = "${userId}" && slug = "${paramsReportSlug}"`, {
+      .getFirstListItem('', {
+        filter: `user_id = "${userId}" && slug = "${paramsReportSlug}"`,
         requestKey: null
       })
       .then((data) => setReport(data as Report))
       .catch((err) => console.log(err))
-  }, [])
+  }, [userId, paramsReportSlug])
 
   return (
     <div className='flex-1 overflow-auto'>
-      <nav className='grid items-start text-sm font-medium mt-2'>
+      <nav className='grid items-start text-sm mt-2'>
         <Link
           className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${
             pathName === PATH.STUDIO_REPORTS ? 'text-black dark:text-white' : ''
@@ -58,7 +59,7 @@ export const ReportSidebar = () => {
           href={`${PATH.STUDIO_REPORTS}/${paramsReportSlug}`}
         >
           <BarChartBigIcon className='h-4 w-4' />
-          Overwiew
+          Overview
         </Link>
 
         <Collapsible className='grid'>

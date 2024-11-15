@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useAuth, useUser } from '@clerk/nextjs'
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from 'recharts'
+import Link from 'next/link'
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import {
@@ -96,12 +97,14 @@ const Page = () => {
             <CardContent>
               <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
                 {reports.map((report) => (
-                  <Card key={report.id} className='flex flex-col justify-between'>
-                    <CardHeader>
-                      <CardTitle className='text-lg'>{report.name}</CardTitle>
-                      <CardDescription>{readableTimestamp(report.created)}</CardDescription>
-                    </CardHeader>
-                  </Card>
+                  <Link key={report.id} href={`/studio/reports/${report.slug}`}>
+                    <Card className='flex flex-col justify-between'>
+                      <CardHeader>
+                        <CardTitle className='text-lg'>{report.name}</CardTitle>
+                        <CardDescription>{readableTimestamp(report.created)}</CardDescription>
+                      </CardHeader>
+                    </Card>
+                  </Link>
                 ))}
               </div>
             </CardContent>

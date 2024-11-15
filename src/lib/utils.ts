@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { clsx, type ClassValue } from 'clsx'
 import { twMerge } from 'tailwind-merge'
+import { isEmpty } from 'lodash'
 
 import { TFileContent } from '@/lib/definitions'
 
@@ -62,5 +63,26 @@ export const getDeviceType = (userAgent: string) => {
     return 'desktop'
   } else {
     return 'unknown'
+  }
+}
+
+export const humanizeDuration = (durationMs: number): string => {
+  if (durationMs < 1000) {
+    return `${Math.round(durationMs)}ms`
+  } else {
+    const secondsTotal = Math.round(durationMs / 1000)
+    const minutesTotal = Math.floor(secondsTotal / 60)
+    const hoursTotal = Math.floor(minutesTotal / 60)
+    const days = Math.floor(hoursTotal / 24)
+
+    let humanized = ''
+    if (days > 0) humanized += `${days}d `
+    if (hoursTotal > 0) humanized += `${hoursTotal}h `
+    if (minutesTotal > 0) humanized += `${minutesTotal}m `
+    if (secondsTotal > 0 || (days === 0 && hoursTotal === 0 && minutesTotal === 0)) {
+      humanized += `${secondsTotal}s`
+    }
+
+    return isEmpty(humanized) ? '0' : humanized.trim()
   }
 }
