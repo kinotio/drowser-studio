@@ -187,3 +187,8 @@ export type Metric = {
   test_coverage: number
   total_tests: number
 }
+
+export type Subscription = {
+  plan_id: string
+  user_id: string
+}

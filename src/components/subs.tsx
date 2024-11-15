@@ -6,7 +6,7 @@ import { useAuth } from '@clerk/nextjs'
 import { Badge } from '@components/ui/badge'
 
 import { pocketbase } from '@/lib/pocketbase'
-import { Plan } from '@/lib/definitions'
+import { Plan, Subscription } from '@/lib/definitions'
 
 export const Subs = () => {
   const { userId } = useAuth()
@@ -17,7 +17,7 @@ export const Subs = () => {
   useEffect(() => {
     pocketbase
       .collection('subs')
-      .getFirstListItem('', { filter: `user_id = "${userId}"`, requestKey: null })
+      .getFirstListItem<Subscription>('', { filter: `user_id = "${userId}"`, requestKey: null })
       .then((data) => {
         const planId = data.plan_id
         pocketbase
