@@ -38,3 +38,8 @@ export const PATH = {
   STUDIO_ACTIVITIES: '/studio/activities',
   STUDIO_SETTINGS: '/studio/settings'
 }
+
+export const CASE_STATUS: Record<string, string> = {
+  passed: 'passed',
+  failed: 'failed'
+}

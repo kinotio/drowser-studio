@@ -124,7 +124,9 @@ export type Report = {
 }
 
 type ReportMetadata = {
-  drowser?: Record<string, unknown>
+  drowser?: {
+    cases: TContentCase[]
+  }
 }
 
 export type Activity = {
