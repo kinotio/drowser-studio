@@ -3,9 +3,14 @@
 import { useTheme } from 'next-themes'
 import { ResponsivePie } from '@nivo/pie'
 
-const LabelledpieChart = (props: any) => {
+interface LabelledPieChartProps {
+  data: { id: string; value: number }[]
+  className?: string
+}
+
+export const LabelledPieChart = (props: LabelledPieChartProps) => {
   const { theme } = useTheme()
-  const color = theme === 'light' ? '#262E3F' : '#f3f4f6'
+  const color = theme === 'light' ? '#262E3F' : '#2761D7'
 
   return (
     <div {...props}>
@@ -38,5 +43,3 @@ const LabelledpieChart = (props: any) => {
     </div>
   )
 }
-
-export { LabelledpieChart }

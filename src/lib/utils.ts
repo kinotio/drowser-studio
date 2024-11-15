@@ -71,9 +71,7 @@ export const humanizeDuration = (durationMs: number): string => {
     return `${Math.round(durationMs)}ms`
   } else {
     const secondsTotal = Math.round(durationMs / 1000)
-    const seconds = secondsTotal % 60
     const minutesTotal = Math.floor(secondsTotal / 60)
-    const minutes = minutesTotal % 60
     const hoursTotal = Math.floor(minutesTotal / 60)
     const days = Math.floor(hoursTotal / 24)
 

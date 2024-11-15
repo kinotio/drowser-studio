@@ -53,7 +53,7 @@ export const POST = async (req: Request) => {
     pocketbase.collection('activities').create(activity)
     pocketbase
       .collection('plans')
-      .getFirstListItem(`type = "free"`, { requestKey: null })
+      .getFirstListItem('', { filter: `type = "free"`, requestKey: null })
       .then((data) => {
         const planId = data.id
         pocketbase.collection('subs').create({ user_id: evt.data.id, plan_id: planId })

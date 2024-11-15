@@ -3,9 +3,14 @@
 import { useTheme } from 'next-themes'
 import { ResponsiveLine } from '@nivo/line'
 
-const LineChart = (props: any) => {
+interface LineChartData {
+  id: string
+  data: { x: string | number; y: number }[]
+}
+
+export const LineChart = (props: { data: LineChartData[]; className?: string }) => {
   const { theme } = useTheme()
-  const color = theme === 'light' ? '#262E3F' : '#f3f4f6'
+  const color = theme === 'light' ? '#262E3F' : '#2761D7'
 
   return (
     <div {...props}>
@@ -55,5 +60,3 @@ const LineChart = (props: any) => {
     </div>
   )
 }
-
-export { LineChart }

@@ -41,12 +41,13 @@ export const ReportSidebar = () => {
   useEffect(() => {
     pocketbase
       .collection('reports')
-      .getFirstListItem(`user_id = "${userId}" && slug = "${paramsReportSlug}"`, {
+      .getFirstListItem('', {
+        filter: `user_id = "${userId}" && slug = "${paramsReportSlug}"`,
         requestKey: null
       })
       .then((data) => setReport(data as Report))
       .catch((err) => console.log(err))
-  }, [])
+  }, [userId, paramsReportSlug])
 
   return (
     <div className='flex-1 overflow-auto'>

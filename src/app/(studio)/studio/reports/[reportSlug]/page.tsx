@@ -8,7 +8,7 @@ import { useAuth } from '@clerk/nextjs'
 import { CardTitle, CardDescription, CardHeader, CardContent, Card } from '@/components/ui/card'
 import { LineChart } from '@/components/charts/line-chart'
 import { BarChart } from '@/components/charts/bar-chart'
-import { LabelledpieChart } from '@/components/charts/labelled-pie-chart'
+import { LabelledPieChart } from '@/components/charts/labelled-pie-chart'
 
 import { humanizeDuration } from '@/lib/utils'
 import { pocketbase } from '@/lib/pocketbase'
@@ -21,12 +21,13 @@ const Page = ({ params }: { params: { reportSlug: string } }) => {
   useEffect(() => {
     pocketbase
       .collection('reports')
-      .getFirstListItem<Report>(`user_id = "${userId}" && slug = "${params.reportSlug}"`, {
+      .getFirstListItem<Report>('', {
+        filter: `user_id = "${userId}" && slug = "${params.reportSlug}"`,
         requestKey: null
       })
       .then((data) => setMetrics(data?.metadata?.drowser?.metrics as Metric))
       .catch((err) => console.log(err))
-  }, [])
+  }, [userId, params.reportSlug])
 
   return (
     <div>
@@ -69,9 +70,9 @@ const Page = ({ params }: { params: { reportSlug: string } }) => {
             <CardHeader>
               <CardTitle>Test Coverage</CardTitle>
               <CardDescription>
-                <span className='text-4xl font-bold'>{`${
-                  metrics.test_coverage.toFixed() ?? 0
-                }%`}</span>
+                <span className='text-4xl font-bold'>{`${(
+                  metrics.test_coverage ?? 0
+                ).toFixed()}%`}</span>
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -83,7 +84,7 @@ const Page = ({ params }: { params: { reportSlug: string } }) => {
               <CardTitle>Avg. Test Duration</CardTitle>
               <CardDescription>
                 <span className='text-4xl font-bold'>
-                  {humanizeDuration(metrics.avg_test_duration) ?? 0}
+                  {humanizeDuration(metrics.avg_test_duration ?? 0)}
                 </span>
               </CardDescription>
             </CardHeader>
@@ -99,7 +100,7 @@ const Page = ({ params }: { params: { reportSlug: string } }) => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <LabelledpieChart className='aspect-[4/3]' data={metrics.graphs.flaky_tests} />
+              <LabelledPieChart className='aspect-[4/3]' data={metrics.graphs.flaky_tests} />
             </CardContent>
           </Card>
         </div>

@@ -3,9 +3,12 @@
 import { useTheme } from 'next-themes'
 import { ResponsiveBar } from '@nivo/bar'
 
-const BarChart = (props: any) => {
+export const BarChart = (props: {
+  data: { name: string; count: number }[]
+  className?: string
+}) => {
   const { theme } = useTheme()
-  const color = theme === 'light' ? '#262E3F' : '#f3f4f6'
+  const color = theme === 'light' ? '#262E3F' : '#2761D7'
 
   return (
     <div {...props}>
@@ -51,5 +54,3 @@ const BarChart = (props: any) => {
     </div>
   )
 }
-
-export { BarChart }
