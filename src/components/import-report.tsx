@@ -18,7 +18,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 
-import { TFileContent } from '@/lib/definitions'
+import { TFileContent, MonthlyMetric } from '@/lib/definitions'
 import { isValidFileContent } from '@/lib/utils'
 import { pocketbase } from '@/lib/pocketbase'
 
@@ -69,7 +69,44 @@ export const ImportReport = ({ children }: { children: React.ReactElement }) => 
 
     toast.promise(pocketbase.collection('reports').create(data), {
       loading: 'Saving report',
-      success: (data) => (data?.error ? data.error : 'Report imported')
+      success: async (data) => {
+        if (data) {
+          const now = new Date()
+          const month = now.getMonth() + 1
+          const year = now.getFullYear()
+
+          pocketbase
+            .collection('metrics')
+            .getFirstListItem<MonthlyMetric>(
+              `user_id = "${userId}" && month = ${month} && year = ${year}`,
+              { requestKey: null }
+            )
+            .then((existingMetric) => {
+              pocketbase.collection('metrics').update(
+                existingMetric.id,
+                {
+                  total: existingMetric.total + 1
+                },
+                { requestKey: null }
+              )
+            })
+            .catch((error) => {
+              if (error.status === 404) {
+                pocketbase.collection('metrics').create<MonthlyMetric>(
+                  {
+                    user_id: userId,
+                    month: month,
+                    year: year,
+                    total: 1
+                  },
+                  { requestKey: null }
+                )
+              }
+            })
+          return 'Report Imported'
+        }
+        return 'An error occurred while importing report'
+      }
     })
   }
 

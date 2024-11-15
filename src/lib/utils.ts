@@ -4,6 +4,7 @@ import { twMerge } from 'tailwind-merge'
 import { isEmpty } from 'lodash'
 
 import { TFileContent } from '@/lib/definitions'
+import { months } from '@lib/constants'
 
 export const cn = (...inputs: ClassValue[]) => {
   return twMerge(clsx(inputs))
@@ -85,4 +86,11 @@ export const humanizeDuration = (durationMs: number): string => {
 
     return isEmpty(humanized) ? '0' : humanized.trim()
   }
+}
+
+export const getMonthName = (monthNumber: number): string => {
+  if (monthNumber < 1 || monthNumber > 12) {
+    throw new Error('Invalid month number. Must be between 1 and 12.')
+  }
+  return months[monthNumber - 1]
 }

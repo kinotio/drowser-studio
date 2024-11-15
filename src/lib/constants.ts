@@ -43,3 +43,17 @@ export const CASE_STATUS: Record<string, string> = {
   passed: 'passed',
   failed: 'failed'
 }
+export const months = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec'
+]
