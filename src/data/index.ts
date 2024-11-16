@@ -34,7 +34,7 @@ export const DATA = {
   },
   navbar: [
     {
-      href: 'docs',
+      href: 'https://docs.kinotio.io/docs/drowser',
       name: 'Docs'
     }
   ],

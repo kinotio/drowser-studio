@@ -41,7 +41,7 @@ const routeList: RouteProps[] = [
     label: 'Pricing'
   },
   {
-    href: 'docs',
+    href: 'https://docs.kinotio.io/docs/drowser',
     label: 'Docs'
   }
 ]
