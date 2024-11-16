@@ -31,6 +31,7 @@ import {
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb'
 import { Subs } from '@/components/subs'
+import { Button } from '@/components/ui/button'
 
 import { APP_VERSION } from '@/lib/constants'
 import { MenuType } from '@/lib/definitions'
@@ -193,11 +194,8 @@ const MobileMenu = ({
           <Menu className='cursor-pointer lg:hidden' />
         </SheetTrigger>
 
-        <SheetContent
-          side='left'
-          className='flex flex-col justify-between bg-card border-secondary'
-        >
-          <div>
+        <SheetContent side='left' className='flex flex-col bg-card border-secondary'>
+          <div className='flex flex-col h-full'>
             <SheetHeader className='mb-4 ml-4'>
               <SheetTitle className='flex items-center'>
                 <Link href='/' className='flex items-center'>
@@ -206,20 +204,20 @@ const MobileMenu = ({
               </SheetTitle>
             </SheetHeader>
 
-            {/* <div className='ml-6'>
-              <Navigation menus={menus} />
-            </div> */}
+            <div className='flex justify-between flex-col h-full'>
+              <Navigation isMobile={true} menus={menus} />
 
-            <div className='flex flex-col gap-2'>
-              <ImportReport>
-                <Badge className='h-8 cursor-pointer'>Import Report</Badge>
-              </ImportReport>
+              <div className='flex flex-col gap-2 justify-end'>
+                <ImportReport>
+                  <Button className='h-8 cursor-pointer'>Import Report</Button>
+                </ImportReport>
 
-              <Badge variant='outline' className='h-8 cursor-pointer'>
-                <Link href={'https://github.com/kinotio/drowser-studio/issues'} target='_blank'>
-                  Feedback
-                </Link>
-              </Badge>
+                <Button variant='outline' className='h-8 cursor-pointer'>
+                  <Link href={'https://github.com/kinotio/drowser-studio/issues'} target='_blank'>
+                    Feedback
+                  </Link>
+                </Button>
+              </div>
             </div>
           </div>
 

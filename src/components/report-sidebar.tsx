@@ -53,7 +53,7 @@ export const ReportSidebar = () => {
     <div className='flex-1 overflow-auto'>
       <nav className='grid items-start text-sm mt-2'>
         <Link
-          className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${
+          className={`flex items-center gap-3 rounded-lg px-2 py-2 transition-all ${
             pathName === PATH.STUDIO_REPORTS ? 'text-black dark:text-white' : ''
           }`}
           href={`${PATH.STUDIO_REPORTS}/${paramsReportSlug}`}
@@ -64,7 +64,7 @@ export const ReportSidebar = () => {
 
         <Collapsible className='grid'>
           <CollapsibleTrigger
-            className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${
+            className={`flex items-center gap-3 rounded-lg px-2 py-2 transition-all ${
               pathName.startsWith(PATH.STUDIO_REPORT_CASES) ? 'text-black dark:text-white' : ''
             }`}
           >
@@ -77,7 +77,7 @@ export const ReportSidebar = () => {
             {uniqueBrowsers.map((browser, idx) => (
               <Collapsible key={idx} className='grid'>
                 <CollapsibleTrigger
-                  className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${
+                  className={`flex items-center gap-3 rounded-lg px-2 py-2 transition-all ${
                     pathName.startsWith(PATH.STUDIO_REPORT_CASE) ? 'text-black dark:text-white' : ''
                   }`}
                 >
@@ -92,7 +92,7 @@ export const ReportSidebar = () => {
                       {c.browser === browser ? (
                         <Link
                           key={c.id}
-                          className={`ml-6 flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${
+                          className={`ml-6 flex items-center gap-3 rounded-lg px-2 py-2 transition-all ${
                             pathName.startsWith(PATH.STUDIO_REPORT_CASES) && params.id === c.id
                               ? 'text-black dark:text-white'
                               : ''
@@ -113,7 +113,7 @@ export const ReportSidebar = () => {
 
         <div className='flex'>
           <Link
-            className='flex items-center gap-3 rounded-lg px-3 py-2 transition-all'
+            className='flex items-center gap-3 rounded-lg px-2 py-2 transition-all'
             href={`${PATH.STUDIO_REPORTS}/${paramsReportSlug}/visualize`}
           >
             <NetworkIcon className='h-4 w-4 -rotate-90' />
@@ -123,7 +123,7 @@ export const ReportSidebar = () => {
 
         <div className='flex'>
           <Link
-            className='pointer-events-none flex items-center gap-3 rounded-lg px-3 py-2 transition-all'
+            className='pointer-events-none flex items-center gap-3 rounded-lg px-2 py-2 transition-all'
             href={`${PATH.STUDIO_REPORTS}/${paramsReportSlug}/ai`}
           >
             <FlaskConicalIcon className='h-4 w-4' />
@@ -143,7 +143,7 @@ export const ReportSidebar = () => {
 
         <div className='flex'>
           <Link
-            className='pointer-events-none flex items-center gap-3 rounded-lg px-3 py-2 transition-all'
+            className='pointer-events-none flex items-center gap-3 rounded-lg px-2 py-2 transition-all'
             href={`${PATH.STUDIO_REPORTS}/${paramsReportSlug}/playground`}
           >
             <PencilIcon className='h-4 w-4' />
