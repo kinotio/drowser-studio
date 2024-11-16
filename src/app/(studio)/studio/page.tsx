@@ -31,10 +31,10 @@ const Page = () => {
   const [metrics, setMetrics] = useState<ChartDataItem[]>()
   const [activities, setActivities] = useState<Activity[]>([])
 
-  const sixMonthsAgo = new Date()
-  sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6)
+  const pastYearMonths = new Date()
+  pastYearMonths.setMonth(pastYearMonths.getMonth() - 12)
 
-  const formattedDate = sixMonthsAgo.toISOString()
+  const formattedDate = pastYearMonths.toISOString()
 
   useEffect(() => {
     Promise.all([
