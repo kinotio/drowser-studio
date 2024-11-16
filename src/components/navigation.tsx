@@ -51,7 +51,7 @@ export const Navigation = ({
       </NavigationMenu>
 
       {isOnMobileWithReport ? (
-        <div className='my-4 justify-start'>
+        <div className='my-4 flex justify-start'>
           <ReportSidebar />
         </div>
       ) : null}
