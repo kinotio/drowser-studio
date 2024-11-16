@@ -50,13 +50,14 @@ export const POST = async (req: Request) => {
       user_id: evt.data.id,
       device: getDeviceType(req.headers.get('user-agent') || '')
     }
-    pocketbase.collection('activities').create(activity)
+    pocketbase.collection('activities').create(activity, { requestKey: null })
     pocketbase
       .collection('plans')
       .getFirstListItem('', { filter: `type = "free"`, requestKey: null })
       .then((data) => {
         const planId = data.id
-        pocketbase.collection('subs').create({ user_id: evt.data.id, plan_id: planId })
+        const sub = { user_id: evt.data.id, plan_id: planId }
+        pocketbase.collection('subs').create(sub, { requestKey: null })
       })
   }
 
@@ -67,7 +68,7 @@ export const POST = async (req: Request) => {
       user_id: evt.data.user_id,
       device: getDeviceType(req.headers.get('user-agent') || '')
     }
-    pocketbase.collection('activities').create(activity)
+    pocketbase.collection('activities').create(activity, { requestKey: null })
   }
 
   if (evt.type === 'session.removed') {
@@ -77,7 +78,7 @@ export const POST = async (req: Request) => {
       user_id: evt.data.user_id,
       device: getDeviceType(req.headers.get('user-agent') || '')
     }
-    pocketbase.collection('activities').create(activity)
+    pocketbase.collection('activities').create(activity, { requestKey: null })
   }
 
   return new Response('', { status: 200 })
