@@ -18,17 +18,9 @@ import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/
 import { Skeleton } from '@/components/ui/skeleton'
 
 import { pocketbase } from '@/lib/pocketbase'
-import { Report, Activity } from '@/lib/definitions'
+import { Report, Activity, ChartDataItem } from '@/lib/definitions'
 import { readableTimestamp } from '@/lib/utils'
-
-const data = [
-  { name: 'Jan', total: 1200 },
-  { name: 'Feb', total: 900 },
-  { name: 'Mar', total: 1600 },
-  { name: 'Apr', total: 1400 },
-  { name: 'May', total: 2000 },
-  { name: 'Jun', total: 1800 }
-]
+import { months } from '@/lib/constants'
 
 const Page = () => {
   const { userId } = useAuth()
@@ -36,10 +28,19 @@ const Page = () => {
 
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [reports, setReports] = useState<Report[]>([])
+  const [metrics, setMetrics] = useState<ChartDataItem[]>()
   const [activities, setActivities] = useState<Activity[]>([])
+
+  const pastYearMonths = new Date()
+  pastYearMonths.setMonth(pastYearMonths.getMonth() - 12)
+
+  const formattedDate = pastYearMonths.toISOString()
 
   useEffect(() => {
     Promise.all([
+      pocketbase
+        .collection('metrics')
+        .getFullList({ filter: `created >= '${formattedDate}'`, requestKey: null }),
       pocketbase
         .collection('reports')
         .getList(1, 3, { requestKey: null, sort: '-created', filter: `user_id = "${userId}"` }),
@@ -47,12 +48,26 @@ const Page = () => {
         .collection('activities')
         .getList(1, 3, { requestKey: null, sort: '-created', filter: `user_id = "${userId}"` })
     ])
-      .then(([reportsData, activitiesData]) => {
+      .then(([metricsData, reportsData, activitiesData]) => {
+        const data = months.map((name) => ({
+          name,
+          total: 0
+        }))
+
+        metricsData.forEach((metric) => {
+          const monthIndex = metric.month - 1
+          if (monthIndex >= 0 && monthIndex < 12) {
+            data[monthIndex].total = metric.total
+          }
+        })
+
+        setMetrics(data as ChartDataItem[])
         setReports(reportsData.items as Report[])
         setActivities(activitiesData.items as Activity[])
       })
       .catch((err) => console.log(err))
       .finally(() => setIsLoading(false))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId])
 
   return (
@@ -65,7 +80,7 @@ const Page = () => {
           <Card>
             <CardHeader>
               <CardTitle>Monthly Reports</CardTitle>
-              <CardDescription>Reports imported for the past 6 months</CardDescription>
+              <CardDescription>Reports imported for the past year</CardDescription>
             </CardHeader>
             <CardContent>
               <ChartContainer
@@ -78,7 +93,7 @@ const Page = () => {
                 className='h-[300px] w-full'
               >
                 <ResponsiveContainer width='100%' height='100%'>
-                  <BarChart data={data}>
+                  <BarChart data={metrics}>
                     <XAxis dataKey='name' />
                     <YAxis />
                     <ChartTooltip content={<ChartTooltipContent />} />
