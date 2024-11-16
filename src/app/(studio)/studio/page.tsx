@@ -31,16 +31,13 @@ const Page = () => {
   const [metrics, setMetrics] = useState<ChartDataItem[]>()
   const [activities, setActivities] = useState<Activity[]>([])
 
-  const pastYearMonths = new Date()
-  pastYearMonths.setMonth(pastYearMonths.getMonth() - 12)
-
-  const formattedDate = pastYearMonths.toISOString()
+  const currentYear = new Date().getFullYear()
 
   useEffect(() => {
     Promise.all([
       pocketbase
         .collection('metrics')
-        .getFullList({ filter: `created >= '${formattedDate}'`, requestKey: null }),
+        .getFullList({ filter: `year = '${currentYear}'`, requestKey: null }),
       pocketbase
         .collection('reports')
         .getList(1, 3, { requestKey: null, sort: '-created', filter: `user_id = "${userId}"` }),
