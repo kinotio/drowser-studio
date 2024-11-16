@@ -30,7 +30,7 @@ export const Navigation = ({
   return (
     <div>
       <NavigationMenu className={`${isMobile ? 'items-start' : ''}`}>
-        <NavigationMenuList className={`gap-6 ml-2 ${isOnMobileWithReport ? '' : 'flex-col'}`}>
+        <NavigationMenuList className='gap-6 ml-2'>
           {menus.map((menu) => (
             <NavigationMenuItem key={menu.path}>
               <Link href={menu.path} legacyBehavior passHref>
