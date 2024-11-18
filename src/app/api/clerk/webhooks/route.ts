@@ -67,7 +67,7 @@ export const POST = async (req: Request) => {
       user_id: evt.data.user_id,
       device: getDeviceType(req.headers.get('user-agent') || '')
     }
-    pocketbase.collection('activities').create(activity)
+    await pocketbase.collection('activities').create(activity)
   }
 
   if (evt.type === 'session.removed') {
@@ -77,7 +77,7 @@ export const POST = async (req: Request) => {
       user_id: evt.data.user_id,
       device: getDeviceType(req.headers.get('user-agent') || '')
     }
-    pocketbase.collection('activities').create(activity)
+    await pocketbase.collection('activities').create(activity)
   }
 
   return new Response('Clerk webhooks handled successfully', { status: 200 })
