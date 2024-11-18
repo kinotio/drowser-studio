@@ -18,7 +18,7 @@ export const POST = async (req: Request) => {
   const svix_signature = headerPayload.get('svix-signature')
 
   if (!svix_id || !svix_timestamp || !svix_signature) {
-    return new Response('Error occured -- no svix headers', {
+    return new Response('An error occurred while getting svix headers', {
       status: 400
     })
   }
@@ -37,8 +37,7 @@ export const POST = async (req: Request) => {
       'svix-signature': svix_signature
     }) as WebhookEvent
   } catch (err) {
-    console.error('Error verifying webhook:', err)
-    return new Response('Error occured', {
+    return new Response(`An error occurred while verifying webhook : ${err}`, {
       status: 400
     })
   }
@@ -81,5 +80,5 @@ export const POST = async (req: Request) => {
     pocketbase.collection('activities').create(activity)
   }
 
-  return new Response('', { status: 200 })
+  return new Response('Clerk webhooks handled successfully', { status: 200 })
 }

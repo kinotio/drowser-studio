@@ -30,6 +30,8 @@ export const POST = async (req: Request) => {
 
     new Response('Stripe webhooks trigger end')
   } catch (err) {
-    return new Response('An error occurred while processing webhooks on server', { status: 500 })
+    return new Response(`An error occurred while processing webhooks on server : ${err}`, {
+      status: 500
+    })
   }
 }
