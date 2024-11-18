@@ -223,7 +223,12 @@ const MobileMenu = ({
             </div>
           </div>
 
-          <SheetFooter className='flex-col sm:flex-col justify-start items-start'>
+          <SheetFooter className='flex-col sm:flex-col justify-start items-start w-full gap-4'>
+            <SignedOut>
+              <SignInButton>
+                <Button className='w-full'>Sign In</Button>
+              </SignInButton>
+            </SignedOut>
             <Separator className='mb-2' />
             <ToggleTheme />
           </SheetFooter>
