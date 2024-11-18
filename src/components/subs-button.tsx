@@ -14,14 +14,12 @@ export const SubsButton = ({ priceId }: { priceId: string }) => {
     initializeStripe().then((stripe) => {
       if (!stripe) return
 
-      axios.post('/api/stripe/checkout', { priceId, userId }).then(({ data }) => {
-        if (!data.ok) {
-          console.log('An error occurred while processing stripe checkout')
-          return
-        }
-
-        stripe.redirectToCheckout({ sessionId: data.result.id })
-      })
+      axios
+        .post('/api/stripe/checkout', { priceId, userId })
+        .then(({ data }) => {
+          stripe.redirectToCheckout({ sessionId: data.id })
+        })
+        .catch((err) => console.log(err))
     })
   }
 
