@@ -22,8 +22,7 @@ const Page = ({ params }: { params: { reportSlug: string } }) => {
     pocketbase
       .collection('reports')
       .getFirstListItem<Report>('', {
-        filter: `user_id = "${userId}" && slug = "${params.reportSlug}"`,
-        requestKey: null
+        filter: `user_id = "${userId}" && slug = "${params.reportSlug}"`
       })
       .then((data) => setMetrics(data?.metadata?.drowser?.metrics as Metric))
       .catch((err) => console.log(err))

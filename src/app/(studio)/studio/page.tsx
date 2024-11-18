@@ -35,15 +35,13 @@ const Page = () => {
 
   useEffect(() => {
     Promise.all([
-      pocketbase
-        .collection('metrics')
-        .getFullList({ filter: `year = '${currentYear}'`, requestKey: null }),
+      pocketbase.collection('metrics').getFullList({ filter: `year = '${currentYear}'` }),
       pocketbase
         .collection('reports')
-        .getList(1, 3, { requestKey: null, sort: '-created', filter: `user_id = "${userId}"` }),
+        .getList(1, 3, { sort: '-created', filter: `user_id = "${userId}"` }),
       pocketbase
         .collection('activities')
-        .getList(1, 3, { requestKey: null, sort: '-created', filter: `user_id = "${userId}"` })
+        .getList(1, 3, { sort: '-created', filter: `user_id = "${userId}"` })
     ])
       .then(([metricsData, reportsData, activitiesData]) => {
         const data = months.map((name) => ({

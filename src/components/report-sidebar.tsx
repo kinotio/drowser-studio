@@ -42,8 +42,7 @@ export const ReportSidebar = () => {
     pocketbase
       .collection('reports')
       .getFirstListItem('', {
-        filter: `user_id = "${userId}" && slug = "${paramsReportSlug}"`,
-        requestKey: null
+        filter: `user_id = "${userId}" && slug = "${paramsReportSlug}"`
       })
       .then((data) => setReport(data as Report))
       .catch((err) => console.log(err))
