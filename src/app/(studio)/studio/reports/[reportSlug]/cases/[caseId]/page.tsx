@@ -43,8 +43,7 @@ const Page = () => {
     pocketbase
       .collection('reports')
       .getFirstListItem<Report>('', {
-        filter: `user_id = "${userId}" && slug = "${reportSlug}"`,
-        requestKey: null
+        filter: `user_id = "${userId}" && slug = "${reportSlug}"`
       })
       .then((data) => setReport(data as Report))
       .catch((err) => console.log(err))

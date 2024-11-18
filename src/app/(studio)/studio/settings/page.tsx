@@ -180,7 +180,7 @@ const Page = () => {
   useEffect(() => {
     pocketbase
       .collection('settings')
-      .getFirstListItem<Settings>('', { filter: `user_id = "${userId}"`, requestKey: null })
+      .getFirstListItem<Settings>('', { filter: `user_id = "${userId}"` })
       .then((data) =>
         setSettings({
           id: data.id,

@@ -78,29 +78,21 @@ export const ImportReport = ({ children }: { children: React.ReactElement }) => 
           pocketbase
             .collection('metrics')
             .getFirstListItem<MonthlyMetric>(
-              `user_id = "${userId}" && month = ${month} && year = ${year}`,
-              { requestKey: null }
+              `user_id = "${userId}" && month = ${month} && year = ${year}`
             )
             .then((existingMetric) => {
-              pocketbase.collection('metrics').update(
-                existingMetric.id,
-                {
-                  total: existingMetric.total + 1
-                },
-                { requestKey: null }
-              )
+              pocketbase.collection('metrics').update(existingMetric.id, {
+                total: existingMetric.total + 1
+              })
             })
             .catch((error) => {
               if (error.status === 404) {
-                pocketbase.collection('metrics').create<MonthlyMetric>(
-                  {
-                    user_id: userId,
-                    month: month,
-                    year: year,
-                    total: 1
-                  },
-                  { requestKey: null }
-                )
+                pocketbase.collection('metrics').create<MonthlyMetric>({
+                  user_id: userId,
+                  month: month,
+                  year: year,
+                  total: 1
+                })
               }
             })
           return 'Report Imported'

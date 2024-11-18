@@ -17,12 +17,12 @@ export const Subs = () => {
   useEffect(() => {
     pocketbase
       .collection('subs')
-      .getFirstListItem<Subscription>('', { filter: `user_id = "${userId}"`, requestKey: null })
+      .getFirstListItem<Subscription>('', { filter: `user_id = "${userId}"` })
       .then((data) => {
         const planId = data.plan_id
         pocketbase
           .collection('plans')
-          .getFirstListItem('', { filter: `id = "${planId}"`, requestKey: null })
+          .getFirstListItem('', { filter: `id = "${planId}"` })
           .then((data) => setPlan(data as Plan))
           .catch((err) => console.log(err))
           .finally(() => setIsLoading(false))

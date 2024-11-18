@@ -24,7 +24,7 @@ export const Plans = () => {
   useEffect(() => {
     pocketbase
       .collection('plans')
-      .getList(1, 3, { requestKey: null })
+      .getList(1, 3)
       .then((data) => setPlans(data.items as Plan[]))
       .catch((err) => console.log(err))
       .finally(() => setIsLoading(false))
