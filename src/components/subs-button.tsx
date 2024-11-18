@@ -27,7 +27,7 @@ export const SubsButton = ({ priceId }: { priceId: string }) => {
 
   return (
     <Button onClick={handleSubmit} className='w-full'>
-      Get Started
+      Subscribe
     </Button>
   )
 }
