@@ -154,6 +154,7 @@ export type Plan = {
   price: number
   type: string
   updated: string
+  price_id: string
 }
 
 export type Metric = {

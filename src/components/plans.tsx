@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react'
 import { Check } from 'lucide-react'
-import Link from 'next/link'
 
 import {
   Card,
@@ -12,8 +11,8 @@ import {
   CardHeader,
   CardTitle
 } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Skeleton } from './ui/skeleton'
+import { Skeleton } from '@components/ui/skeleton'
+import { SubsButton } from '@components/subs-button'
 
 import { pocketbase } from '@/lib/pocketbase'
 import { Plan } from '@/lib/definitions'
@@ -73,9 +72,7 @@ export const Plans = () => {
                   </ul>
                 </CardContent>
                 <CardFooter className='mt-auto'>
-                  <Link href={''} className='w-full'>
-                    <Button className='w-full'>Get Started</Button>
-                  </Link>
+                  <SubsButton priceId={plan.price_id} />
                 </CardFooter>
               </Card>
             ))}
