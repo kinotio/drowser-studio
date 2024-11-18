@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { Check } from 'lucide-react'
+import { SignUpButton, SignedOut, SignedIn } from '@clerk/nextjs'
 
 import {
   Card,
@@ -12,7 +13,8 @@ import {
   CardTitle
 } from '@/components/ui/card'
 import { Skeleton } from '@components/ui/skeleton'
-import { SubsButton } from '@components/subs-button'
+import { Button } from '@/components/ui/button'
+import { SubsButton } from '@/components/subs-button'
 
 import { pocketbase } from '@/lib/pocketbase'
 import { Plan } from '@/lib/definitions'
@@ -72,7 +74,15 @@ export const Plans = () => {
                   </ul>
                 </CardContent>
                 <CardFooter className='mt-auto'>
-                  <SubsButton priceId={plan.price_id} />
+                  <SignedOut>
+                    <SignUpButton>
+                      <Button className='w-full'>Get Started</Button>
+                    </SignUpButton>
+                  </SignedOut>
+
+                  <SignedIn>
+                    <SubsButton priceId={plan.price_id} />
+                  </SignedIn>
                 </CardFooter>
               </Card>
             ))}
