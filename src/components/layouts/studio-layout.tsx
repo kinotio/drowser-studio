@@ -204,28 +204,24 @@ const MobileMenu = ({
               </SheetTitle>
             </SheetHeader>
 
-            <div className='flex justify-between flex-col h-full'>
-              <Navigation isMobile={true} menus={menus} />
-
-              <div className='flex flex-col gap-2 justify-end'>
-                <ImportReport>
-                  <Button className='h-8 cursor-pointer'>Import Report</Button>
-                </ImportReport>
-
-                <Button variant='outline' className='h-8 cursor-pointer'>
-                  <Link href={'https://github.com/kinotio/drowser-studio/issues'} target='_blank'>
-                    Feedback
-                  </Link>
-                </Button>
-              </div>
-            </div>
+            <Navigation isMobile={true} menus={menus} />
           </div>
 
-          <SheetFooter className='flex-col sm:flex-col justify-start items-start'>
+          <SheetFooter className='flex-col sm:flex-col justify-start items-start gap-4'>
+            <div className='flex flex-col gap-4 w-full'>
+              <ImportReport>
+                <Button className='h-8 cursor-pointer w-full'>Import Report</Button>
+              </ImportReport>
+
+              <Button variant='outline' className='h-8 cursor-pointer w-full'>
+                <Link href={'https://github.com/kinotio/drowser-studio/issues'} target='_blank'>
+                  Feedback
+                </Link>
+              </Button>
+            </div>
             <Separator className='mb-2' />
             <div className='flex justify-between w-full items-center'>
               <ToggleTheme />
-
               <UserButton />
             </div>
           </SheetFooter>
