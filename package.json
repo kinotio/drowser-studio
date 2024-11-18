@@ -40,7 +40,7 @@
     "next-themes": "^0.3.0",
     "pocketbase": "^0.21.5",
     "react": "^18",
-    "react-day-picker": "^8.10.1",
+    "react-day-picker": "^9.3.1",
     "react-dom": "^18",
     "react-hook-form": "^7.53.1",
     "reaflow": "^5.3.1",
