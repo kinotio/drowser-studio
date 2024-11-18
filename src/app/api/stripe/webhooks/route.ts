@@ -1,6 +1,7 @@
 import { headers } from 'next/headers'
 
 import { stripe } from '@/lib/stripe'
+import { pocketbase } from '@/lib/pocketbase'
 
 export const POST = async (req: Request) => {
   const STRIPE_WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET
@@ -13,9 +14,24 @@ export const POST = async (req: Request) => {
   const sig = headerPayload.get('stripe-signature') as string
   const body = await req.text()
 
-  const evt = stripe.webhooks.constructEvent(body, sig, STRIPE_WEBHOOK_SECRET)
+  try {
+    const evt = await stripe.webhooks.constructEventAsync(body, sig, STRIPE_WEBHOOK_SECRET)
 
-  console.log(evt.type)
+    switch (evt.type) {
+      case 'checkout.session.completed':
+        const { metadata } = evt.data.object
+        pocketbase
+          .collection('subs')
+          .create({ user_id: metadata?.userId, plan_id: metadata?.planId })
+        break
+      default:
+        console.log(`Unhandled event type ${evt.type}`)
+    }
 
-  return new Response('Event Received', { status: 200 })
+    new Response('Stripe webhooks trigger end')
+  } catch (err) {
+    return new Response(`An error occurred while processing webhooks on server : ${err}`, {
+      status: 500
+    })
+  }
 }

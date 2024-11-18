@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button'
 
 import { initializeStripe } from '@/lib/stripe'
 
-export const SubsButton = ({ priceId }: { priceId: string }) => {
+export const SubsButton = ({ planId, priceId }: { planId: string; priceId: string }) => {
   const { userId } = useAuth()
 
   const handleSubmit = () => {
@@ -15,7 +15,7 @@ export const SubsButton = ({ priceId }: { priceId: string }) => {
       if (!stripe) return
 
       axios
-        .post('/api/stripe/checkout', { priceId, userId })
+        .post('/api/stripe/checkout', { planId, priceId, userId })
         .then(({ data }) => {
           stripe.redirectToCheckout({ sessionId: data.id })
         })
