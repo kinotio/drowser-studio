@@ -48,6 +48,11 @@ const menus = [
     icon: 'Activity'
   },
   {
+    label: 'Subscription',
+    path: '/studio/subscription',
+    icon: 'Zap'
+  },
+  {
     label: 'Settings',
     path: '/studio/settings',
     icon: 'Settings'
