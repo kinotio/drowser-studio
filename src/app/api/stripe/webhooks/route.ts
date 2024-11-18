@@ -13,7 +13,7 @@ export const POST = async (req: Request) => {
   const sig = headerPayload.get('stripe-signature') as string
   const body = await req.text()
 
-  const evt = await stripe.webhooks.constructEventAsync(body, sig, STRIPE_WEBHOOK_SECRET)
+  const evt = stripe.webhooks.constructEvent(body, sig, STRIPE_WEBHOOK_SECRET)
 
   console.log(evt.type)
 
