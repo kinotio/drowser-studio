@@ -21,6 +21,7 @@ export default clerkMiddleware(async (auth, request) => {
       })
       return NextResponse.next()
     } catch (err) {
+      console.log(err)
       url.pathname = '/subscription'
       return NextResponse.redirect(url)
     }

@@ -22,7 +22,8 @@ export const POST = async (req: Request) => {
     })
 
     return new Response(JSON.stringify({ result: session }), { status: 200 })
-  } catch (error) {
+  } catch (err) {
+    console.log(err)
     return new Response('An error occurred while processing checkout on server', { status: 500 })
   }
 }
