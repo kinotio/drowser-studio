@@ -7,7 +7,6 @@ import {
   BarChartBigIcon,
   ClipboardListIcon,
   FlaskConicalIcon,
-  PencilIcon,
   NetworkIcon,
   GlobeIcon,
   ConstructionIcon
