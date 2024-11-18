@@ -19,10 +19,9 @@ export const Subs = () => {
       .collection('subs')
       .getFirstListItem<Subscription>('', { filter: `user_id = "${userId}"` })
       .then((data) => {
-        const planId = data.plan_id
         pocketbase
           .collection('plans')
-          .getFirstListItem('', { filter: `id = "${planId}"` })
+          .getFirstListItem('', { filter: `id = "${data.plan_id}"` })
           .then((data) => setPlan(data as Plan))
           .catch((err) => console.log(err))
           .finally(() => setIsLoading(false))
@@ -33,7 +32,14 @@ export const Subs = () => {
   return (
     <>
       {!isLoading && (
-        <Badge variant={'outline'} className='h-8 text-green-500 border-green-500'>
+        <Badge
+          variant={'outline'}
+          className={`h-8 ${
+            plan?.type === 'free'
+              ? 'text-green-500 border-green-500'
+              : 'text-orange-500 border-orange-500'
+          }`}
+        >
           {plan?.name}
         </Badge>
       )}

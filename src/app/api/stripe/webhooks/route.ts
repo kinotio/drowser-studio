@@ -27,9 +27,19 @@ export const POST = async (req: Request) => {
 
   if (evt.type === 'checkout.session.completed') {
     const { metadata } = evt.data.object
-    await pocketbase
-      .collection('subs')
-      .create({ user_id: metadata?.userId, plan_id: metadata?.planId })
+
+    try {
+      const sub = await pocketbase.collection('subs').getFirstListItem('', {
+        filter: `user_id = "${metadata?.userId}"`
+      })
+
+      await pocketbase.collection('subs').update(sub.id, { plan_id: metadata?.planId })
+    } catch (err) {
+      console.log(err)
+      await pocketbase
+        .collection('subs')
+        .create({ user_id: metadata?.userId, plan_id: metadata?.planId })
+    }
   }
 
   return new Response('Stripe webhooks handled successfully')
