@@ -33,7 +33,6 @@ export const PATH = {
   STUDIO_REPORT_CASES: '/studio/reports/:reportId/cases',
   STUDIO_REPORT_CASE: '/studio/reports/:reportId/cases/:caseId',
   STUDIO_REPORT_VISUALIZE: '/studio/reports/:reportId/visualize',
-  STUDIO_REPORT_PLAYGROUND: '/studio/reports/:reportId/playground',
   STUDIO_REPORT_AI: '/studio/reports/:reportId/ai',
   STUDIO_ACTIVITIES: '/studio/activities',
   STUDIO_SETTINGS: '/studio/settings'

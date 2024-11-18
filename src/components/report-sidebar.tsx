@@ -139,26 +139,6 @@ export const ReportSidebar = () => {
             </Tooltip>
           </TooltipProvider>
         </div>
-
-        <div className='flex'>
-          <Link
-            className='pointer-events-none flex items-center gap-3 rounded-lg px-2 py-2 transition-all'
-            href={`${PATH.STUDIO_REPORTS}/${paramsReportSlug}/playground`}
-          >
-            <PencilIcon className='h-4 w-4' />
-            Playground
-          </Link>
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger>
-                <ConstructionIcon className='text-yellow-400 h-4 w-4' />
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Under construction</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        </div>
       </nav>
     </div>
   )
