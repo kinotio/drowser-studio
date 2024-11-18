@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react'
 import { Check, Zap } from 'lucide-react'
 import { useAuth, useUser } from '@clerk/nextjs'
 
-import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
@@ -15,6 +14,7 @@ import {
 } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Skeleton } from '@components/ui/skeleton'
+import { SubsButton } from '@/components/subs-button'
 
 import { pocketbase } from '@/lib/pocketbase'
 import { Plan, Subscription } from '@/lib/definitions'
@@ -26,10 +26,6 @@ const Page = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [plans, setPlans] = useState<Plan[]>([])
   const [currentPlan, setCurrentPlan] = useState<Plan>()
-
-  const upgradePlan = (type: string) => {
-    console.log(`Upgrading to ${type} plan`)
-  }
 
   useEffect(() => {
     pocketbase
@@ -117,14 +113,18 @@ const Page = () => {
                     </ul>
                   </CardContent>
                   <CardFooter className='mt-auto'>
-                    <Button
-                      className='w-full'
-                      onClick={() => upgradePlan(plan.type)}
+                    <SubsButton
+                      planId={plan.id}
+                      priceId={plan.price_id}
                       disabled={currentPlan?.type === plan.type}
                     >
-                      {currentPlan?.type === plan.type ? 'Current Plan' : 'Upgrade'}
+                      {currentPlan?.type === plan.type
+                        ? 'Current Plan'
+                        : currentPlan?.type === 'pro'
+                        ? ' Downgrade'
+                        : 'Upgrade'}
                       {currentPlan?.type !== plan.type && <Zap className='ml-2 h-4 w-4' />}
-                    </Button>
+                    </SubsButton>
                   </CardFooter>
                 </Card>
               ))}

@@ -81,7 +81,9 @@ export const Plans = () => {
                   </SignedOut>
 
                   <SignedIn>
-                    <SubsButton planId={plan.id} priceId={plan.price_id} />
+                    <SubsButton planId={plan.id} priceId={plan.price_id}>
+                      Subscribe
+                    </SubsButton>
                   </SignedIn>
                 </CardFooter>
               </Card>
