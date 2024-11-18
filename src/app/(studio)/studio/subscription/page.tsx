@@ -1,7 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Check, Zap } from 'lucide-react'
+import { useAuth, useUser } from '@clerk/nextjs'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -13,29 +14,45 @@ import {
   CardTitle
 } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
+import { Skeleton } from '@components/ui/skeleton'
 
-const user = {
-  name: 'John Doe',
-  email: 'john@example.com',
-  currentPlan: 'basic'
-}
+import { pocketbase } from '@/lib/pocketbase'
+import { Plan, Subscription } from '@/lib/definitions'
 
-const plans = [
-  { name: 'Basic', price: 9.99, features: ['1 User', '5 Projects', '5GB Storage'] },
-  {
-    name: 'Pro',
-    price: 19.99,
-    features: ['5 Users', '20 Projects', '50GB Storage', 'Priority Support']
+const Page = () => {
+  const { userId } = useAuth()
+  const { user } = useUser()
+
+  const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [plans, setPlans] = useState<Plan[]>([])
+  const [currentPlan, setCurrentPlan] = useState<Plan>()
+
+  const upgradePlan = (type: string) => {
+    console.log(`Upgrading to ${type} plan`)
   }
-]
 
-export default function SubscriptionPage() {
-  const [currentPlan, setCurrentPlan] = useState(user.currentPlan)
+  useEffect(() => {
+    pocketbase
+      .collection('plans')
+      .getList(1, 3)
+      .then((data) => setPlans(data.items as Plan[]))
+      .catch((err) => console.log(err))
+      .finally(() => setIsLoading(false))
+  }, [])
 
-  const upgradePlan = (planName: string) => {
-    console.log(`Upgrading to ${planName} plan`)
-    setCurrentPlan(planName.toLowerCase())
-  }
+  useEffect(() => {
+    pocketbase
+      .collection('subs')
+      .getFirstListItem<Subscription>('', {
+        filter: `user_id = "${userId}"`
+      })
+      .then(async (data) => {
+        pocketbase
+          .collection('plans')
+          .getFirstListItem('', { filter: `id = "${data.plan_id}"` })
+          .then((data) => setCurrentPlan(data as Plan))
+      })
+  }, [userId])
 
   return (
     <div className='mx-auto px-4 pt-4 pb-8 flex flex-col gap-6'>
@@ -49,14 +66,14 @@ export default function SubscriptionPage() {
       <Card className='mb-8'>
         <CardHeader>
           <CardTitle>Current Plan</CardTitle>
-          <CardDescription>You are currently on the {currentPlan} plan</CardDescription>
+          <CardDescription>You are currently on the {currentPlan?.type} plan</CardDescription>
         </CardHeader>
         <CardContent>
           <p>
-            <strong>Name:</strong> {user.name}
+            <strong>Name:</strong> {user?.fullName}
           </p>
           <p>
-            <strong>Email:</strong> {user.email}
+            <strong>Email:</strong> {user?.emailAddresses[0].emailAddress}
           </p>
         </CardContent>
       </Card>
@@ -64,48 +81,59 @@ export default function SubscriptionPage() {
       <div>
         <h2 className='text-2xl font-semibold mb-4'>Available Plans</h2>
         <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
-          {plans.map((plan) => (
-            <Card
-              key={plan.name}
-              className={`flex flex-col ${
-                currentPlan === plan.name.toLowerCase() ? 'border-primary' : ''
-              }`}
-            >
-              <CardHeader>
-                <CardTitle className='flex justify-between items-center'>
-                  {plan.name}
-                  {currentPlan === plan.name.toLowerCase() && (
-                    <Badge variant='default'>Current Plan</Badge>
-                  )}
-                </CardTitle>
-                <CardDescription>
-                  <span className='text-3xl font-bold'>${plan.price}</span> / month
-                </CardDescription>
-              </CardHeader>
-              <CardContent className='flex-grow'>
-                <ul className='space-y-2'>
-                  {plan.features.map((feature, index) => (
-                    <li key={index} className='flex items-center'>
-                      <Check className='mr-2 h-4 w-4 text-green-500' />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-              <CardFooter className='mt-auto'>
-                <Button
-                  className='w-full'
-                  onClick={() => upgradePlan(plan.name)}
-                  disabled={currentPlan === plan.name.toLowerCase()}
+          {isLoading ? (
+            <>
+              <Skeleton className='w-full h-[425px] rounded-md' />
+              <Skeleton className='w-full h-[425px] rounded-md' />
+            </>
+          ) : (
+            <>
+              {plans.map((plan) => (
+                <Card
+                  key={plan.name}
+                  className={`flex flex-col ${
+                    currentPlan?.type === plan.type ? 'border-primary' : ''
+                  }`}
                 >
-                  {currentPlan === plan.name.toLowerCase() ? 'Current Plan' : 'Upgrade'}
-                  {currentPlan !== plan.name.toLowerCase() && <Zap className='ml-2 h-4 w-4' />}
-                </Button>
-              </CardFooter>
-            </Card>
-          ))}
+                  <CardHeader>
+                    <CardTitle className='flex justify-between items-center'>
+                      {plan.name}
+                      {currentPlan?.type === plan.type && (
+                        <Badge variant='default'>Current Plan</Badge>
+                      )}
+                    </CardTitle>
+                    <CardDescription>
+                      <span className='text-3xl font-bold'>${plan.price}</span> / month
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className='flex-grow'>
+                    <ul className='space-y-2'>
+                      {plan.metadata.features.map((feature, index) => (
+                        <li key={index} className='flex items-center'>
+                          <Check className='mr-2 h-4 w-4 text-green-500' />
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                  <CardFooter className='mt-auto'>
+                    <Button
+                      className='w-full'
+                      onClick={() => upgradePlan(plan.type)}
+                      disabled={currentPlan?.type === plan.type}
+                    >
+                      {currentPlan?.type === plan.type ? 'Current Plan' : 'Upgrade'}
+                      {currentPlan?.type !== plan.type && <Zap className='ml-2 h-4 w-4' />}
+                    </Button>
+                  </CardFooter>
+                </Card>
+              ))}
+            </>
+          )}
         </div>
       </div>
     </div>
   )
 }
+
+export default Page
