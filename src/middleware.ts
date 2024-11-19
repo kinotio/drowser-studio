@@ -14,6 +14,19 @@ export default clerkMiddleware(async (auth, request) => {
     return NextResponse.redirect(url)
   }
 
+  if (userId && request.nextUrl.pathname === '/subscription') {
+    try {
+      await pocketbase.collection('subscriptions').getFirstListItem('', {
+        filter: `user_id = "${userId}"`
+      })
+      url.pathname = '/studio'
+      return NextResponse.redirect(url)
+    } catch (err) {
+      console.log(err)
+      return NextResponse.next()
+    }
+  }
+
   if (userId && request.nextUrl.pathname.startsWith('/studio')) {
     try {
       await pocketbase.collection('subscriptions').getFirstListItem('', {
