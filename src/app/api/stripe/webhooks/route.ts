@@ -26,19 +26,26 @@ export const POST = async (req: Request) => {
   }
 
   if (evt.type === 'checkout.session.completed') {
-    const { metadata } = evt.data.object
+    const { metadata, customer_details } = evt.data.object
 
     try {
       const sub = await pocketbase.collection('subs').getFirstListItem('', {
         filter: `user_id = "${metadata?.userId}"`
       })
 
-      await pocketbase.collection('subs').update(sub.id, { plan_id: metadata?.planId })
+      await pocketbase.collection('subs').update(sub.id, {
+        plan_id: metadata?.planId,
+        customer_email: customer_details?.email,
+        customer_name: customer_details?.name
+      })
     } catch (err) {
       console.log(err)
-      await pocketbase
-        .collection('subs')
-        .create({ user_id: metadata?.userId, plan_id: metadata?.planId })
+      await pocketbase.collection('subs').create({
+        user_id: metadata?.userId,
+        plan_id: metadata?.planId,
+        customer_email: customer_details?.email,
+        customer_name: customer_details?.name
+      })
     }
   }
 

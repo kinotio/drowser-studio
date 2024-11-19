@@ -195,6 +195,8 @@ export type Metric = {
 export type Subscription = {
   plan_id: string
   user_id: string
+  customer_email: string
+  customer_name: string
 }
 
 export type MonthlyMetric = {
