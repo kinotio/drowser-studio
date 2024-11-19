@@ -1,9 +1,9 @@
 'use client'
 
-import { useState, SetStateAction, Dispatch } from 'react'
-import { Menu, GithubIcon, Slash } from 'lucide-react'
+import { useState, SetStateAction, Dispatch, useEffect } from 'react'
+import { Menu, GithubIcon, Slash, AlertTriangle } from 'lucide-react'
 import Link from 'next/link'
-import { UserButton } from '@clerk/nextjs'
+import { UserButton, useAuth } from '@clerk/nextjs'
 import { usePathname } from 'next/navigation'
 
 import { Badge } from '@/components/ui/badge'
@@ -32,8 +32,10 @@ import {
 } from '@/components/ui/breadcrumb'
 import { Subs } from '@/components/subs'
 import { Button } from '@/components/ui/button'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 
 import { MenuType } from '@/lib/definitions'
+import { pocketbase } from '@/lib/pocketbase'
 
 const menus = [
   {
@@ -63,14 +65,49 @@ export const StudioLayout = ({
 }: Readonly<{
   children: React.ReactNode
 }>) => {
+  const { userId } = useAuth()
+
   const pathname = usePathname()
   const pathSegments = pathname.split('/').filter((segment) => segment)
 
+  const [isOverLimit, setIsOverLimit] = useState<boolean>(false)
+
+  useEffect(() => {
+    pocketbase
+      .collection('subs')
+      .getFirstListItem('', { filter: `user_id = "${userId}"` })
+      .then((sub) => {
+        pocketbase
+          .collection('reports')
+          .getList(1, 1, { filter: `user_id = "${userId}"` })
+          .then((reports) => {
+            pocketbase
+              .collection('plans')
+              .getOne(sub.plan_id)
+              .then((plan) => setIsOverLimit(plan.type === 'free' && reports.totalItems >= 5))
+          })
+      })
+      .catch((error) =>
+        console.error('An error occurred while verifying over limit reports :', error)
+      )
+  }, [userId])
+
   return (
     <>
-      <Header />
+      <Header isOverLimit={isOverLimit} />
 
       <main className='flex flex-1 flex-col overflow-auto lg:max-w-[60%] m-auto'>
+        {isOverLimit ? (
+          <Alert variant='destructive' className='my-6 container mx-auto'>
+            <AlertTriangle className='h-4 w-4' />
+            <AlertTitle>Usage Limit Exceeded</AlertTitle>
+            <AlertDescription>
+              You have exceeded your current plan's usage limit. Please upgrade your plan to
+              continue using all features.
+            </AlertDescription>
+          </Alert>
+        ) : null}
+
         <div className='flex flex-col'>
           <Breadcrumb className='container w-full m-auto px-4 py-6'>
             <BreadcrumbList>
@@ -109,7 +146,7 @@ export const StudioLayout = ({
   )
 }
 
-const Header = () => {
+const Header = ({ isOverLimit }: { isOverLimit: boolean }) => {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
@@ -125,11 +162,11 @@ const Header = () => {
           </div>
         </div>
         {/* <!-- Mobile --> */}
-        <MobileMenu isOpen={isOpen} setIsOpen={setIsOpen} />
+        <MobileMenu isOpen={isOpen} setIsOpen={setIsOpen} isOverLimit={isOverLimit} />
 
         {/* <!-- Desktop --> */}
         <div className='hidden lg:flex justify-center items-center gap-4'>
-          <ImportReport>
+          <ImportReport isOverLimit={isOverLimit}>
             <Badge className='h-8 cursor-pointer'>Import Report</Badge>
           </ImportReport>
 
@@ -185,10 +222,12 @@ const Footer = () => {
 
 const MobileMenu = ({
   isOpen,
-  setIsOpen
+  setIsOpen,
+  isOverLimit
 }: {
   isOpen: boolean
   setIsOpen: Dispatch<SetStateAction<boolean>>
+  isOverLimit: boolean
 }) => {
   return (
     <div className='flex items-center lg:hidden'>
@@ -212,7 +251,7 @@ const MobileMenu = ({
 
           <SheetFooter className='flex-col sm:flex-col justify-start items-start gap-4'>
             <div className='flex flex-col gap-4 w-full'>
-              <ImportReport>
+              <ImportReport isOverLimit={isOverLimit}>
                 <Button className='h-8 cursor-pointer w-full'>Import Report</Button>
               </ImportReport>
 

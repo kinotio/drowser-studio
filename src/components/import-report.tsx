@@ -22,11 +22,16 @@ import { TFileContent, MonthlyMetric } from '@/lib/definitions'
 import { isValidFileContent } from '@/lib/utils'
 import { pocketbase } from '@/lib/pocketbase'
 
-export const ImportReport = ({ children }: { children: React.ReactElement }) => {
+export const ImportReport = ({
+  isOverLimit,
+  children
+}: {
+  isOverLimit: boolean
+  children: React.ReactElement
+}) => {
   const [loading, setLoading] = useState<boolean>(false)
   const [reportName, setReportName] = useState<string>()
   const [reportContent, setReportContent] = useState<TFileContent | null>(null)
-  const [isOverLimit, setIsOverLimit] = useState<boolean>(false)
 
   const { userId } = useAuth()
 
@@ -102,16 +107,6 @@ export const ImportReport = ({ children }: { children: React.ReactElement }) => 
       }
     })
   }
-
-  useEffect(() => {
-    pocketbase
-      .collection('reports')
-      .getList(1, 1, { filter: `user_id = "${userId}"` })
-      .then((data) => setIsOverLimit(data.totalItems >= 5))
-      .catch((error) =>
-        console.error('An error occurred while verifying over limit reports :', error)
-      )
-  }, [userId])
 
   return (
     <>
