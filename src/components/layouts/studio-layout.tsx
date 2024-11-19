@@ -74,7 +74,7 @@ export const StudioLayout = ({
 
   useEffect(() => {
     pocketbase
-      .collection('subs')
+      .collection('subscriptions')
       .getFirstListItem('', { filter: `user_id = "${userId}"` })
       .then((sub) => {
         pocketbase

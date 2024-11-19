@@ -29,18 +29,18 @@ export const POST = async (req: Request) => {
     const { metadata, customer_details, amount_total, payment_status } = evt.data.object
 
     try {
-      const sub = await pocketbase.collection('subs').getFirstListItem('', {
+      const sub = await pocketbase.collection('subscriptions').getFirstListItem('', {
         filter: `user_id = "${metadata?.userId}"`
       })
 
-      await pocketbase.collection('subs').update(sub.id, {
+      await pocketbase.collection('subscriptions').update(sub.id, {
         plan_id: metadata?.planId,
         customer_email: customer_details?.email,
         customer_name: customer_details?.name
       })
     } catch (err) {
       console.log(err)
-      await pocketbase.collection('subs').create({
+      await pocketbase.collection('subscriptions').create({
         user_id: metadata?.userId,
         plan_id: metadata?.planId,
         customer_email: customer_details?.email,

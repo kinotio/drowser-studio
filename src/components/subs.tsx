@@ -16,7 +16,7 @@ export const Subs = () => {
 
   useEffect(() => {
     pocketbase
-      .collection('subs')
+      .collection('subscriptions')
       .getFirstListItem<Subscription>('', { filter: `user_id = "${userId}"` })
       .then((data) => {
         pocketbase
