@@ -46,14 +46,14 @@ export const POST = async (req: Request) => {
         customer_email: customer_details?.email,
         customer_name: customer_details?.name
       })
+    } finally {
+      await pocketbase.collection('payments').create({
+        user_id: metadata?.userId,
+        date: new Date(),
+        amount: amount_total,
+        status: payment_status
+      })
     }
-
-    await pocketbase.collection('payments').create({
-      user_id: metadata?.userId,
-      date: new Date(),
-      amount: amount_total,
-      status: payment_status
-    })
   }
 
   return new Response('Stripe webhooks handled successfully')
