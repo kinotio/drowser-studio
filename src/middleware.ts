@@ -16,7 +16,7 @@ export default clerkMiddleware(async (auth, request) => {
 
   if (userId && request.nextUrl.pathname.startsWith('/studio')) {
     try {
-      await pocketbase.collection('subs').getFirstListItem('', {
+      await pocketbase.collection('subscriptions').getFirstListItem('', {
         filter: `user_id = "${userId}"`
       })
       return NextResponse.next()
