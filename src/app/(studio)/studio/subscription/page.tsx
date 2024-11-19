@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Check, Zap } from 'lucide-react'
+import { Check, Zap, CreditCard } from 'lucide-react'
 import { useAuth } from '@clerk/nextjs'
 
 import {
@@ -15,9 +15,25 @@ import {
 import { Badge } from '@/components/ui/badge'
 import { Skeleton } from '@components/ui/skeleton'
 import { SubsButton } from '@/components/subs-button'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow
+} from '@/components/ui/table'
 
 import { pocketbase } from '@/lib/pocketbase'
 import { Plan, Subscription } from '@/lib/definitions'
+
+const paymentHistory = [
+  { id: 1, date: '2023-05-01', amount: 9.99, status: 'Paid' },
+  { id: 2, date: '2023-04-01', amount: 9.99, status: 'Paid' },
+  { id: 3, date: '2023-03-01', amount: 9.99, status: 'Paid' },
+  { id: 4, date: '2023-02-01', amount: 9.99, status: 'Paid' },
+  { id: 5, date: '2023-01-01', amount: 9.99, status: 'Paid' }
+]
 
 const Page = () => {
   const { userId } = useAuth()
@@ -52,7 +68,7 @@ const Page = () => {
   }, [userId])
 
   return (
-    <div className='mx-auto px-4 pt-4 pb-8 flex flex-col gap-6'>
+    <div className='mx-auto px-4 pt-4 pb-8 flex flex-col gap-6 mb-[100px]'>
       <div className='flex justify-between items-center w-full'>
         <Badge variant='secondary' className='flex gap-2'>
           <Zap size={20} />
@@ -75,7 +91,7 @@ const Page = () => {
         </CardContent>
       </Card>
 
-      <div>
+      <div className='mb-8'>
         <h2 className='text-2xl font-semibold mb-4'>Available Plans</h2>
         <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
           {isLoading ? (
@@ -132,6 +148,37 @@ const Page = () => {
             </>
           )}
         </div>
+      </div>
+
+      <div>
+        <h2 className='text-2xl font-semibold mb-4'>Payment History</h2>
+        <Card>
+          <CardContent>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Date</TableHead>
+                  <TableHead>Amount</TableHead>
+                  <TableHead>Status</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {paymentHistory.map((payment) => (
+                  <TableRow key={payment.id}>
+                    <TableCell>{payment.date}</TableCell>
+                    <TableCell>${payment.amount.toFixed(2)}</TableCell>
+                    <TableCell>
+                      <span className='flex items-center'>
+                        <CreditCard className='mr-2 h-4 w-4 text-green-500' />
+                        {payment.status}
+                      </span>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </CardContent>
+        </Card>
       </div>
     </div>
   )
