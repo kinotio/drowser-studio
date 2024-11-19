@@ -34,6 +34,7 @@ import {
 
 import { pocketbase } from '@/lib/pocketbase'
 import { Plan, Subscription, Payment } from '@/lib/definitions'
+import { readableTimestamp } from '@/lib/utils'
 
 const Page = () => {
   const { userId } = useAuth()
@@ -190,7 +191,7 @@ const Page = () => {
               <TableBody>
                 {payments.map((payment) => (
                   <TableRow key={payment.id}>
-                    <TableCell>{payment.date}</TableCell>
+                    <TableCell>{readableTimestamp(payment.date)}</TableCell>
                     <TableCell>${payment.amount.toFixed(2)}</TableCell>
                     <TableCell>
                       <span className='flex items-center'>
