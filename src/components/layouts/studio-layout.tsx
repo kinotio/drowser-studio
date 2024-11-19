@@ -102,8 +102,8 @@ export const StudioLayout = ({
             <AlertTriangle className='h-4 w-4' />
             <AlertTitle>Usage Limit Exceeded</AlertTitle>
             <AlertDescription>
-              You have exceeded your current plan's usage limit. Please upgrade your plan to
-              continue using all features.
+              {`You have exceeded your current plan's usage limit. Please upgrade your plan to
+              continue using all features.`}
             </AlertDescription>
           </Alert>
         ) : null}

@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { toast } from 'sonner'
 import { uniqueNamesGenerator, colors, animals, adjectives } from 'unique-names-generator'
 import { useAuth } from '@clerk/nextjs'
