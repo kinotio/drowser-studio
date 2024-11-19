@@ -140,7 +140,7 @@ const Page = () => {
                       )}
                     </CardTitle>
                     <CardDescription>
-                      <span className='text-3xl font-bold'>${plan.price}</span> / month
+                      <span className='text-3xl font-bold'>${plan.price.toFixed(2)}</span> / month
                     </CardDescription>
                   </CardHeader>
                   <CardContent className='flex-grow'>
