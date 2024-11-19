@@ -33,7 +33,6 @@ import {
 import { Subs } from '@/components/subs'
 import { Button } from '@/components/ui/button'
 
-import { APP_VERSION } from '@/lib/constants'
 import { MenuType } from '@/lib/definitions'
 
 const menus = [
@@ -157,7 +156,6 @@ const Footer = () => {
       <div className='flex flex-1 items-center justify-between px-4 w-full'>
         <div className='flex flex-col'>
           <div className='flex px-6 items-center justify-between gap-4'>
-            <Badge>{APP_VERSION}</Badge>
             <Link href={'https://github.com/kinotio/drowser-studio'}>
               <GithubIcon size={20} />
             </Link>

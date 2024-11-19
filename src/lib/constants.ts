@@ -1,7 +1,3 @@
-import pkg from '../../package.json'
-
-export const APP_VERSION = `v${pkg.version}`
-
 const BASE_EVENT_TYPES = [
   'unknown',
   'login',
