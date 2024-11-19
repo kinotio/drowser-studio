@@ -26,7 +26,7 @@ export const POST = async (req: Request) => {
   }
 
   if (evt.type === 'checkout.session.completed') {
-    const { metadata, customer_details } = evt.data.object
+    const { metadata, customer_details, amount_total, payment_status } = evt.data.object
 
     try {
       const sub = await pocketbase.collection('subs').getFirstListItem('', {
@@ -47,6 +47,13 @@ export const POST = async (req: Request) => {
         customer_name: customer_details?.name
       })
     }
+
+    await pocketbase.collection('payments').create({
+      user_id: metadata?.userId,
+      date: new Date(),
+      amount: amount_total,
+      status: payment_status
+    })
   }
 
   return new Response('Stripe webhooks handled successfully')
