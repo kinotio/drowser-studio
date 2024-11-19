@@ -213,3 +213,15 @@ export type ChartDataItem = {
   name: string
   total: number
 }
+
+export type Payment = {
+  amount: number
+  collectionId: string
+  collectionName: string
+  created: string
+  date: string
+  id: string
+  status: string
+  updated: string
+  user_id: string
+}

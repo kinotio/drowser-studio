@@ -23,17 +23,17 @@ import {
   TableHeader,
   TableRow
 } from '@/components/ui/table'
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationPrevious,
+  PaginationLink,
+  PaginationNext
+} from '@/components/ui/pagination'
 
 import { pocketbase } from '@/lib/pocketbase'
-import { Plan, Subscription } from '@/lib/definitions'
-
-const paymentHistory = [
-  { id: 1, date: '2023-05-01', amount: 9.99, status: 'Paid' },
-  { id: 2, date: '2023-04-01', amount: 9.99, status: 'Paid' },
-  { id: 3, date: '2023-03-01', amount: 9.99, status: 'Paid' },
-  { id: 4, date: '2023-02-01', amount: 9.99, status: 'Paid' },
-  { id: 5, date: '2023-01-01', amount: 9.99, status: 'Paid' }
-]
+import { Plan, Subscription, Payment } from '@/lib/definitions'
 
 const Page = () => {
   const { userId } = useAuth()
@@ -42,6 +42,15 @@ const Page = () => {
   const [plans, setPlans] = useState<Plan[]>([])
   const [currentPlan, setCurrentPlan] = useState<Plan>()
   const [sub, setSub] = useState<Subscription>()
+  const [currentPage, setCurrentPage] = useState<number>(1)
+  const [total, setTotal] = useState<number>(0)
+  const [payments, setPayments] = useState<Payment[]>([])
+
+  const itemsPerPage = 6
+
+  const totalPages = Math.ceil(total / itemsPerPage)
+
+  const handlePageChange = (pageNumber: number) => setCurrentPage(pageNumber)
 
   useEffect(() => {
     pocketbase
@@ -65,7 +74,22 @@ const Page = () => {
           .getFirstListItem('', { filter: `id = "${data.plan_id}"` })
           .then((data) => setCurrentPlan(data as Plan))
       })
+      .finally(() => setIsLoading(false))
   }, [userId])
+
+  useEffect(() => {
+    pocketbase
+      .collection('payments')
+      .getList(currentPage, itemsPerPage, {
+        filter: `user_id = "${userId}"`
+      })
+      .then((data) => {
+        setPayments(data.items as Payment[])
+        setTotal(data.totalItems)
+      })
+      .catch((err) => console.log(err))
+      .finally(() => setIsLoading(false))
+  }, [userId, currentPage])
 
   return (
     <div className='mx-auto px-4 pt-4 pb-8 flex flex-col gap-6 mb-[100px]'>
@@ -154,7 +178,7 @@ const Page = () => {
         <h2 className='text-2xl font-semibold mb-4'>Payment History</h2>
         <Card>
           <CardContent>
-            <Table>
+            <Table className='mb-6'>
               <TableHeader>
                 <TableRow>
                   <TableHead>Date</TableHead>
@@ -163,24 +187,64 @@ const Page = () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {paymentHistory.map((payment) => (
+                {payments.map((payment) => (
                   <TableRow key={payment.id}>
                     <TableCell>{payment.date}</TableCell>
                     <TableCell>${payment.amount.toFixed(2)}</TableCell>
                     <TableCell>
                       <span className='flex items-center'>
                         <CreditCard className='mr-2 h-4 w-4 text-green-500' />
-                        {payment.status}
+                        {payment.status.charAt(0).toUpperCase() + payment.status.slice(1)}
                       </span>
                     </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
             </Table>
+
+            <PayementsTablePagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              handlePageChange={handlePageChange}
+            />
           </CardContent>
         </Card>
       </div>
     </div>
+  )
+}
+
+const PayementsTablePagination = ({
+  currentPage,
+  totalPages,
+  handlePageChange
+}: {
+  currentPage: number
+  totalPages: number
+  handlePageChange: (page: number) => void
+}) => {
+  return (
+    <Pagination>
+      <PaginationContent>
+        <PaginationItem>
+          {currentPage !== 1 ? (
+            <PaginationPrevious href='#' onClick={() => handlePageChange(currentPage - 1)} />
+          ) : null}
+        </PaginationItem>
+        {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+          <PaginationItem key={page}>
+            <PaginationLink isActive={page === currentPage} onClick={() => handlePageChange(page)}>
+              {page}
+            </PaginationLink>
+          </PaginationItem>
+        ))}
+        <PaginationItem>
+          {currentPage !== totalPages ? (
+            <PaginationNext onClick={() => handlePageChange(currentPage + 1)} />
+          ) : null}
+        </PaginationItem>
+      </PaginationContent>
+    </Pagination>
   )
 }
 
