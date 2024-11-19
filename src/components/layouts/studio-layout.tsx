@@ -84,7 +84,11 @@ export const StudioLayout = ({
             pocketbase
               .collection('plans')
               .getOne(sub.plan_id)
-              .then((plan) => setIsOverLimit(plan.type === 'free' && reports.totalItems >= 5))
+              .then((plan) => {
+                console.log(plan.type)
+                console.log(reports.totalItems)
+                setIsOverLimit(plan.type === 'free' && reports.totalItems >= 5)
+              })
           })
       })
       .catch((error) =>
@@ -94,7 +98,7 @@ export const StudioLayout = ({
 
   return (
     <>
-      <Header isOverLimit={isOverLimit} />
+      <Header pathname={pathname} isOverLimit={isOverLimit} />
 
       <main className='flex flex-1 flex-col overflow-auto lg:max-w-[60%] m-auto'>
         {isOverLimit ? (
@@ -146,7 +150,7 @@ export const StudioLayout = ({
   )
 }
 
-const Header = ({ isOverLimit }: { isOverLimit: boolean }) => {
+const Header = ({ pathname, isOverLimit }: { pathname: string; isOverLimit: boolean }) => {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
@@ -162,11 +166,16 @@ const Header = ({ isOverLimit }: { isOverLimit: boolean }) => {
           </div>
         </div>
         {/* <!-- Mobile --> */}
-        <MobileMenu isOpen={isOpen} setIsOpen={setIsOpen} isOverLimit={isOverLimit} />
+        <MobileMenu
+          pathname={pathname}
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          isOverLimit={isOverLimit}
+        />
 
         {/* <!-- Desktop --> */}
         <div className='hidden lg:flex justify-center items-center gap-4'>
-          <ImportReport isOverLimit={isOverLimit}>
+          <ImportReport show={!isOverLimit && pathname !== '/subscription'}>
             <Badge className='h-8 cursor-pointer'>Import Report</Badge>
           </ImportReport>
 
@@ -221,10 +230,12 @@ const Footer = () => {
 }
 
 const MobileMenu = ({
+  pathname,
   isOpen,
   setIsOpen,
   isOverLimit
 }: {
+  pathname: string
   isOpen: boolean
   setIsOpen: Dispatch<SetStateAction<boolean>>
   isOverLimit: boolean
@@ -251,7 +262,7 @@ const MobileMenu = ({
 
           <SheetFooter className='flex-col sm:flex-col justify-start items-start gap-4'>
             <div className='flex flex-col gap-4 w-full'>
-              <ImportReport isOverLimit={isOverLimit}>
+              <ImportReport show={!isOverLimit && pathname !== '/subscription'}>
                 <Button className='h-8 cursor-pointer w-full'>Import Report</Button>
               </ImportReport>
 

@@ -23,10 +23,10 @@ import { isValidFileContent } from '@/lib/utils'
 import { pocketbase } from '@/lib/pocketbase'
 
 export const ImportReport = ({
-  isOverLimit,
+  show,
   children
 }: {
-  isOverLimit: boolean
+  show: boolean
   children: React.ReactElement
 }) => {
   const [loading, setLoading] = useState<boolean>(false)
@@ -110,7 +110,7 @@ export const ImportReport = ({
 
   return (
     <>
-      {!isOverLimit ? (
+      {show ? (
         <AlertDialog>
           <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
           <AlertDialogContent>
