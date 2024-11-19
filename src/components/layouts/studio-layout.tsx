@@ -161,9 +161,11 @@ const Header = ({ pathname, isOverLimit }: { pathname: string; isOverLimit: bool
             <DrowserStudio width={200} height={50} />
           </Link>
 
-          <div className='hidden lg:flex'>
-            <Navigation menus={menus} />
-          </div>
+          {!isOverLimit && pathname !== '/subscription' ? (
+            <div className='hidden lg:flex'>
+              <Navigation menus={menus} />
+            </div>
+          ) : null}
         </div>
         {/* <!-- Mobile --> */}
         <MobileMenu
@@ -257,7 +259,9 @@ const MobileMenu = ({
               </SheetTitle>
             </SheetHeader>
 
-            <Navigation isMobile={true} menus={menus} />
+            {!isOverLimit && pathname !== '/subscription' ? (
+              <Navigation isMobile={true} menus={menus} />
+            ) : null}
           </div>
 
           <SheetFooter className='flex-col sm:flex-col justify-start items-start gap-4'>
