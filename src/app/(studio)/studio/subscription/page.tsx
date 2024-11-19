@@ -81,7 +81,8 @@ const Page = () => {
     pocketbase
       .collection('payments')
       .getList(currentPage, itemsPerPage, {
-        filter: `user_id = "${userId}"`
+        filter: `user_id = "${userId}"`,
+        sort: '-created'
       })
       .then((data) => {
         setPayments(data.items as Payment[])
