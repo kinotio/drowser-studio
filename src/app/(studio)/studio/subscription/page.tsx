@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { Check, Zap } from 'lucide-react'
-import { useAuth, useUser } from '@clerk/nextjs'
+import { useAuth } from '@clerk/nextjs'
 
 import {
   Card,
@@ -21,11 +21,11 @@ import { Plan, Subscription } from '@/lib/definitions'
 
 const Page = () => {
   const { userId } = useAuth()
-  const { user } = useUser()
 
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [plans, setPlans] = useState<Plan[]>([])
   const [currentPlan, setCurrentPlan] = useState<Plan>()
+  const [sub, setSub] = useState<Subscription>()
 
   useEffect(() => {
     pocketbase
@@ -43,6 +43,7 @@ const Page = () => {
         filter: `user_id = "${userId}"`
       })
       .then(async (data) => {
+        setSub(data as Subscription)
         pocketbase
           .collection('plans')
           .getFirstListItem('', { filter: `id = "${data.plan_id}"` })
@@ -66,10 +67,10 @@ const Page = () => {
         </CardHeader>
         <CardContent>
           <p>
-            <strong>Name:</strong> {user?.fullName}
+            <strong>Name:</strong> {sub?.customer_name}
           </p>
           <p>
-            <strong>Email:</strong> {user?.emailAddresses[0].emailAddress}
+            <strong>Email:</strong> {sub?.customer_email}
           </p>
         </CardContent>
       </Card>
