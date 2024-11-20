@@ -39,6 +39,7 @@ import {
   DialogHeader,
   DialogTitle
 } from '@/components/ui/dialog'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 
 import { readableTimestamp } from '@/lib/utils'
 import { pocketbase } from '@/lib/pocketbase'
@@ -135,10 +136,15 @@ const Page = () => {
         </div>
       </div>
 
-      {viewType === 'list' ? (
+      {Array.isArray(reports) && reports.length === 0 ? (
+        <Alert>
+          <AlertTitle>Aucun rapport disponible</AlertTitle>
+          <AlertDescription>Il n'y a actuellement aucun rapport à afficher.</AlertDescription>
+        </Alert>
+      ) : viewType === 'list' ? (
         <ListView reports={reports} setReportToRemove={setReportToRemove} />
       ) : (
-        <CardView reports={reports} isLoading={isLoading} setReportToRemove={setReportToRemove} />
+        <CardView isLoading={isLoading} reports={reports} setReportToRemove={setReportToRemove} />
       )}
 
       {!isLoading && reports.length !== 0 ? (
