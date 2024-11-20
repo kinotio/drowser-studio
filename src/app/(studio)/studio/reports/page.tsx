@@ -2,7 +2,14 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { ChevronDownIcon, LayoutListIcon, LayoutGridIcon, FilesIcon } from 'lucide-react'
+import {
+  ChevronDownIcon,
+  LayoutListIcon,
+  LayoutGridIcon,
+  FilesIcon,
+  MoreVerticalIcon,
+  Trash2Icon
+} from 'lucide-react'
 import { useAuth } from '@clerk/nextjs'
 
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
@@ -24,6 +31,14 @@ import {
   PaginationPrevious
 } from '@/components/ui/pagination'
 import { Input } from '@/components/ui/input'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle
+} from '@/components/ui/dialog'
 
 import { readableTimestamp } from '@/lib/utils'
 import { pocketbase } from '@/lib/pocketbase'
@@ -40,6 +55,7 @@ const Page = () => {
   const [searchTerm, setSearchTerm] = useState<string>('')
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [total, setTotal] = useState<number>(0)
+  const [reportToRemove, setReportToRemove] = useState<string | null>(null)
 
   const itemsPerPage = 12
 
@@ -47,7 +63,7 @@ const Page = () => {
 
   const handlePageChange = (pageNumber: number) => setCurrentPage(pageNumber)
 
-  useEffect(() => {
+  const fetchReports = () => {
     pocketbase
       .collection('reports')
       .getList(currentPage, itemsPerPage, {
@@ -59,6 +75,20 @@ const Page = () => {
       })
       .catch((err) => console.log(err))
       .finally(() => setIsLoading(false))
+  }
+
+  const handleRemoveReport = (reportId: string) => {
+    pocketbase
+      .collection('reports')
+      .delete(reportId)
+      .then(() => {
+        setReportToRemove(null)
+        fetchReports()
+      })
+  }
+
+  useEffect(() => {
+    fetchReports()
   }, [userId, currentPage, searchTerm])
 
   return (
@@ -106,9 +136,9 @@ const Page = () => {
       </div>
 
       {viewType === 'list' ? (
-        <ListView reports={reports} />
+        <ListView reports={reports} setReportToRemove={setReportToRemove} />
       ) : (
-        <CardView reports={reports} isLoading={isLoading} />
+        <CardView reports={reports} isLoading={isLoading} setReportToRemove={setReportToRemove} />
       )}
 
       {!isLoading && reports.length !== 0 ? (
@@ -118,19 +148,41 @@ const Page = () => {
           handlePageChange={handlePageChange}
         />
       ) : null}
+
+      <ConfirmRemoveDialog
+        isOpen={reportToRemove !== null}
+        onClose={() => setReportToRemove(null)}
+        onConfirm={() => reportToRemove && handleRemoveReport(reportToRemove)}
+      />
     </div>
   )
 }
 
-const ListView = ({ reports }: { reports: Report[] }) => {
+const ListView = ({
+  reports,
+
+  setReportToRemove
+}: {
+  reports: Report[]
+
+  setReportToRemove: (reportId: string) => void
+}) => {
   return (
     <ul className='space-y-4 flex flex-col gap-2'>
       {reports.map((report) => (
         <Link href={`/studio/reports/${report.slug}`} key={report.id}>
-          <li className='border rounded-lg p-4 hover:bg-gray-50'>
-            <h2 className='text-lg font-semibold'>{report.name}</h2>
-            <p className='text-sm'>{report.slug}</p>
-            <p className='text-sm text-gray-500 mt-2'>Date: {readableTimestamp(report.created)}</p>
+          <li
+            key={report.id}
+            className='border rounded-lg p-4 hover:bg-gray-50 flex justify-between items-start'
+          >
+            <div>
+              <h2 className='text-lg font-semibold'>{report.name}</h2>
+              <p className='text-gray-600'>{report.slug}</p>
+              <p className='text-sm text-gray-500 mt-2'>
+                Date: {readableTimestamp(report.created)}
+              </p>
+            </div>
+            <ReportMenu reportId={report.id} setReportToRemove={setReportToRemove} />
           </li>
         </Link>
       ))}
@@ -138,7 +190,17 @@ const ListView = ({ reports }: { reports: Report[] }) => {
   )
 }
 
-const CardView = ({ reports, isLoading }: { reports: Report[]; isLoading: boolean }) => {
+const CardView = ({
+  reports,
+  isLoading,
+
+  setReportToRemove
+}: {
+  reports: Report[]
+  isLoading: boolean
+
+  setReportToRemove: (reportId: string) => void
+}) => {
   return (
     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
       {isLoading ? (
@@ -152,17 +214,18 @@ const CardView = ({ reports, isLoading }: { reports: Report[]; isLoading: boolea
       ) : (
         <>
           {reports.map((report) => (
-            <Link href={`/studio/reports/${report.slug}`} key={report.id}>
-              <Card className='h-[175px]'>
-                <CardHeader>
+            <Card key={report.id}>
+              <CardHeader className='flex flex-row items-start justify-between space-y-0'>
+                <div>
                   <CardTitle>{report.name}</CardTitle>
                   <CardDescription>{report.slug}</CardDescription>
-                </CardHeader>
-                <CardFooter>
-                  <p className='text-sm text-gray-500'>Date: {readableTimestamp(report.created)}</p>
-                </CardFooter>
-              </Card>
-            </Link>
+                </div>
+                <ReportMenu reportId={report.id} setReportToRemove={setReportToRemove} />
+              </CardHeader>
+              <CardFooter>
+                <p className='text-sm text-gray-500'>Date: {readableTimestamp(report.created)}</p>
+              </CardFooter>
+            </Card>
           ))}
         </>
       )}
@@ -201,6 +264,62 @@ const ReportsPagination = ({
         </PaginationItem>
       </PaginationContent>
     </Pagination>
+  )
+}
+
+const ReportMenu = ({
+  reportId,
+  setReportToRemove
+}: {
+  reportId: string
+  setReportToRemove: (reportId: string) => void
+}) => {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant='ghost' size='icon' className='h-8 w-8 p-0'>
+          <span className='sr-only'>Open menu</span>
+          <MoreVerticalIcon className='h-4 w-4' />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align='end'>
+        <DropdownMenuItem onClick={() => setReportToRemove(reportId)} className='text-red-600'>
+          <Trash2Icon className='mr-2 h-4 w-4' />
+          Remove
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
+}
+
+const ConfirmRemoveDialog = ({
+  isOpen,
+  onClose,
+  onConfirm
+}: {
+  isOpen: boolean
+  onClose: () => void
+  onConfirm: () => void
+}) => {
+  return (
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Confirm Removal</DialogTitle>
+          <DialogDescription>
+            Are you sure you want to remove this report? This action cannot be undone.
+          </DialogDescription>
+        </DialogHeader>
+        <DialogFooter>
+          <Button variant='outline' onClick={onClose}>
+            Cancel
+          </Button>
+          <Button variant='destructive' onClick={onConfirm}>
+            Confirm
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   )
 }
 

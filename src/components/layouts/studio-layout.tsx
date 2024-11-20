@@ -84,11 +84,7 @@ export const StudioLayout = ({
             pocketbase
               .collection('plans')
               .getOne(sub.plan_id)
-              .then((plan) => {
-                console.log(plan.type)
-                console.log(reports.totalItems)
-                setIsOverLimit(plan.type === 'free' && reports.totalItems >= 5)
-              })
+              .then((plan) => setIsOverLimit(plan.type === 'free' && reports.totalItems >= 5))
           })
       })
       .catch((error) =>
