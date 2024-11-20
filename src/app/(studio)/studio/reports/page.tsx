@@ -138,8 +138,8 @@ const Page = () => {
 
       {Array.isArray(reports) && reports.length === 0 ? (
         <Alert>
-          <AlertTitle>Aucun rapport disponible</AlertTitle>
-          <AlertDescription>Il n'y a actuellement aucun rapport à afficher.</AlertDescription>
+          <AlertTitle>No reports available</AlertTitle>
+          <AlertDescription>There are currently no reports to display.</AlertDescription>
         </Alert>
       ) : viewType === 'list' ? (
         <ListView reports={reports} setReportToRemove={setReportToRemove} />
