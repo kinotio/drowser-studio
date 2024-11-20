@@ -214,18 +214,20 @@ const CardView = ({
       ) : (
         <>
           {reports.map((report) => (
-            <Card key={report.id}>
-              <CardHeader className='flex flex-row items-start justify-between space-y-0'>
-                <div>
-                  <CardTitle>{report.name}</CardTitle>
-                  <CardDescription>{report.slug}</CardDescription>
-                </div>
-                <ReportMenu reportId={report.id} setReportToRemove={setReportToRemove} />
-              </CardHeader>
-              <CardFooter>
-                <p className='text-sm text-gray-500'>Date: {readableTimestamp(report.created)}</p>
-              </CardFooter>
-            </Card>
+            <Link href={`/studio/reports/${report.slug}`} key={report.id}>
+              <Card>
+                <CardHeader className='flex flex-row items-start justify-between space-y-0'>
+                  <div>
+                    <CardTitle>{report.name}</CardTitle>
+                    <CardDescription>{report.slug}</CardDescription>
+                  </div>
+                  <ReportMenu reportId={report.id} setReportToRemove={setReportToRemove} />
+                </CardHeader>
+                <CardFooter>
+                  <p className='text-sm text-gray-500'>Date: {readableTimestamp(report.created)}</p>
+                </CardFooter>
+              </Card>
+            </Link>
           ))}
         </>
       )}
@@ -283,7 +285,10 @@ const ReportMenu = ({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align='end'>
-        <DropdownMenuItem onClick={() => setReportToRemove(reportId)} className='text-red-600'>
+        <DropdownMenuItem
+          onClick={() => setReportToRemove(reportId)}
+          className='text-red-600 cursor-pointer'
+        >
           <Trash2Icon className='mr-2 h-4 w-4' />
           Remove
         </DropdownMenuItem>
