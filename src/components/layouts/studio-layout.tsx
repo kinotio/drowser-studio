@@ -275,7 +275,11 @@ const MobileMenu = ({
             <Separator className='mb-2' />
             <div className='flex justify-between w-full items-center'>
               <ToggleTheme />
-              <UserButton />
+
+              <div className='flex gap-4 items-center'>
+                <Subs />
+                <UserButton />
+              </div>
             </div>
           </SheetFooter>
         </SheetContent>
