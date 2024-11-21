@@ -52,3 +52,5 @@ export const months = [
   'Nov',
   'Dec'
 ]
+
+export const FREE_MAX_REPORT_COUNT = 5
