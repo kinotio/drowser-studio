@@ -36,6 +36,7 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 
 import { MenuType } from '@/lib/definitions'
 import { pocketbase } from '@/lib/pocketbase'
+import { FREE_MAX_REPORT_COUNT } from '@/lib/constants'
 
 const menus = [
   {
@@ -84,7 +85,9 @@ export const StudioLayout = ({
             pocketbase
               .collection('plans')
               .getOne(sub.plan_id)
-              .then((plan) => setIsOverLimit(plan.type === 'free' && reports.totalItems >= 5))
+              .then((plan) =>
+                setIsOverLimit(plan.type === 'free' && reports.totalItems >= FREE_MAX_REPORT_COUNT)
+              )
           })
       })
       .catch((error) =>
