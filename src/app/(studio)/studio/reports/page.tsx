@@ -12,6 +12,7 @@ import {
   RefreshCcwIcon
 } from 'lucide-react'
 import { useAuth } from '@clerk/nextjs'
+import { toast } from 'sonner'
 
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -81,10 +82,9 @@ const Page = () => {
   }, [currentPage, itemsPerPage, searchTerm, userId])
 
   const handleRemoveReport = (reportId: string) => {
-    pocketbase
-      .collection('reports')
-      .delete(reportId)
-      .then(async () => {
+    toast.promise(pocketbase.collection('reports').delete(reportId), {
+      loading: 'Deleting report',
+      success: async () => {
         setReportToRemove(null)
         fetchReports()
 
@@ -94,7 +94,11 @@ const Page = () => {
           user_id: userId,
           device: 'unknown'
         })
-      })
+
+        return 'Report deleted'
+      },
+      error: () => 'An error occurred while deleting report'
+    })
   }
 
   useEffect(() => {
@@ -197,21 +201,19 @@ const ListView = ({
   return (
     <ul className='space-y-4 flex flex-col gap-2'>
       {reports.map((report) => (
-        <Link href={`/studio/reports/${report.slug}`} key={report.id}>
-          <li
-            key={report.id}
-            className='border rounded-lg p-4 hover:bg-gray-50 flex justify-between items-start'
-          >
-            <div>
+        <li
+          key={report.id}
+          className='border rounded-lg p-4 hover:bg-gray-50 flex justify-between items-start'
+        >
+          <div>
+            <Link href={`/studio/reports/${report.slug}`}>
               <h2 className='text-lg font-semibold'>{report.name}</h2>
-              <p className='text-gray-600'>{report.slug}</p>
-              <p className='text-sm text-gray-500 mt-2'>
-                Date: {readableTimestamp(report.created)}
-              </p>
-            </div>
-            <ReportMenu reportId={report.id} setReportToRemove={setReportToRemove} />
-          </li>
-        </Link>
+            </Link>
+            <p className='text-gray-600'>{report.slug}</p>
+            <p className='text-sm text-gray-500 mt-2'>Date: {readableTimestamp(report.created)}</p>
+          </div>
+          <ReportMenu reportId={report.id} setReportToRemove={setReportToRemove} />
+        </li>
       ))}
     </ul>
   )
@@ -241,20 +243,20 @@ const CardView = ({
       ) : (
         <>
           {reports.map((report) => (
-            <Link href={`/studio/reports/${report.slug}`} key={report.id}>
-              <Card>
-                <CardHeader className='flex flex-row items-start justify-between space-y-0'>
-                  <div>
+            <Card key={report.id}>
+              <CardHeader className='flex flex-row items-start justify-between space-y-0'>
+                <div>
+                  <Link href={`/studio/reports/${report.slug}`}>
                     <CardTitle>{report.name}</CardTitle>
-                    <CardDescription>{report.slug}</CardDescription>
-                  </div>
-                  <ReportMenu reportId={report.id} setReportToRemove={setReportToRemove} />
-                </CardHeader>
-                <CardFooter>
-                  <p className='text-sm text-gray-500'>Date: {readableTimestamp(report.created)}</p>
-                </CardFooter>
-              </Card>
-            </Link>
+                  </Link>
+                  <CardDescription>{report.slug}</CardDescription>
+                </div>
+                <ReportMenu reportId={report.id} setReportToRemove={setReportToRemove} />
+              </CardHeader>
+              <CardFooter>
+                <p className='text-sm text-gray-500'>Date: {readableTimestamp(report.created)}</p>
+              </CardFooter>
+            </Card>
           ))}
         </>
       )}
