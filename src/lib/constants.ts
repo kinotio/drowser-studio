@@ -3,7 +3,7 @@ const BASE_EVENT_TYPES = [
   'login',
   'account_created',
   'password_change',
-  'report_added',
+  'report_imported',
   'inboxes_preferences_change',
   'profile_information_change',
   'logout'
