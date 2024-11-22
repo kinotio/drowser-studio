@@ -45,7 +45,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip
 
 import { readableTimestamp } from '@/lib/utils'
 import { pocketbase } from '@/lib/pocketbase'
-import { Report } from '@/lib/definitions'
+import { Report, Activity } from '@/lib/definitions'
 
 type ViewType = 'list' | 'card'
 
@@ -84,9 +84,16 @@ const Page = () => {
     pocketbase
       .collection('reports')
       .delete(reportId)
-      .then(() => {
+      .then(async () => {
         setReportToRemove(null)
         fetchReports()
+
+        await pocketbase.collection('activities').create<Activity>({
+          type: 'report_deleted',
+          description: 'Report deleted',
+          user_id: userId,
+          device: 'unknown'
+        })
       })
   }
 
