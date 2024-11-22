@@ -8,7 +8,8 @@ import {
   LayoutGridIcon,
   FilesIcon,
   MoreVerticalIcon,
-  Trash2Icon
+  Trash2Icon,
+  RefreshCcwIcon
 } from 'lucide-react'
 import { useAuth } from '@clerk/nextjs'
 
@@ -40,6 +41,7 @@ import {
   DialogTitle
 } from '@/components/ui/dialog'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 
 import { readableTimestamp } from '@/lib/utils'
 import { pocketbase } from '@/lib/pocketbase'
@@ -90,11 +92,12 @@ const Page = () => {
 
   useEffect(() => {
     fetchReports()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId, currentPage, searchTerm])
 
   return (
     <div className='container mx-auto p-4'>
-      <div className='flex justify-between items-center mb-6'>
+      <div className='flex justify-between items-center mb-8'>
         <div>
           <Badge variant='secondary' className='flex gap-2'>
             <FilesIcon size={20} />
@@ -103,6 +106,17 @@ const Page = () => {
         </div>
 
         <div className='flex items-center gap-2'>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button variant={'outline'} onClick={fetchReports}>
+                <RefreshCcwIcon className='h-4 w-4' size={20} />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <span>Refresh Reports</span>
+            </TooltipContent>
+          </Tooltip>
+
           <Input
             name='search'
             type='text'

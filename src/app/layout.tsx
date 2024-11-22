@@ -6,6 +6,7 @@ import { ClerkProvider, ClerkLoaded } from '@clerk/nextjs'
 import Script from 'next/script'
 
 import { ThemeProvider } from '@/components/theme-provider'
+import { TooltipProvider } from '@/components/ui/tooltip'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -38,7 +39,9 @@ const Layout = ({
             enableSystem
             disableTransitionOnChange
           >
-            <ClerkLoaded>{children}</ClerkLoaded>
+            <ClerkLoaded>
+              <TooltipProvider>{children}</TooltipProvider>
+            </ClerkLoaded>
           </ThemeProvider>
         </body>
       </html>
