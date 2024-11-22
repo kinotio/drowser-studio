@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import {
   ChevronDownIcon,
@@ -66,7 +66,7 @@ const Page = () => {
 
   const handlePageChange = (pageNumber: number) => setCurrentPage(pageNumber)
 
-  const fetchReports = () => {
+  const fetchReports = useCallback(() => {
     pocketbase
       .collection('reports')
       .getList(currentPage, itemsPerPage, {
@@ -78,7 +78,7 @@ const Page = () => {
       })
       .catch((err) => console.log(err))
       .finally(() => setIsLoading(false))
-  }
+  }, [currentPage, itemsPerPage, searchTerm, userId])
 
   const handleRemoveReport = (reportId: string) => {
     pocketbase
@@ -92,7 +92,6 @@ const Page = () => {
 
   useEffect(() => {
     fetchReports()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId, currentPage, searchTerm])
 
   return (
