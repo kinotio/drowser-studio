@@ -99,6 +99,7 @@ const Page = () => {
 
   useEffect(() => {
     fetchReports()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId, currentPage, searchTerm])
 
   return (
