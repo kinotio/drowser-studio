@@ -1,9 +1,9 @@
 'use client'
 
-import { useState, SetStateAction, Dispatch, useEffect } from 'react'
-import { Menu, GithubIcon, Slash, AlertTriangle } from 'lucide-react'
+import { useState, SetStateAction, Dispatch } from 'react'
+import { Menu, GithubIcon, Slash } from 'lucide-react'
 import Link from 'next/link'
-import { UserButton, useAuth } from '@clerk/nextjs'
+import { UserButton } from '@clerk/nextjs'
 import { usePathname } from 'next/navigation'
 
 import { Badge } from '@/components/ui/badge'
@@ -32,11 +32,8 @@ import {
 } from '@/components/ui/breadcrumb'
 import { Subs } from '@/components/subs'
 import { Button } from '@/components/ui/button'
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 
 import { MenuType } from '@/lib/definitions'
-import { pocketbase } from '@/lib/pocketbase'
-import { FREE_MAX_REPORT_COUNT } from '@/lib/constants'
 
 const menus = [
   {
@@ -66,51 +63,14 @@ export const StudioLayout = ({
 }: Readonly<{
   children: React.ReactNode
 }>) => {
-  const { userId } = useAuth()
-
   const pathname = usePathname()
   const pathSegments = pathname.split('/').filter((segment) => segment)
 
-  const [isOverLimit, setIsOverLimit] = useState<boolean>(false)
-
-  useEffect(() => {
-    pocketbase
-      .collection('subscriptions')
-      .getFirstListItem('', { filter: `user_id = "${userId}"` })
-      .then((sub) => {
-        pocketbase
-          .collection('reports')
-          .getList(1, 1, { filter: `user_id = "${userId}"` })
-          .then((reports) => {
-            pocketbase
-              .collection('plans')
-              .getOne(sub.plan_id)
-              .then((plan) =>
-                setIsOverLimit(plan.type === 'free' && reports.totalItems >= FREE_MAX_REPORT_COUNT)
-              )
-          })
-      })
-      .catch((error) =>
-        console.error('An error occurred while verifying over limit reports :', error)
-      )
-  }, [userId])
-
   return (
     <>
-      <Header pathname={pathname} isOverLimit={isOverLimit} />
+      <Header pathname={pathname} />
 
       <main className='flex flex-1 flex-col overflow-auto lg:max-w-[60%] m-auto'>
-        {isOverLimit ? (
-          <Alert variant='destructive' className='my-6 container mx-auto'>
-            <AlertTriangle className='h-4 w-4' />
-            <AlertTitle>Usage Limit Exceeded</AlertTitle>
-            <AlertDescription>
-              {`You have exceeded your current plan's usage limit. Please upgrade your plan to
-              continue using all features.`}
-            </AlertDescription>
-          </Alert>
-        ) : null}
-
         <div className='flex flex-col'>
           <Breadcrumb className='container w-full m-auto px-4 py-6'>
             <BreadcrumbList>
@@ -149,7 +109,7 @@ export const StudioLayout = ({
   )
 }
 
-const Header = ({ pathname, isOverLimit }: { pathname: string; isOverLimit: boolean }) => {
+const Header = ({ pathname }: { pathname: string }) => {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
@@ -167,16 +127,11 @@ const Header = ({ pathname, isOverLimit }: { pathname: string; isOverLimit: bool
           ) : null}
         </div>
         {/* <!-- Mobile --> */}
-        <MobileMenu
-          pathname={pathname}
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-          isOverLimit={isOverLimit}
-        />
+        <MobileMenu pathname={pathname} isOpen={isOpen} setIsOpen={setIsOpen} />
 
         {/* <!-- Desktop --> */}
         <div className='hidden lg:flex justify-center items-center gap-4'>
-          <ImportReport show={!isOverLimit && pathname !== '/subscription'}>
+          <ImportReport>
             <Badge className='h-8 cursor-pointer'>Import Report</Badge>
           </ImportReport>
 
@@ -233,13 +188,11 @@ const Footer = () => {
 const MobileMenu = ({
   pathname,
   isOpen,
-  setIsOpen,
-  isOverLimit
+  setIsOpen
 }: {
   pathname: string
   isOpen: boolean
   setIsOpen: Dispatch<SetStateAction<boolean>>
-  isOverLimit: boolean
 }) => {
   return (
     <div className='flex items-center lg:hidden'>
@@ -263,7 +216,7 @@ const MobileMenu = ({
 
           <SheetFooter className='flex-col sm:flex-col justify-start items-start gap-4'>
             <div className='flex flex-col gap-4 w-full'>
-              <ImportReport show={!isOverLimit && pathname !== '/subscription'}>
+              <ImportReport>
                 <Button className='h-8 cursor-pointer w-full'>Import Report</Button>
               </ImportReport>
 

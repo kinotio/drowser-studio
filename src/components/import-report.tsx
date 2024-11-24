@@ -22,13 +22,7 @@ import { TFileContent, MonthlyMetric, Activity } from '@/lib/definitions'
 import { isValidFileContent } from '@/lib/utils'
 import { pocketbase } from '@/lib/pocketbase'
 
-export const ImportReport = ({
-  show,
-  children
-}: {
-  show: boolean
-  children: React.ReactElement
-}) => {
+export const ImportReport = ({ children }: { children: React.ReactElement }) => {
   const [loading, setLoading] = useState<boolean>(false)
   const [reportName, setReportName] = useState<string>()
   const [reportContent, setReportContent] = useState<TFileContent | null>(null)
@@ -117,49 +111,45 @@ export const ImportReport = ({
   }
 
   return (
-    <>
-      {show ? (
-        <AlertDialog>
-          <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>Import new report ?</AlertDialogTitle>
-            </AlertDialogHeader>
+    <AlertDialog>
+      <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Import new report ?</AlertDialogTitle>
+        </AlertDialogHeader>
 
-            <div className='flex flex-col gap-4'>
-              <div className='flex flex-col gap-2'>
-                <Label htmlFor='name'>Report Name</Label>
-                <Input
-                  id='name'
-                  name='name'
-                  className='flex h-10 w-full rounded-md border border-input px-3 py-2 text-sm'
-                  type='text'
-                  onChange={(e) => setReportName(e.target.value)}
-                  placeholder='Name of report'
-                />
-              </div>
+        <div className='flex flex-col gap-4'>
+          <div className='flex flex-col gap-2'>
+            <Label htmlFor='name'>Report Name</Label>
+            <Input
+              id='name'
+              name='name'
+              className='flex h-10 w-full rounded-md border border-input px-3 py-2 text-sm'
+              type='text'
+              onChange={(e) => setReportName(e.target.value)}
+              placeholder='Name of report'
+            />
+          </div>
 
-              <div className='flex flex-col gap-2'>
-                <Label htmlFor='report'>Report File</Label>
-                <Input
-                  id='report'
-                  name='report'
-                  className='flex h-10 w-full rounded-md border border-input px-3 py-2 text-sm'
-                  type='file'
-                  onChange={handleFileChange}
-                />
-              </div>
-            </div>
+          <div className='flex flex-col gap-2'>
+            <Label htmlFor='report'>Report File</Label>
+            <Input
+              id='report'
+              name='report'
+              className='flex h-10 w-full rounded-md border border-input px-3 py-2 text-sm'
+              type='file'
+              onChange={handleFileChange}
+            />
+          </div>
+        </div>
 
-            <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction onClick={handleSubmit}>
-                {loading ? 'Loading...' : 'Import Report'}
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
-      ) : null}
-    </>
+        <AlertDialogFooter>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogAction onClick={handleSubmit}>
+            {loading ? 'Loading...' : 'Import Report'}
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   )
 }
