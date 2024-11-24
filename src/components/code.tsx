@@ -4,6 +4,23 @@ import { tomorrowNightBright } from 'react-syntax-highlighter/dist/esm/styles/hl
 import { BorderBeam } from '@/components/ui/border-beam'
 
 export const Code = () => {
+  const code = `
+import { driver } from "https://deno.land/x/drowser@${'v0.1.5'}/mod.ts";
+      
+driver({ browser: "chrome" })
+    .then(({ service }) => {
+        service.cases = [
+            {
+                name: "Verify Title",
+                fn: async ({ builder, assert }) => {
+                    const title = await builder.getTitle();
+                    assert.assertEquals(title, "Drowser");
+                },
+            },
+        ];
+    }).catch((error) => console.log(error));
+    `
+
   return (
     <section className='py-16'>
       <div className='container mx-auto px-4'>
@@ -23,40 +40,15 @@ export const Code = () => {
               validations and creating a dependable testing workflow for your web applications.
             </p>
           </div>
-          <div className='relative w-full overflow-hidden rounded-lg shadow-md'>
-            <CodeBlock />
+
+          <div className='mx-auto max-w-4xl h-full relative p-4 bg-black rounded-lg mt-4 border border-secondary'>
+            <SyntaxHighlighter language='typescript' style={tomorrowNightBright}>
+              {code}
+            </SyntaxHighlighter>
+            <BorderBeam colorFrom='#fff' colorTo='#fff' />
           </div>
         </div>
       </div>
     </section>
-  )
-}
-
-const CodeBlock = () => {
-  const code = `
-import { driver } from "https://deno.land/x/drowser@${'v0.1.5'}/mod.ts";
-  
-driver({ browser: "chrome" })
-    .then(({ service }) => {
-        service.cases = [
-            {
-                name: "Verify Title",
-                fn: async ({ builder, assert }) => {
-                    const title = await builder.getTitle();
-                    assert.assertEquals(title, "Drowser");
-                },
-            },
-        ];
-    })
-    .catch((error) => console.log(error));
-`
-
-  return (
-    <div className='mx-auto max-w-4xl h-full relative p-4 bg-black rounded-lg mt-4 border border-secondary'>
-      <SyntaxHighlighter language='typescript' style={tomorrowNightBright}>
-        {code}
-      </SyntaxHighlighter>
-      <BorderBeam colorFrom='#fff' colorTo='#fff' />
-    </div>
   )
 }
