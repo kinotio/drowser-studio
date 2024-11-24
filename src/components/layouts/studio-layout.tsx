@@ -30,7 +30,6 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb'
-import { Subs } from '@/components/subs'
 import { Button } from '@/components/ui/button'
 
 import { MenuType } from '@/lib/definitions'
@@ -144,8 +143,6 @@ const Header = ({ pathname }: { pathname: string }) => {
           <ToggleTheme />
 
           <UserButton />
-
-          <Subs />
         </div>
       </div>
     </header>
@@ -231,7 +228,6 @@ const MobileMenu = ({
               <ToggleTheme />
 
               <div className='flex gap-4 items-center'>
-                <Subs />
                 <UserButton />
               </div>
             </div>
