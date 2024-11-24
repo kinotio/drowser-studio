@@ -52,8 +52,12 @@ export const DATA = {
         name: 'FAQ'
       },
       {
-        href: '#issues',
-        name: 'Issues'
+        href: 'https://github.com/kinotio/drowser/issues',
+        name: 'Issues (Drowser)'
+      },
+      {
+        href: 'https://github.com/kinotio/drowser-studio/issues',
+        name: 'Issues (Drowser Studio)'
       }
     ],
     legal: [
