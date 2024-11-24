@@ -54,10 +54,6 @@ export const DATA = {
       {
         href: '#issues',
         name: 'Issues'
-      },
-      {
-        href: '#plans',
-        name: 'Pricing'
       }
     ],
     legal: [

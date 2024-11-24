@@ -30,22 +30,6 @@ import { getCurrentYear } from '@/lib/utils'
 
 import { DATA } from '@/data'
 
-interface RouteProps {
-  href: string
-  label: string
-}
-
-const routeList: RouteProps[] = [
-  {
-    href: '#plans',
-    label: 'Pricing'
-  },
-  {
-    href: 'https://docs.kinotio.io/docs/drowser',
-    label: 'Docs'
-  }
-]
-
 export const RootLayout = ({
   children
 }: Readonly<{
@@ -77,10 +61,10 @@ const Header = () => {
           <NavigationMenu className='hidden lg:block mx-auto'>
             <NavigationMenuList>
               <NavigationMenuItem>
-                {routeList.map(({ href, label }) => (
+                {DATA.navbar.map(({ href, name }) => (
                   <NavigationMenuLink key={href} asChild>
                     <Link href={href} className='text-base px-2'>
-                      {label}
+                      {name}
                     </Link>
                   </NavigationMenuLink>
                 ))}
@@ -209,7 +193,7 @@ const MobileMenu = ({
             </SheetHeader>
 
             <div className='flex flex-col gap-2'>
-              {routeList.map(({ href, label }) => (
+              {DATA.navbar.map(({ href, name }) => (
                 <Button
                   key={href}
                   onClick={() => setIsOpen(false)}
@@ -217,7 +201,7 @@ const MobileMenu = ({
                   variant='ghost'
                   className='justify-start text-base'
                 >
-                  <Link href={href}>{label}</Link>
+                  <Link href={href}>{name}</Link>
                 </Button>
               ))}
             </div>
