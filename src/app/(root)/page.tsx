@@ -9,12 +9,14 @@ import AnimatedGradientText from '@/components/ui/animated-gradient-text'
 import { FAQ } from '@/components/faq'
 import { Plans } from '@/components/plans'
 import { Features } from '@/components/features'
+import { Code } from '@/components/code'
 
 const Page = () => {
   return (
     <>
       <Hero />
       <Features />
+      <Code />
       <Plans />
       <FAQ />
     </>
