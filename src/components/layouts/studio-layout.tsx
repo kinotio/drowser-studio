@@ -6,7 +6,6 @@ import Link from 'next/link'
 import { UserButton } from '@clerk/nextjs'
 import { usePathname } from 'next/navigation'
 
-import { Badge } from '@/components/ui/badge'
 import {
   Sheet,
   SheetContent,
@@ -126,14 +125,14 @@ const Header = ({ pathname }: { pathname: string }) => {
         {/* <!-- Desktop --> */}
         <div className='hidden lg:flex justify-center items-center gap-4'>
           <ImportReport>
-            <Badge className='h-8 cursor-pointer'>Import Report</Badge>
+            <Button>Import Report</Button>
           </ImportReport>
 
-          <Badge variant='outline' className='h-8 cursor-pointer'>
+          <Button variant='outline'>
             <Link href={'https://github.com/kinotio/drowser-studio/issues'} target='_blank'>
               Feedback
             </Link>
-          </Badge>
+          </Button>
 
           <ToggleTheme />
 
