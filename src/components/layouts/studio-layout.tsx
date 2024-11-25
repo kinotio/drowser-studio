@@ -52,44 +52,12 @@ export const StudioLayout = ({
   children: React.ReactNode
 }>) => {
   const pathname = usePathname()
-  const pathSegments = pathname.split('/').filter((segment) => segment)
 
   return (
     <>
       <Header pathname={pathname} />
-
       <main className='flex flex-1 flex-col overflow-auto lg:max-w-[60%] m-auto'>
-        <div className='flex flex-col'>
-          <Breadcrumb className='container w-full m-auto px-4 py-6'>
-            <BreadcrumbList>
-              {pathSegments.map((segment, index) => {
-                const href = '/' + pathSegments.slice(0, index + 1).join('/')
-                return (
-                  <div key={href} className='flex items-center gap-2'>
-                    <BreadcrumbItem>
-                      {index === pathSegments.length - 1 ? (
-                        <BreadcrumbPage>
-                          {segment.charAt(0).toUpperCase() + segment.slice(1)}{' '}
-                        </BreadcrumbPage>
-                      ) : (
-                        <BreadcrumbLink href={href}>
-                          {segment.charAt(0).toUpperCase() + segment.slice(1)}{' '}
-                        </BreadcrumbLink>
-                      )}
-                    </BreadcrumbItem>
-                    {index < pathSegments.length - 1 && (
-                      <BreadcrumbSeparator>
-                        <Slash />
-                      </BreadcrumbSeparator>
-                    )}
-                  </div>
-                )
-              })}
-            </BreadcrumbList>
-          </Breadcrumb>
-
-          <div className='overflow-hidden'>{children}</div>
-        </div>
+        <div className='overflow-hidden'>{children}</div>
       </main>
       <Footer />
       <Toaster position='bottom-center' />
@@ -99,41 +67,72 @@ export const StudioLayout = ({
 
 const Header = ({ pathname }: { pathname: string }) => {
   const [isOpen, setIsOpen] = useState(false)
+  const pathSegments = pathname.split('/').filter((segment) => segment)
 
   return (
-    <header className='w-full top-0 mx-auto sticky z-40 p-2 flex justify-center items-center bg-card border-b border-secondary flex-col'>
-      <div className='w-[90%] md:w-[70%] lg:w-[75%] lg:max-w-screen-xl flex justify-between items-center'>
-        <div className='flex items-center justify-between gap-4'>
-          <Link href='/' className='flex items-center gap-4'>
-            <DrowserStudio width={200} height={50} />
-          </Link>
-
-          {pathname !== '/subscription' ? (
-            <div className='hidden lg:flex'>
-              <Navigation menus={menus} />
-            </div>
-          ) : null}
-        </div>
-        {/* <!-- Mobile --> */}
-        <MobileMenu pathname={pathname} isOpen={isOpen} setIsOpen={setIsOpen} />
-
-        {/* <!-- Desktop --> */}
-        <div className='hidden lg:flex justify-center items-center gap-4'>
-          <ImportReport>
-            <Button>Import Report</Button>
-          </ImportReport>
-
-          <Button variant='outline'>
-            <Link href={'https://github.com/kinotio/drowser-studio/issues'} target='_blank'>
-              Feedback
+    <header className='w-full top-0 mx-auto sticky z-40 p-2 flex justify-center items-center bg-card flex-col gap-4'>
+      <div className='w-full flex justify-center border-b border-secondary'>
+        <div className='w-[90%] md:w-[70%] lg:w-[75%] lg:max-w-screen-xl flex py-2 justify-between items-center'>
+          <div className='flex items-center justify-between gap-4'>
+            <Link href='/' className='flex items-center gap-4'>
+              <DrowserStudio width={200} height={50} />
             </Link>
-          </Button>
 
-          <ToggleTheme />
+            {pathname !== '/subscription' ? (
+              <div className='hidden lg:flex'>
+                <Navigation menus={menus} />
+              </div>
+            ) : null}
+          </div>
+          {/* <!-- Mobile --> */}
+          <MobileMenu pathname={pathname} isOpen={isOpen} setIsOpen={setIsOpen} />
 
-          <UserButton />
+          {/* <!-- Desktop --> */}
+          <div className='hidden lg:flex justify-center items-center gap-4'>
+            <ImportReport>
+              <Button>Import Report</Button>
+            </ImportReport>
+
+            <Button variant='outline'>
+              <Link href={'https://github.com/kinotio/drowser-studio/issues'} target='_blank'>
+                Feedback
+              </Link>
+            </Button>
+
+            <ToggleTheme />
+
+            <UserButton />
+          </div>
         </div>
       </div>
+
+      <Breadcrumb className='w-[95%] md:w-[95%] lg:w-[60%] lg:max-w-screen-xl flex justify-between items-center pt-2 pb-4'>
+        <BreadcrumbList>
+          {pathSegments.map((segment, index) => {
+            const href = '/' + pathSegments.slice(0, index + 1).join('/')
+            return (
+              <div key={href} className='flex items-center gap-2'>
+                <BreadcrumbItem>
+                  {index === pathSegments.length - 1 ? (
+                    <BreadcrumbPage>
+                      {segment.charAt(0).toUpperCase() + segment.slice(1)}{' '}
+                    </BreadcrumbPage>
+                  ) : (
+                    <BreadcrumbLink href={href}>
+                      {segment.charAt(0).toUpperCase() + segment.slice(1)}{' '}
+                    </BreadcrumbLink>
+                  )}
+                </BreadcrumbItem>
+                {index < pathSegments.length - 1 && (
+                  <BreadcrumbSeparator>
+                    <Slash />
+                  </BreadcrumbSeparator>
+                )}
+              </div>
+            )
+          })}
+        </BreadcrumbList>
+      </Breadcrumb>
     </header>
   )
 }
