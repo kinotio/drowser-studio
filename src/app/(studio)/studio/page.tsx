@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useAuth, useUser } from '@clerk/nextjs'
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from 'recharts'
 import Link from 'next/link'
+import { icons } from 'lucide-react'
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import {
@@ -16,11 +17,12 @@ import {
 } from '@/components/ui/table'
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart'
 import { Skeleton } from '@/components/ui/skeleton'
+import { Icon } from '@/components/ui/icon'
 
 import { pocketbase } from '@/lib/pocketbase'
 import { Report, Activity, ChartDataItem } from '@/lib/definitions'
 import { readableTimestamp } from '@/lib/utils'
-import { months } from '@/lib/constants'
+import { months, deviceIcons } from '@/lib/constants'
 
 const Page = () => {
   const { userId } = useAuth()
@@ -141,7 +143,16 @@ const Page = () => {
                       <TableCell>{activity.type}</TableCell>
                       <TableCell>{activity.description}</TableCell>
                       <TableCell>{readableTimestamp(activity.created)}</TableCell>
-                      <TableCell>{activity.device}</TableCell>
+                      <TableCell>
+                        <Icon
+                          name={
+                            deviceIcons[
+                              activity.device as keyof typeof deviceIcons
+                            ] as keyof typeof icons
+                          }
+                          size={20}
+                        />
+                      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>

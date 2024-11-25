@@ -52,12 +52,7 @@ import { ACTIVITIES_TYPES } from '@/lib/constants'
 
 import { pocketbase } from '@/lib/pocketbase'
 import { Activity } from '@/lib/definitions'
-
-const deviceIcons = {
-  desktop: 'Laptop',
-  mobile: 'Smartphone',
-  unknown: 'CircleAlert'
-}
+import { deviceIcons } from '@/lib/constants'
 
 const Page = () => {
   const { userId } = useAuth()

@@ -55,3 +55,9 @@ export const months = [
 ]
 
 export const FREE_MAX_REPORT_COUNT = 5
+
+export const deviceIcons = {
+  desktop: 'Laptop',
+  mobile: 'Smartphone',
+  unknown: 'CircleAlert'
+}
