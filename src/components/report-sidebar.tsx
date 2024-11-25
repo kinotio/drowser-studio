@@ -6,16 +6,14 @@ import {
   ClipboardIcon,
   BarChartBigIcon,
   ClipboardListIcon,
-  FlaskConicalIcon,
   NetworkIcon,
-  GlobeIcon,
-  ConstructionIcon
+  GlobeIcon
 } from 'lucide-react'
 import { usePathname, useParams } from 'next/navigation'
 import { useAuth } from '@clerk/nextjs'
 
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
+// import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 
 import { TContentCase, Report } from '@/lib/definitions'
 import { readableTimestamp } from '@/lib/utils'
@@ -119,7 +117,7 @@ export const ReportSidebar = () => {
           </Link>
         </div>
 
-        <div className='hidden'>
+        {/* <div className='hidden'>
           <Link
             className='pointer-events-none flex items-center gap-3 rounded-lg px-2 py-2 transition-all'
             href={`${PATH.STUDIO_REPORTS}/${paramsReportSlug}/ai`}
@@ -137,7 +135,7 @@ export const ReportSidebar = () => {
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
-        </div>
+        </div> */}
       </nav>
     </div>
   )
