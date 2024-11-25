@@ -119,7 +119,7 @@ export const ReportSidebar = () => {
           </Link>
         </div>
 
-        <div className='flex'>
+        <div className='hidden'>
           <Link
             className='pointer-events-none flex items-center gap-3 rounded-lg px-2 py-2 transition-all'
             href={`${PATH.STUDIO_REPORTS}/${paramsReportSlug}/ai`}
