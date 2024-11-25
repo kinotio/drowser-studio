@@ -43,11 +43,6 @@ const menus = [
     label: 'Activities',
     path: '/studio/activities',
     icon: 'Activity'
-  },
-  {
-    label: 'Settings',
-    path: '/studio/settings',
-    icon: 'Settings'
   }
 ] as MenuType[]
 
