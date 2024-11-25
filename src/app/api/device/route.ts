@@ -1,10 +1,8 @@
-import { NextApiRequest } from 'next'
-
 import { getDeviceType } from '@/lib/utils'
 
-export async function GET(request: NextApiRequest) {
+export const GET = async (req: Request) => {
   try {
-    const agent = request.headers['user-agent'] || ''
+    const agent = req.headers.get('user-agent') || ''
     const device = getDeviceType(agent as string)
     const data = { device }
 
