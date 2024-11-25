@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import { toast } from 'sonner'
 import { uniqueNamesGenerator, colors, animals, adjectives } from 'unique-names-generator'
 import { useAuth } from '@clerk/nextjs'
+import axios from 'axios'
 
 import {
   AlertDialog,
@@ -85,11 +86,13 @@ export const ImportReport = ({ children }: { children: React.ReactElement }) => 
                 total: existingMetric.total + 1
               })
 
+              const device = (await axios.get('/api/device')).data.device
+
               await pocketbase.collection('activities').create<Activity>({
                 type: 'report_imported',
                 description: 'Report imported',
                 user_id: userId,
-                device: 'unknown'
+                device
               })
             })
             .catch(async (error) => {

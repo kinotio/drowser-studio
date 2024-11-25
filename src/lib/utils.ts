@@ -44,27 +44,12 @@ export const formatToReadable = (text: string): string => {
     .replace(/\b\w/g, (char) => char.toUpperCase()) // Capitalize the first letter of each word
 }
 
-export const getDeviceType = (userAgent: string) => {
-  const mobileKeywords = [
-    'Android',
-    'iPhone',
-    'iPad',
-    'iPod',
-    'BlackBerry',
-    'Opera Mini',
-    'IEMobile',
-    'Mobile',
-    'Windows Phone'
-  ]
-  const desktopKeywords = ['Macintosh', 'Windows NT', 'Linux']
+export function getDeviceType(agent: string): 'mobile' | 'desktop' {
+  const isMobile = /Mobi|Android|iPhone|iPad|iPod|BlackBerry|Opera Mini|IEMobile|WPDesktop/i.test(
+    agent
+  )
 
-  if (mobileKeywords.some((keyword) => userAgent.includes(keyword))) {
-    return 'mobile'
-  } else if (desktopKeywords.some((keyword) => userAgent.includes(keyword))) {
-    return 'desktop'
-  } else {
-    return 'unknown'
-  }
+  return isMobile ? 'mobile' : 'desktop'
 }
 
 export const humanizeDuration = (durationMs: number): string => {
