@@ -13,6 +13,7 @@ import {
 } from 'lucide-react'
 import { useAuth } from '@clerk/nextjs'
 import { toast } from 'sonner'
+import axios from 'axios'
 
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -88,11 +89,13 @@ const Page = () => {
         setReportToRemove(null)
         fetchReports()
 
+        const device = (await axios.get('/api/device')).data.device
+
         await pocketbase.collection('activities').create<Activity>({
           type: 'report_deleted',
           description: 'Report deleted',
           user_id: userId,
-          device: 'unknown'
+          device
         })
 
         return 'Report deleted'
