@@ -177,7 +177,7 @@ const CardList = ({
               <CardTitle>Recent Cases</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className='space-y-4 overflow-auto pt-6'>
+              <div className='space-y-4 overflow-auto pt-6 h-[340px]'>
                 {content.cases.map((c: TContentSubCase) => (
                   <div key={c.id} className='flex items-center justify-between border-b pb-6'>
                     <div className='flex items-center gap-2'>
