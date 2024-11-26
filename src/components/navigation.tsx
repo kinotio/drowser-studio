@@ -30,7 +30,7 @@ export const Navigation = ({
   return (
     <div>
       <NavigationMenu className={`${isMobile ? 'items-start' : ''}`}>
-        <NavigationMenuList className='gap-6 ml-2'>
+        <NavigationMenuList className='gap-4 ml-2'>
           {menus.map((menu) => (
             <NavigationMenuItem key={menu.path}>
               <Link href={menu.path} legacyBehavior passHref>
@@ -39,8 +39,7 @@ export const Navigation = ({
                     <Icon name={menu.icon as keyof typeof icons} size={14} />
                   </Button>
                 ) : (
-                  <NavigationMenuLink className='text-sm flex items-center justify-center gap-2 border-black dark:border-white'>
-                    <Icon name={menu.icon as keyof typeof icons} size={14} />
+                  <NavigationMenuLink className='text-sm flex items-center justify-center gap-2'>
                     {menu.label}
                   </NavigationMenuLink>
                 )}
