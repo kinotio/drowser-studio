@@ -84,7 +84,7 @@ const Header = ({ pathname }: { pathname: string }) => {
             </div>
           </div>
           {/* <!-- Mobile --> */}
-          <MobileMenu pathname={pathname} isOpen={isOpen} setIsOpen={setIsOpen} />
+          <MobileMenu isOpen={isOpen} setIsOpen={setIsOpen} />
 
           {/* <!-- Desktop --> */}
           <div className='hidden lg:flex justify-center items-center gap-4'>
@@ -170,11 +170,9 @@ const Footer = () => {
 }
 
 const MobileMenu = ({
-  pathname,
   isOpen,
   setIsOpen
 }: {
-  pathname: string
   isOpen: boolean
   setIsOpen: Dispatch<SetStateAction<boolean>>
 }) => {
