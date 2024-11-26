@@ -33,12 +33,7 @@ const Layout = ({
           data-website-id='c5168dda-d0db-468c-b8c0-3d70fab4cfd8'
         />
         <body className={`${inter.className}`}>
-          <ThemeProvider
-            attribute='class'
-            defaultTheme='system'
-            enableSystem
-            disableTransitionOnChange
-          >
+          <ThemeProvider attribute='class' defaultTheme='system' enableSystem>
             <ClerkLoaded>
               <TooltipProvider>{children}</TooltipProvider>
             </ClerkLoaded>

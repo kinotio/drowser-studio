@@ -67,6 +67,7 @@ export const StudioLayout = ({
 
 const Header = ({ pathname }: { pathname: string }) => {
   const [isOpen, setIsOpen] = useState(false)
+
   const pathSegments = pathname.split('/').filter((segment) => segment)
 
   return (
@@ -78,14 +79,12 @@ const Header = ({ pathname }: { pathname: string }) => {
               <DrowserStudio width={200} height={50} />
             </Link>
 
-            {pathname !== '/subscription' ? (
-              <div className='hidden lg:flex'>
-                <Navigation menus={menus} />
-              </div>
-            ) : null}
+            <div className='hidden lg:flex'>
+              <Navigation menus={menus} />
+            </div>
           </div>
           {/* <!-- Mobile --> */}
-          <MobileMenu pathname={pathname} isOpen={isOpen} setIsOpen={setIsOpen} />
+          <MobileMenu isOpen={isOpen} setIsOpen={setIsOpen} />
 
           {/* <!-- Desktop --> */}
           <div className='hidden lg:flex justify-center items-center gap-4'>
@@ -98,8 +97,6 @@ const Header = ({ pathname }: { pathname: string }) => {
                 Feedback
               </Link>
             </Button>
-
-            <ToggleTheme />
 
             <UserButton />
           </div>
@@ -142,7 +139,9 @@ const Footer = () => {
     <footer className='flex h-14 lg:h-[60px] items-center border-t fixed bottom-0 w-full bg-white dark:bg-black'>
       <div className='flex flex-1 items-center justify-between px-4 w-full'>
         <div className='flex flex-col'>
-          <div className='flex px-6 items-center justify-between gap-4'>
+          <div className='flex px-2 items-center justify-between gap-6'>
+            <ToggleTheme />
+
             <Link href={'https://github.com/kinotio/drowser-studio'}>
               <GithubIcon size={20} />
             </Link>
@@ -171,11 +170,9 @@ const Footer = () => {
 }
 
 const MobileMenu = ({
-  pathname,
   isOpen,
   setIsOpen
 }: {
-  pathname: string
   isOpen: boolean
   setIsOpen: Dispatch<SetStateAction<boolean>>
 }) => {
@@ -196,7 +193,7 @@ const MobileMenu = ({
               </SheetTitle>
             </SheetHeader>
 
-            {pathname !== '/subscription' ? <Navigation isMobile={true} menus={menus} /> : null}
+            <Navigation isMobile={true} menus={menus} />
           </div>
 
           <SheetFooter className='flex-col sm:flex-col justify-start items-start gap-4'>
@@ -213,8 +210,6 @@ const MobileMenu = ({
             </div>
             <Separator className='mb-2' />
             <div className='flex justify-between w-full items-center'>
-              <ToggleTheme />
-
               <div className='flex gap-4 items-center'>
                 <UserButton />
               </div>
