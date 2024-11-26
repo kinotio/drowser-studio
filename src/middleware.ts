@@ -6,9 +6,16 @@ const isProtectedRoute = createRouteMatcher(['/studio(.*)'])
 export default clerkMiddleware(async (auth, request) => {
   const url = request.nextUrl.clone()
   const { userId } = await auth()
+  const reportCasesPattern = /^\/studio\/reports\/([^\/]+)\/cases$/
+  const match = request.nextUrl.pathname.match(reportCasesPattern)
 
   if (userId && request.nextUrl.pathname === '/') {
     url.pathname = '/studio'
+    return NextResponse.redirect(url)
+  }
+
+  if (userId && match) {
+    url.pathname = '/studio/reports/' + match[1]
     return NextResponse.redirect(url)
   }
 
