@@ -13,7 +13,7 @@ const Layout = ({
         </div>
       </div>
 
-      <div className='flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6 overflow-auto mb-[100px] h-[800px]'>
+      <div className='flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6 overflow-auto h-[800px]'>
         {children}
       </div>
     </div>
