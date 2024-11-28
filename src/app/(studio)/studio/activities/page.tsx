@@ -82,7 +82,7 @@ const Page = () => {
     pocketbase
       .collection('activities')
       .getList(currentPage, itemsPerPage, {
-        filter: `user_id = "${userId}" && type ~ "${searchTerm}" && description ~ "${searchTerm}"`,
+        filter: `user_id = "${userId}" && type ~ "${searchTerm}" || description ~ "${searchTerm}"`,
         sort: '-created'
       })
       .then((data) => {
