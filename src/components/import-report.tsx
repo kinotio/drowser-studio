@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
+import { Info } from 'lucide-react'
 import { toast } from 'sonner'
 import { uniqueNamesGenerator, colors, animals, adjectives } from 'unique-names-generator'
 import { useAuth } from '@clerk/nextjs'
@@ -18,6 +19,7 @@ import {
 } from '@/components/ui/alert-dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 
 import { TFileContent, MonthlyMetric, Activity } from '@/lib/definitions'
 import { isValidFileContent } from '@/lib/utils'
@@ -145,6 +147,14 @@ export const ImportReport = ({ children }: { children: React.ReactElement }) => 
             />
           </div>
         </div>
+
+        <Alert>
+          <Info className='h-4 w-4' />
+          <AlertTitle>Report Format Notice</AlertTitle>
+          <AlertDescription>
+            The report format should be compatible with Drowser Report specifications.
+          </AlertDescription>
+        </Alert>
 
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
