@@ -48,8 +48,8 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <header className='w-full top-0 mx-auto sticky z-40 p-4 flex justify-center items-center bg-card border-b border-secondary'>
-      <div className='w-[90%] md:w-[70%] lg:w-[75%] lg:max-w-screen-xl flex justify-between items-center'>
+    <header className='w-full top-0 mx-auto sticky z-40 flex justify-center items-center bg-card border-b border-secondary'>
+      <div className='w-[90%] md:w-[70%] lg:w-[75%] lg:max-w-screen-xl flex justify-between items-center py-2'>
         <Link href='/' className='flex items-center'>
           <Drowser width={100} height={50} />
         </Link>
