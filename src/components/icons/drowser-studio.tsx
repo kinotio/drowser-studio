@@ -1,6 +1,6 @@
 export const DrowserStudio = (props: React.ComponentProps<'svg'>): React.ReactElement => (
   <svg
-    viewBox='0 0 1209 180'
+    viewBox='0 0 1209 160'
     fill='none'
     xmlns='http://www.w3.org/2000/svg'
     role='img'

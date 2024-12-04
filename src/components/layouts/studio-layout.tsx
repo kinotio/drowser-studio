@@ -1,26 +1,11 @@
 'use client'
 
-import { useState, SetStateAction, Dispatch } from 'react'
-import { Menu, GithubIcon, Slash } from 'lucide-react'
+import { Slash } from 'lucide-react'
 import Link from 'next/link'
-import { UserButton } from '@clerk/nextjs'
 import { usePathname } from 'next/navigation'
 
-import {
-  Sheet,
-  SheetContent,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger
-} from '@/components/ui/sheet'
-import { Separator } from '@/components/ui/separator'
 import { Toaster } from '@/components/ui/sonner'
-import { DrowserStudio } from '@/components/icons/drowser-studio'
 import { Kinotio } from '@/components/icons/kinotio'
-import { ToggleTheme } from '@/components/toogle-theme'
-import { ImportReport } from '@/components/import-report'
-import { Navigation } from '@/components/navigation'
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -29,22 +14,8 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb'
-import { Button } from '@/components/ui/button'
-
-import { MenuType } from '@/lib/definitions'
-
-const menus = [
-  {
-    label: 'Reports',
-    path: '/studio/reports',
-    icon: 'Files'
-  },
-  {
-    label: 'Activities',
-    path: '/studio/activities',
-    icon: 'Activity'
-  }
-] as MenuType[]
+import { SidebarProvider, SidebarInset, SidebarTrigger } from '@/components/ui/sidebar'
+import { AppSidebar } from '@/components/app-sidebar'
 
 export const StudioLayout = ({
   children
@@ -55,10 +26,18 @@ export const StudioLayout = ({
 
   return (
     <>
-      <Header pathname={pathname} />
-      <main className='flex flex-1 flex-col overflow-auto lg:max-w-[60%] m-auto'>
-        <div className='overflow-hidden'>{children}</div>
-      </main>
+      <SidebarProvider defaultOpen={true}>
+        <AppSidebar />
+
+        <SidebarInset>
+          <Header pathname={pathname} />
+
+          <main className='flex flex-1 flex-col overflow-auto p-2'>
+            <div className='overflow-hidden'>{children}</div>
+          </main>
+        </SidebarInset>
+      </SidebarProvider>
+
       <Footer />
       <Toaster position='bottom-center' />
     </>
@@ -66,70 +45,43 @@ export const StudioLayout = ({
 }
 
 const Header = ({ pathname }: { pathname: string }) => {
-  const [isOpen, setIsOpen] = useState(false)
-
   const pathSegments = pathname.split('/').filter((segment) => segment)
 
   return (
-    <header className='w-full top-0 mx-auto sticky z-40 p-2 flex justify-center items-center bg-card flex-col gap-4'>
-      <div className='w-full flex justify-center border-b border-secondary'>
-        <div className='w-[90%] md:w-[70%] lg:w-[75%] lg:max-w-screen-xl flex py-2 justify-between items-center'>
-          <div className='flex items-center justify-between gap-4'>
-            <Link href='/' className='flex items-center gap-4'>
-              <DrowserStudio width={200} height={50} />
-            </Link>
+    <header className='w-full top-0 mx-auto sticky z-40 flex justify-center items-center bg-card flex-col gap-4'>
+      <div className='w-full flex border-b border-secondary'>
+        <div className='flex py-2 px-5 justify-between items-center'>
+          <SidebarTrigger />
 
-            <div className='hidden lg:flex'>
-              <Navigation menus={menus} />
-            </div>
-          </div>
-          {/* <!-- Mobile --> */}
-          <MobileMenu isOpen={isOpen} setIsOpen={setIsOpen} />
-
-          {/* <!-- Desktop --> */}
-          <div className='hidden lg:flex justify-center items-center gap-4'>
-            <ImportReport>
-              <Button>Import Report</Button>
-            </ImportReport>
-
-            <Button variant='outline'>
-              <Link href={'https://github.com/kinotio/drowser-studio/issues'} target='_blank'>
-                Feedback
-              </Link>
-            </Button>
-
-            <UserButton />
-          </div>
+          <Breadcrumb className='flex justify-between items-center py-3 ml-2'>
+            <BreadcrumbList>
+              {pathSegments.map((segment, index) => {
+                const href = '/' + pathSegments.slice(0, index + 1).join('/')
+                return (
+                  <div key={href} className='flex items-center gap-2'>
+                    <BreadcrumbItem>
+                      {index === pathSegments.length - 1 ? (
+                        <BreadcrumbPage>
+                          {segment.charAt(0).toUpperCase() + segment.slice(1)}{' '}
+                        </BreadcrumbPage>
+                      ) : (
+                        <BreadcrumbLink href={href}>
+                          {segment.charAt(0).toUpperCase() + segment.slice(1)}{' '}
+                        </BreadcrumbLink>
+                      )}
+                    </BreadcrumbItem>
+                    {index < pathSegments.length - 1 && (
+                      <BreadcrumbSeparator>
+                        <Slash />
+                      </BreadcrumbSeparator>
+                    )}
+                  </div>
+                )
+              })}
+            </BreadcrumbList>
+          </Breadcrumb>
         </div>
       </div>
-
-      <Breadcrumb className='w-[95%] md:w-[95%] lg:w-[60%] lg:max-w-screen-xl flex justify-between items-center pt-2 pb-4'>
-        <BreadcrumbList>
-          {pathSegments.map((segment, index) => {
-            const href = '/' + pathSegments.slice(0, index + 1).join('/')
-            return (
-              <div key={href} className='flex items-center gap-2'>
-                <BreadcrumbItem>
-                  {index === pathSegments.length - 1 ? (
-                    <BreadcrumbPage>
-                      {segment.charAt(0).toUpperCase() + segment.slice(1)}{' '}
-                    </BreadcrumbPage>
-                  ) : (
-                    <BreadcrumbLink href={href}>
-                      {segment.charAt(0).toUpperCase() + segment.slice(1)}{' '}
-                    </BreadcrumbLink>
-                  )}
-                </BreadcrumbItem>
-                {index < pathSegments.length - 1 && (
-                  <BreadcrumbSeparator>
-                    <Slash />
-                  </BreadcrumbSeparator>
-                )}
-              </div>
-            )
-          })}
-        </BreadcrumbList>
-      </Breadcrumb>
     </header>
   )
 }
@@ -137,17 +89,7 @@ const Header = ({ pathname }: { pathname: string }) => {
 const Footer = () => {
   return (
     <footer className='flex h-14 lg:h-[60px] items-center border-t fixed bottom-0 w-full bg-white dark:bg-black'>
-      <div className='flex flex-1 items-center justify-between px-4 w-full'>
-        <div className='flex flex-col'>
-          <div className='flex px-2 items-center justify-between gap-6'>
-            <ToggleTheme />
-
-            <Link href={'https://github.com/kinotio/drowser-studio'}>
-              <GithubIcon size={20} />
-            </Link>
-          </div>
-        </div>
-
+      <div className='flex flex-1 items-end justify-end px-4 w-full'>
         <div className='flex gap-3 items-center'>
           <Link href='/studio/legal/terms' className='text-xs hidden md:block'>
             Terms
@@ -166,57 +108,5 @@ const Footer = () => {
         </div>
       </div>
     </footer>
-  )
-}
-
-const MobileMenu = ({
-  isOpen,
-  setIsOpen
-}: {
-  isOpen: boolean
-  setIsOpen: Dispatch<SetStateAction<boolean>>
-}) => {
-  return (
-    <div className='flex items-center lg:hidden'>
-      <Sheet open={isOpen} onOpenChange={setIsOpen}>
-        <SheetTrigger asChild>
-          <Menu className='cursor-pointer lg:hidden' />
-        </SheetTrigger>
-
-        <SheetContent side='left' className='flex flex-col bg-card border-secondary'>
-          <div className='flex flex-col h-full'>
-            <SheetHeader className='mb-4 ml-4'>
-              <SheetTitle className='flex items-center'>
-                <Link href='/' className='flex items-center'>
-                  <DrowserStudio width={200} height={50} />
-                </Link>
-              </SheetTitle>
-            </SheetHeader>
-
-            <Navigation isMobile={true} menus={menus} />
-          </div>
-
-          <SheetFooter className='flex-col sm:flex-col justify-start items-start gap-4'>
-            <div className='flex flex-col gap-4 w-full'>
-              <ImportReport>
-                <Button className='h-8 cursor-pointer w-full'>Import Report</Button>
-              </ImportReport>
-
-              <Button variant='outline' className='h-8 cursor-pointer w-full'>
-                <Link href={'https://github.com/kinotio/drowser-studio/issues'} target='_blank'>
-                  Feedback
-                </Link>
-              </Button>
-            </div>
-            <Separator className='mb-2' />
-            <div className='flex justify-between w-full items-center'>
-              <div className='flex gap-4 items-center'>
-                <UserButton />
-              </div>
-            </div>
-          </SheetFooter>
-        </SheetContent>
-      </Sheet>
-    </div>
   )
 }
