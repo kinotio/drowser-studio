@@ -67,7 +67,7 @@ const Page = () => {
   const [date, setDate] = useState<DateRange | undefined>()
   const [total, setTotal] = useState<number>(0)
 
-  const itemsPerPage = 6
+  const itemsPerPage = 8
 
   const totalPages = Math.ceil(total / itemsPerPage)
 
@@ -307,7 +307,7 @@ const SkeletonLoader = () => {
     <>
       {Array.from({ length: 3 }).map((_, idx) => (
         <TableRow key={idx}>
-          {Array.from({ length: 4 }).map((_, idx) => (
+          {Array.from({ length: 8 }).map((_, idx) => (
             <TableCell key={idx}>
               <Skeleton className='h-6 w-full rounded-md bg-muted' />
             </TableCell>
