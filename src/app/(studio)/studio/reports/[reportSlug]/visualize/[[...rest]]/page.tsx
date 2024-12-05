@@ -115,7 +115,7 @@ const Page = () => {
   }, [userId, paramsReportSlug])
 
   return (
-    <div className='h-full relative overflow-hidden'>
+    <div className='h-[850px] w-[1500px] relative overflow-hidden'>
       <Canvas
         arrow={null}
         panType='drag'
