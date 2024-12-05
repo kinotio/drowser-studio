@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { ActivityIcon, SearchIcon, FilterIcon, Calendar as CalendarIcon, icons } from 'lucide-react'
+import { SearchIcon, FilterIcon, Calendar as CalendarIcon, icons } from 'lucide-react'
 import { format } from 'date-fns'
 import { DateRange } from 'react-day-picker'
 import { useAuth } from '@clerk/nextjs'

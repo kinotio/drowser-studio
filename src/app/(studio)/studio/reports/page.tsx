@@ -6,7 +6,6 @@ import {
   ChevronDownIcon,
   LayoutListIcon,
   LayoutGridIcon,
-  FilesIcon,
   MoreVerticalIcon,
   Trash2Icon,
   RefreshCcwIcon
