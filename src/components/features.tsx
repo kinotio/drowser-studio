@@ -1,6 +1,8 @@
 import { icons } from 'lucide-react'
+import Image from 'next/image'
 
 import { Icon } from '@/components/ui/icon'
+import ShineBorder from '@/components/ui/shine-border'
 
 import { DATA } from '@/data'
 
@@ -20,7 +22,22 @@ export const Features = () => {
                 designed for impactful presentations.
               </p>
             </div>
-            <div className='grid grid-cols-4 gap-4'>
+            <div className='flex justify-center items-center lg:pb-28'>
+              <ShineBorder
+                className='relative flex flex-col items-center justify-center overflow-hidden rounded-lg border bg-background p-0 m-0'
+                color={['#A07CFE', '#FE8FB5', '#FFBE7B']}
+              >
+                <Image
+                  src='/images/drowser-studio.png'
+                  alt='Drowser Studio'
+                  width={1200}
+                  height={675}
+                  className='rounded-lg'
+                  priority
+                />
+              </ShineBorder>
+            </div>
+            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4'>
               {DATA.features.studio.map((feature) => (
                 <div key={feature.title} className='rounded-lg border bg-background p-4 shadow-sm'>
                   <div className='flex h-12 w-12 items-center justify-center rounded-full bg-primary'>

@@ -13,7 +13,7 @@ import {
   LifeBuoy,
   SquareStack
 } from 'lucide-react'
-import { UserButton, useUser, useAuth } from '@clerk/nextjs'
+import { useUser, useAuth, UserButton } from '@clerk/nextjs'
 import { usePathname, useParams } from 'next/navigation'
 import { isEmpty } from 'lodash'
 
@@ -212,7 +212,7 @@ export const StudioSidebar = () => {
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
                   <Link href={`mailto:support@kinotio.io`}>
-                    <LifeBuoy className='mr-2 h-4 w-4' />
+                    <LifeBuoy className='h-4 w-4' />
                     <span>Support</span>
                   </Link>
                 </SidebarMenuButton>
@@ -220,7 +220,7 @@ export const StudioSidebar = () => {
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
                   <Link href={`https://github.com/kinotio/drowser-studio/issues`} target='_blank'>
-                    <MessageSquare className='mr-2 h-4 w-4' />
+                    <MessageSquare className='h-4 w-4' />
                     <span>Feedback</span>
                   </Link>
                 </SidebarMenuButton>
@@ -236,7 +236,7 @@ export const StudioSidebar = () => {
             <ImportReport>
               <SidebarMenuButton asChild>
                 <Button variant='ghost' className='w-full justify-start'>
-                  <Import className='mr-2 h-4 w-4' />
+                  <Import className='h-4 w-4' />
                   <span>Import Report</span>
                 </Button>
               </SidebarMenuButton>
@@ -245,7 +245,7 @@ export const StudioSidebar = () => {
           <SidebarMenuItem>
             <SidebarMenuButton asChild>
               <Button variant='ghost' className='w-full justify-start'>
-                <ToggleTheme />
+                <ToggleTheme inStudio />
               </Button>
             </SidebarMenuButton>
           </SidebarMenuItem>
