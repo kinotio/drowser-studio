@@ -45,7 +45,7 @@ driver({ browser: "chrome" })
             <SyntaxHighlighter language='typescript' style={tomorrowNightBright}>
               {code}
             </SyntaxHighlighter>
-            <BorderBeam colorFrom='#fff' colorTo='#fff' />
+            <BorderBeam colorFrom='#A07CFE' colorTo='#FE8FB5' />
           </div>
         </div>
       </div>

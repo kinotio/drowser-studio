@@ -1,16 +1,14 @@
 import { useTheme } from 'next-themes'
 import { Moon, Sun } from 'lucide-react'
-import Link from 'next/link'
 
 export const ToggleTheme = ({ inStudio = false }: { inStudio: boolean }) => {
   const { theme, setTheme } = useTheme()
 
   if (inStudio) {
     return (
-      <Link
-        href='#'
+      <span
         onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
-        className='justify-start'
+        className='justify-start cursor-pointer'
       >
         <div className='flex gap-2 dark:hidden items-center'>
           <Moon size={20} />
@@ -21,15 +19,14 @@ export const ToggleTheme = ({ inStudio = false }: { inStudio: boolean }) => {
           <Sun size={20} />
           <span>Light</span>
         </div>
-      </Link>
+      </span>
     )
   }
 
   return (
-    <Link
-      href='#'
+    <span
       onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
-      className='justify-start'
+      className='justify-start cursor-pointer'
     >
       <div className='flex gap-2 dark:hidden'>
         <Moon size={20} />
@@ -42,6 +39,6 @@ export const ToggleTheme = ({ inStudio = false }: { inStudio: boolean }) => {
       </div>
 
       <span className='sr-only'>Toggle theme</span>
-    </Link>
+    </span>
   )
 }
