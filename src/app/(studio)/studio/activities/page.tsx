@@ -67,7 +67,7 @@ const Page = () => {
   const [date, setDate] = useState<DateRange | undefined>()
   const [total, setTotal] = useState<number>(0)
 
-  const itemsPerPage = 8
+  const itemsPerPage = 9
 
   const totalPages = Math.ceil(total / itemsPerPage)
 
@@ -96,15 +96,6 @@ const Page = () => {
   return (
     <div className='flex flex-1 flex-col gap-8 w-full py-4 px-3'>
       <section className='w-full mx-auto pb-12 md:pb-16 lg:pb-20 gap-6 flex flex-col'>
-        <div className='grid gap-8'>
-          <div className='gap-2 flex items-center'>
-            <Badge className='flex gap-2' variant='secondary'>
-              <ActivityIcon size={20} />
-              <h1 className='text-xl font-bold'>Activities</h1>
-            </Badge>
-          </div>
-        </div>
-
         <Card className='w-full'>
           <CardHeader>
             <CardDescription>View and filter activity actions</CardDescription>
