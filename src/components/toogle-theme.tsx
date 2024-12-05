@@ -1,7 +1,7 @@
 import { useTheme } from 'next-themes'
 import { Moon, Sun } from 'lucide-react'
 
-export const ToggleTheme = ({ inStudio = false }: { inStudio: boolean }) => {
+export const ToggleTheme = ({ inStudio = false }: { inStudio?: boolean }) => {
   const { theme, setTheme } = useTheme()
 
   if (inStudio) {
