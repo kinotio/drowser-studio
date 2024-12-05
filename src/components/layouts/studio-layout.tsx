@@ -15,7 +15,7 @@ import {
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb'
 import { SidebarProvider, SidebarInset, SidebarTrigger } from '@/components/ui/sidebar'
-import { AppSidebar } from '@/components/app-sidebar'
+import { StudioSidebar } from '@/components/studio-sidebar'
 
 export const StudioLayout = ({
   children
@@ -27,7 +27,7 @@ export const StudioLayout = ({
   return (
     <>
       <SidebarProvider defaultOpen={true}>
-        <AppSidebar />
+        <StudioSidebar />
 
         <SidebarInset>
           <Header pathname={pathname} />
