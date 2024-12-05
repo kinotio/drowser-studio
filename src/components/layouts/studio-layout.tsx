@@ -26,7 +26,7 @@ export const StudioLayout = ({
 
   return (
     <>
-      <SidebarProvider defaultOpen={true}>
+      <SidebarProvider defaultOpen={false}>
         <StudioSidebar />
 
         <SidebarInset>

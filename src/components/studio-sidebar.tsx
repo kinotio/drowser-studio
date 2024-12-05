@@ -257,7 +257,7 @@ export const StudioSidebar = () => {
               <div className='flex items-center'>
                 <UserButton />
                 <div className='flex flex-col gap-1'>
-                  <span>{user?.fullName}</span>
+                  <span>{user?.firstName}</span>
                   <span className='text-xs'>{user?.emailAddresses[0].emailAddress}</span>
                 </div>
               </div>
