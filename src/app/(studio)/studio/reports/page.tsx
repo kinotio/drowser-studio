@@ -6,7 +6,6 @@ import {
   ChevronDownIcon,
   LayoutListIcon,
   LayoutGridIcon,
-  FilesIcon,
   MoreVerticalIcon,
   Trash2Icon,
   RefreshCcwIcon
@@ -23,7 +22,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
-import { Badge } from '@/components/ui/badge'
 import { Skeleton } from '@/components/ui/skeleton'
 import {
   Pagination,
@@ -111,14 +109,7 @@ const Page = () => {
 
   return (
     <div className='container mx-auto p-4'>
-      <div className='flex justify-between items-center mb-8'>
-        <div>
-          <Badge variant='secondary' className='flex gap-2'>
-            <FilesIcon size={20} />
-            <span className='text-xl font-bold'>Reports</span>
-          </Badge>
-        </div>
-
+      <div className='flex justify-end items-center mb-8'>
         <div className='flex items-center gap-2'>
           <Tooltip>
             <TooltipTrigger asChild>

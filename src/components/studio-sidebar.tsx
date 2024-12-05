@@ -48,6 +48,11 @@ import { pocketbase } from '@/lib/pocketbase'
 
 const menus = [
   {
+    label: 'Home',
+    path: '/studio',
+    icon: 'House'
+  },
+  {
     label: 'Reports',
     path: '/studio/reports',
     icon: 'Files'
