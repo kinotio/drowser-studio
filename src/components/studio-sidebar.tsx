@@ -84,7 +84,7 @@ export const StudioSidebar = () => {
       })
       .then((data) => setReport(data as Report))
       .catch((err) => console.log(err))
-  }, [userId, paramsReportSlug])
+  }, [userId, paramsReportSlug, pathName])
 
   return (
     <Sidebar collapsible='icon'>
@@ -110,7 +110,7 @@ export const StudioSidebar = () => {
             <SidebarMenu>
               {menus.map((menu) => (
                 <SidebarMenuItem key={menu.label}>
-                  <SidebarMenuButton asChild>
+                  <SidebarMenuButton asChild isActive={pathName === menu.path}>
                     <Link href={menu.path}>
                       <Icon name={menu.icon as keyof typeof icons} size={20} />
                       <span>{menu.label}</span>
@@ -128,7 +128,7 @@ export const StudioSidebar = () => {
             <SidebarGroupContent>
               <SidebarMenu>
                 <SidebarMenuItem>
-                  <SidebarMenuButton asChild isActive={pathName === PATH.STUDIO_REPORTS}>
+                  <SidebarMenuButton asChild>
                     <Link href={`${PATH.STUDIO_REPORTS}/${paramsReportSlug}`}>
                       <BarChartBig className='mr-2 h-4 w-4' />
                       <span>Overview</span>
@@ -139,7 +139,7 @@ export const StudioSidebar = () => {
                 <Collapsible defaultOpen className='group/collapsible'>
                   <CollapsibleTrigger asChild>
                     <SidebarMenuItem>
-                      <SidebarMenuButton isActive={pathName.startsWith(PATH.STUDIO_REPORT_CASES)}>
+                      <SidebarMenuButton>
                         <ClipboardList className='mr-2 h-4 w-4' />
                         <span>Cases</span>
                       </SidebarMenuButton>
@@ -169,13 +169,7 @@ export const StudioSidebar = () => {
                                 .filter((c) => c.browser === browser)
                                 .map((c) => (
                                   <SidebarMenuSubItem key={c.id}>
-                                    <SidebarMenuSubButton
-                                      asChild
-                                      isActive={
-                                        pathName.startsWith(PATH.STUDIO_REPORT_CASES) &&
-                                        params.id === c.id
-                                      }
-                                    >
+                                    <SidebarMenuSubButton asChild>
                                       <Link
                                         href={`${PATH.STUDIO_REPORTS}/${paramsReportSlug}/cases/${c.id}`}
                                       >
