@@ -65,7 +65,7 @@ export const StudioSidebar = () => {
   const params = useParams()
   const { userId } = useAuth()
 
-  const [report, setReport] = useState<Report>()
+  const [report, setReport] = useState<Report | null>(null)
   const [openBrowser, setOpenBrowser] = useState<string | null>(null)
 
   const paramsReportSlug = params.reportSlug as string
@@ -83,8 +83,8 @@ export const StudioSidebar = () => {
         filter: `user_id = "${userId}" && slug = "${paramsReportSlug}"`
       })
       .then((data) => setReport(data as Report))
-      .catch((err) => console.log(err))
-  }, [userId, paramsReportSlug, pathName])
+      .catch(() => setReport(null))
+  }, [userId, paramsReportSlug])
 
   return (
     <Sidebar collapsible='icon'>
