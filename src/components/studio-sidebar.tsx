@@ -232,7 +232,7 @@ export const StudioSidebar = () => {
               <SidebarMenuButton asChild>
                 <Button variant='ghost' className='w-full justify-start'>
                   <Import className='mr-2 h-4 w-4' />
-                  <span>Import report</span>
+                  <span>Import Report</span>
                 </Button>
               </SidebarMenuButton>
             </ImportReport>
