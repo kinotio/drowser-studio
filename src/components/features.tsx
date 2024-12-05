@@ -31,8 +31,9 @@ export const Features = () => {
                   src='/images/drowser-studio.png'
                   alt='Drowser Studio'
                   width={1200}
-                  height={1200}
+                  height={675}
                   className='rounded-lg'
+                  priority
                 />
               </ShineBorder>
             </div>

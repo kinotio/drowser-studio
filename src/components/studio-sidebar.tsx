@@ -245,7 +245,7 @@ export const StudioSidebar = () => {
           <SidebarMenuItem>
             <SidebarMenuButton asChild>
               <Button variant='ghost' className='w-full justify-start'>
-                <ToggleTheme inStudio={true} />
+                <ToggleTheme inStudio />
               </Button>
             </SidebarMenuButton>
           </SidebarMenuItem>
