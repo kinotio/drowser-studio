@@ -133,9 +133,12 @@ export const StudioSidebar = () => {
             <SidebarGroupContent>
               <SidebarMenu>
                 <SidebarMenuItem>
-                  <SidebarMenuButton asChild>
+                  <SidebarMenuButton
+                    asChild
+                    isActive={pathName === `${PATH.STUDIO_REPORTS}/${paramsReportSlug}`}
+                  >
                     <Link href={`${PATH.STUDIO_REPORTS}/${paramsReportSlug}`}>
-                      <BarChartBig className='mr-2 h-4 w-4' />
+                      <BarChartBig className='h-4 w-4' />
                       <span>Overview</span>
                     </Link>
                   </SidebarMenuButton>
@@ -144,8 +147,12 @@ export const StudioSidebar = () => {
                 <Collapsible defaultOpen className='group/collapsible'>
                   <CollapsibleTrigger asChild>
                     <SidebarMenuItem>
-                      <SidebarMenuButton>
-                        <ClipboardList className='mr-2 h-4 w-4' />
+                      <SidebarMenuButton
+                        isActive={pathName.startsWith(
+                          `${PATH.STUDIO_REPORTS}/${paramsReportSlug}/cases`
+                        )}
+                      >
+                        <ClipboardList className='h-4 w-4' />
                         <span>Cases</span>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
@@ -163,7 +170,7 @@ export const StudioSidebar = () => {
                           <CollapsibleTrigger asChild>
                             <SidebarMenuSubItem>
                               <SidebarMenuSubButton>
-                                <Globe className='mr-2 h-4 w-4' />
+                                <Globe className='h-4 w-4' />
                                 <span className='capitalize'>{browser}</span>
                               </SidebarMenuSubButton>
                             </SidebarMenuSubItem>
@@ -174,11 +181,16 @@ export const StudioSidebar = () => {
                                 .filter((c) => c.browser === browser)
                                 .map((c) => (
                                   <SidebarMenuSubItem key={c.id}>
-                                    <SidebarMenuSubButton asChild>
+                                    <SidebarMenuSubButton
+                                      asChild
+                                      isActive={pathName.startsWith(
+                                        `${PATH.STUDIO_REPORTS}/${paramsReportSlug}/cases/${c.id}`
+                                      )}
+                                    >
                                       <Link
                                         href={`${PATH.STUDIO_REPORTS}/${paramsReportSlug}/cases/${c.id}`}
                                       >
-                                        <Clipboard className='mr-2 h-4 w-4' />
+                                        <Clipboard className='h-4 w-4' />
                                         <span>{readableTimestamp(c.time)}</span>
                                       </Link>
                                     </SidebarMenuSubButton>
@@ -193,9 +205,12 @@ export const StudioSidebar = () => {
                 </Collapsible>
 
                 <SidebarMenuItem>
-                  <SidebarMenuButton asChild>
+                  <SidebarMenuButton
+                    asChild
+                    isActive={pathName === `${PATH.STUDIO_REPORTS}/${paramsReportSlug}/visualize`}
+                  >
                     <Link href={`${PATH.STUDIO_REPORTS}/${paramsReportSlug}/visualize`}>
-                      <SquareStack className='mr-2 h-4 w-4 -rotate-90' />
+                      <SquareStack className='h-4 w-4 -rotate-90' />
                       <span>Visualize</span>
                     </Link>
                   </SidebarMenuButton>
