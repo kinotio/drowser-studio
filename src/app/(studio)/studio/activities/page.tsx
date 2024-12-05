@@ -67,7 +67,7 @@ const Page = () => {
   const [date, setDate] = useState<DateRange | undefined>()
   const [total, setTotal] = useState<number>(0)
 
-  const itemsPerPage = 6
+  const itemsPerPage = 8
 
   const totalPages = Math.ceil(total / itemsPerPage)
 
