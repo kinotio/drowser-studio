@@ -214,7 +214,7 @@ export const StudioSidebar = () => {
               </SidebarMenuItem>
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
-                  <Link href={`https://github.com/kinotio/drowser-studio/issues`}>
+                  <Link href={`https://github.com/kinotio/drowser-studio/issues`} target='_blank'>
                     <MessageSquare className='mr-2 h-4 w-4' />
                     <span>Feedback</span>
                   </Link>
