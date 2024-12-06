@@ -69,7 +69,7 @@ const Page = () => {
   }, [content])
 
   return (
-    <div className='flex flex-col gap-4 md:gap-8'>
+    <div className='container mx-auto flex flex-col gap-4 md:gap-8'>
       <CaseMetrics
         content={content}
         goupedByStatus={goupedByStatus as Record<string, TContentSubCase[]>}
