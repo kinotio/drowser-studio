@@ -93,7 +93,7 @@ const Page = () => {
   }, [userId, currentPage, searchTerm, filters])
 
   return (
-    <div className='flex flex-1 flex-col gap-8 w-full py-4 px-3'>
+    <div className='container mx-auto flex flex-1 flex-col gap-8 w-full py-4 px-3'>
       <section className='w-full mx-auto pb-12 md:pb-16 lg:pb-20 gap-6 flex flex-col'>
         <Card className='w-full'>
           <CardHeader>
