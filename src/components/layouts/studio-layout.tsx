@@ -90,21 +90,11 @@ const Footer = () => {
   return (
     <footer className='flex h-14 lg:h-[60px] items-center border-t fixed bottom-0 w-full bg-white dark:bg-black'>
       <div className='flex flex-1 items-end justify-end px-4 w-full'>
-        <div className='flex gap-3 items-center'>
-          <Link href='/studio/legal/terms' className='text-xs hidden md:block'>
-            Terms
+        <div className='flex items-center pl-4 gap-2'>
+          <span className='text-sm font-semibold'>By</span>
+          <Link href={'https://github.com/kinotio'}>
+            <Kinotio width={100} height={50} />
           </Link>
-
-          <Link href='/studio/legal/privacy' className='text-xs hidden md:block'>
-            Privacy
-          </Link>
-
-          <div className='flex items-center pl-4 gap-2'>
-            <span className='text-sm font-semibold'>By</span>
-            <Link href={'https://github.com/kinotio'}>
-              <Kinotio width={100} height={50} />
-            </Link>
-          </div>
         </div>
       </div>
     </footer>
