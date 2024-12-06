@@ -252,7 +252,7 @@ export const StudioSidebar = () => {
             <SidebarMenu>
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
-                  <Link href={'studio/legal/terms'}>
+                  <Link href={'/studio/legal/terms'}>
                     <FileText className='h-4 w-4' />
                     <span>Terms of Service</span>
                   </Link>
@@ -260,7 +260,7 @@ export const StudioSidebar = () => {
               </SidebarMenuItem>
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
-                  <Link href={'studio/legal/privacy'}>
+                  <Link href={'/studio/legal/privacy'}>
                     <Shield className='h-4 w-4' />
                     <span>Privacy Policy</span>
                   </Link>
