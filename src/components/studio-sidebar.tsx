@@ -11,7 +11,9 @@ import {
   ClipboardList,
   Globe,
   LifeBuoy,
-  SquareStack
+  SquareStack,
+  FileText,
+  Shield
 } from 'lucide-react'
 import { useUser, useAuth, UserButton } from '@clerk/nextjs'
 import { usePathname, useParams } from 'next/navigation'
@@ -237,6 +239,30 @@ export const StudioSidebar = () => {
                   <Link href={`https://github.com/kinotio/drowser-studio/issues`} target='_blank'>
                     <MessageSquare className='h-4 w-4' />
                     <span>Feedback</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        <SidebarGroup>
+          <SidebarGroupLabel>Legal</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <Link href={'/studio/legal/terms'}>
+                    <FileText className='h-4 w-4' />
+                    <span>Terms of Service</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <Link href={'/studio/legal/privacy'}>
+                    <Shield className='h-4 w-4' />
+                    <span>Privacy Policy</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
