@@ -1,6 +1,6 @@
 'use client'
 
-import { Slash } from 'lucide-react'
+import { Slash, PanelLeftOpen, PanelLeftClose } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
@@ -14,8 +14,9 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb'
-import { SidebarProvider, SidebarInset, SidebarTrigger } from '@/components/ui/sidebar'
+import { SidebarProvider, SidebarInset, useSidebar } from '@/components/ui/sidebar'
 import { StudioSidebar } from '@/components/studio-sidebar'
+import { Button } from '../ui/button'
 
 export const StudioLayout = ({
   children
@@ -45,13 +46,16 @@ export const StudioLayout = ({
 }
 
 const Header = ({ pathname }: { pathname: string }) => {
+  const { toggleSidebar, open } = useSidebar()
   const pathSegments = pathname.split('/').filter((segment) => segment)
 
   return (
     <header className='w-full top-0 mx-auto sticky z-40 flex justify-center items-center bg-card flex-col gap-4'>
       <div className='w-full flex border-b border-secondary'>
         <div className='flex py-2 px-5 justify-between items-center'>
-          <SidebarTrigger />
+          <Button variant='ghost' size='icon' className='h-8 w-8 p-0' onClick={toggleSidebar}>
+            {open ? <PanelLeftClose className='h-4 w-4' /> : <PanelLeftOpen className='h-4 w-4' />}
+          </Button>
 
           <Breadcrumb className='flex justify-between items-center py-3 ml-2'>
             <BreadcrumbList>
