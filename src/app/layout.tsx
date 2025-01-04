@@ -23,8 +23,8 @@ const Layout = ({
       <html lang='en'>
         <Script
           async
-          src='https://analytics.kinotio.io/script.js'
-          data-website-id='c5168dda-d0db-468c-b8c0-3d70fab4cfd8'
+          src='https://umami.kinotio.io/script.js'
+          data-website-id='eb707704-e55f-4bcd-bb71-637d1ca6a7a4'
         />
         <body className={`${inter.className}`}>
           <ThemeProvider attribute='class' defaultTheme='system' enableSystem>
