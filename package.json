@@ -41,7 +41,6 @@
     "axios": "^1.7.7",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
-    "crypto-js": "^4.2.0",
     "date-fns": "^3.0.0",
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.39.2",
@@ -67,7 +66,6 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@types/crypto-js": "^4.2.2",
     "@types/lodash": "^4.17.13",
     "@types/node": "^20",
     "@types/pg": "^8.11.11",

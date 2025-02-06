@@ -1,4 +1,4 @@
-import { varchar, pgTable, uuid, timestamp, jsonb, integer } from '@/lib/drizzle'
+import { varchar, pgTable, uuid, timestamp, jsonb, integer } from '@/server/drizzle'
 
 export const reports = pgTable('reports', {
   id: uuid().primaryKey().defaultRandom().notNull(),
@@ -9,7 +9,8 @@ export const reports = pgTable('reports', {
   timestamp: timestamp({ mode: 'date' }).notNull().defaultNow()
 })
 
-export type Report = typeof reports.$inferSelect
+export type ReportSelect = typeof reports.$inferSelect
+export type ReportInsert = typeof reports.$inferInsert
 
 export const metrics = pgTable('metrics', {
   id: uuid().primaryKey().defaultRandom().notNull(),
@@ -19,7 +20,8 @@ export const metrics = pgTable('metrics', {
   timestamp: timestamp({ mode: 'date' }).notNull().defaultNow()
 })
 
-export type Metric = typeof metrics.$inferSelect
+export type MetricSelect = typeof metrics.$inferSelect
+export type MetricInsert = typeof metrics.$inferInsert
 
 export const activities = pgTable('activities', {
   id: uuid().primaryKey().defaultRandom().notNull(),
@@ -30,7 +32,8 @@ export const activities = pgTable('activities', {
   timestamp: timestamp({ mode: 'date' }).notNull().defaultNow()
 })
 
-export type Activity = typeof activities.$inferSelect
+export type ActivitySelect = typeof activities.$inferSelect
+export type ActivityInsert = typeof activities.$inferInsert
 
 const schema = { reports, metrics, activities }
 
