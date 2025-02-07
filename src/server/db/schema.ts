@@ -6,7 +6,11 @@ export const reports = pgTable('reports', {
   slug: varchar({ length: 256 }).notNull().unique(),
   metadata: jsonb().notNull(),
   user_id: varchar({ length: 256 }).notNull(),
-  timestamp: timestamp({ mode: 'date' }).notNull().defaultNow()
+  created: timestamp({ mode: 'date' }).notNull().defaultNow(),
+  updated: timestamp({ mode: 'date' })
+    .notNull()
+    .defaultNow()
+    .$onUpdate(() => new Date())
 })
 
 export type ReportSelect = typeof reports.$inferSelect
@@ -17,7 +21,12 @@ export const metrics = pgTable('metrics', {
   year: integer().notNull(),
   total: integer().notNull(),
   month: integer().notNull(),
-  timestamp: timestamp({ mode: 'date' }).notNull().defaultNow()
+  user_id: varchar({ length: 256 }).notNull(),
+  created: timestamp({ mode: 'date' }).notNull().defaultNow(),
+  updated: timestamp({ mode: 'date' })
+    .notNull()
+    .defaultNow()
+    .$onUpdate(() => new Date())
 })
 
 export type MetricSelect = typeof metrics.$inferSelect
@@ -29,7 +38,11 @@ export const activities = pgTable('activities', {
   description: varchar({ length: 256 }).notNull().unique(),
   user_id: varchar({ length: 256 }).notNull(),
   device: varchar({ length: 256 }).notNull(),
-  timestamp: timestamp({ mode: 'date' }).notNull().defaultNow()
+  created: timestamp({ mode: 'date' }).notNull().defaultNow(),
+  updated: timestamp({ mode: 'date' })
+    .notNull()
+    .defaultNow()
+    .$onUpdate(() => new Date())
 })
 
 export type ActivitySelect = typeof activities.$inferSelect
