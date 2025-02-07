@@ -1,0 +1,1 @@
+ALTER TABLE "metrics" ADD COLUMN "user_id" varchar(256) NOT NULL;

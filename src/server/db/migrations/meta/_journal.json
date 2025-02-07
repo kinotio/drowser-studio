@@ -8,6 +8,34 @@
       "when": 1738859792104,
       "tag": "0000_fearless_harry_osborn",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1738928815400,
+      "tag": "0001_amused_xavin",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1738929028213,
+      "tag": "0002_puzzling_baron_strucker",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1738929844287,
+      "tag": "0003_absent_kate_bishop",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1738947340411,
+      "tag": "0004_brown_sunfire",
+      "breakpoints": true
     }
   ]
 }
