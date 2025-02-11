@@ -9,7 +9,11 @@ export default clerkMiddleware(async (auth, request) => {
   const reportCasesPattern = /^\/studio\/reports\/([^\/]+)\/cases$/
   const match = request.nextUrl.pathname.match(reportCasesPattern)
 
-  if (userId && request.nextUrl.pathname === '/') {
+  if (
+    (userId && request.nextUrl.pathname === '/') ||
+    (userId && request.nextUrl.pathname === '/drowser-studio') ||
+    (userId && request.nextUrl.pathname.startsWith('/legal'))
+  ) {
     url.pathname = '/studio'
     return NextResponse.redirect(url)
   }

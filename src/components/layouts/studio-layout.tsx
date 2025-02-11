@@ -15,7 +15,7 @@ import {
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb'
 import { SidebarProvider, SidebarInset, useSidebar } from '@/components/ui/sidebar'
-import { StudioSidebar } from '@/components/studio-sidebar'
+import { StudioSidebar } from '@/components/mods/studio/studio-sidebar'
 import { Button } from '../ui/button'
 
 export const StudioLayout = ({
@@ -27,7 +27,7 @@ export const StudioLayout = ({
 
   return (
     <>
-      <SidebarProvider defaultOpen={false}>
+      <SidebarProvider defaultOpen={true}>
         <StudioSidebar />
 
         <SidebarInset>

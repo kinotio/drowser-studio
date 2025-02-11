@@ -20,8 +20,8 @@ import { usePathname, useParams } from 'next/navigation'
 import { isEmpty } from 'lodash'
 
 import { DrowserStudio } from '@/components/icons/drowser-studio'
-import { DrowserStudioIcon } from '@/components/icons/drowser-studio-icon'
-import { ImportReport } from '@/components/import-report'
+import { KinotioIcon } from '@/components/icons/kinotio-icon'
+import { ImportReport } from '@/components/mods/studio/import-report'
 import {
   Sidebar,
   SidebarContent,
@@ -98,11 +98,11 @@ export const StudioSidebar = () => {
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild className='flex items-center'>
-              <Link href='/'>
-                <DrowserStudioIcon />
+            <SidebarMenuButton asChild>
+              <Link href='/' className='flex items-center gap-2'>
+                <KinotioIcon />
                 <span>
-                  <DrowserStudio width={175} height={70} />
+                  <DrowserStudio width={150} height={70} />
                 </span>
               </Link>
             </SidebarMenuButton>
