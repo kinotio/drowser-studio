@@ -91,6 +91,11 @@ export const DATA = {
         icon: 'MessageCircle',
         href: 'https://discord.gg/cskvbKQA',
         label: 'Discord'
+      },
+      {
+        icon: 'MessageCircle',
+        href: 'https://bsky.app/profile/kinotio.io',
+        label: 'Bluesky'
       }
     ]
   },
