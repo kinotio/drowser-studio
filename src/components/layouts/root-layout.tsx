@@ -22,7 +22,6 @@ import {
 } from '@/components/ui/navigation-menu'
 import { Button } from '@/components/ui/button'
 import { Drowser } from '@/components/icons/drowser'
-import { Icon } from '@/components/ui/icon'
 import { Kinotio } from '@/components/icons/kinotio'
 import { Heart } from '@/components/icons/heart'
 
