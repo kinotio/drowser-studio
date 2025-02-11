@@ -1,17 +1,18 @@
 import { BrowserKey } from '@/lib/definitions'
 
 export const DATA = {
-  name: 'Drowser, explore new way to write tests',
+  name: 'Drowser: explore new way to write tests',
   url: 'https://drowser.kinotio.io',
   description: 'A easy way to implement and write Selenium with TypeScript using Deno',
   social_url: {
-    github: 'https://github.com/kinotio',
+    github: 'https://github.com/kinotiodotio',
     discord: 'https://discord.gg/cskvbKQA',
-    linkedin: 'https://linkedin.com/company/kinotio',
-    x: 'https://x.com/kinotiodotio'
+    linkedin: 'https://linkedin.com/company/kinotiodotio',
+    x: 'https://x.com/kinotiodotio',
+    bluesky: 'https://bsky.app/profile/kinotio.io'
   },
-  repo: 'https://github.com/kinotio/drowser',
-  doc_repo: 'https://github.com/kinotio/drowser/tree/main',
+  repo: 'https://github.com/kinotiodotio/drowser',
+  doc_repo: 'https://github.com/kinotiodotio/drowser/tree/main',
   keywords: [
     'Drowser',
     'Drowser Studio',
@@ -52,11 +53,11 @@ export const DATA = {
         name: 'FAQ'
       },
       {
-        href: 'https://github.com/kinotio/drowser/issues',
+        href: 'https://github.com/kinotiodotio/drowser/issues',
         name: 'Issues (Drowser)'
       },
       {
-        href: 'https://github.com/kinotio/drowser-studio/issues',
+        href: 'https://github.com/kinotiodotio/drowser-studio/issues',
         name: 'Issues (Drowser Studio)'
       }
     ],
@@ -73,7 +74,7 @@ export const DATA = {
     socials: [
       {
         icon: 'Github',
-        href: 'https://github.com/kinotio',
+        href: 'https://github.com/kinotiodotio',
         name: 'github'
       },
       {
@@ -90,6 +91,11 @@ export const DATA = {
         icon: 'MessageCircle',
         href: 'https://discord.gg/cskvbKQA',
         label: 'Discord'
+      },
+      {
+        icon: 'MessageCircle',
+        href: 'https://bsky.app/profile/kinotio.io',
+        label: 'Bluesky'
       }
     ]
   },

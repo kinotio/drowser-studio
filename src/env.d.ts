@@ -6,6 +6,7 @@ declare global {
       NEXT_PUBLIC_CLERK_REDIRECT_BASE: string
       NEXT_PUBLIC_BASE_URL: string
 
+      DATABASE_URL: string
       CLERK_SECRET_KEY: string
       CLERK_WEBHOOK_SECRET: string
       CRYPTO_PASSPHRASE: string
