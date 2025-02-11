@@ -1,5 +1,3 @@
-import { BrowserKey } from '@/lib/definitions'
-
 export const DATA = {
   name: 'Drowser: explore new way to write tests',
   url: 'https://drowser.kinotio.io',
@@ -34,6 +32,10 @@ export const DATA = {
     }
   },
   navbar: [
+    {
+      href: '/drowser-studio',
+      name: 'Studio'
+    },
     {
       href: 'https://docs.kinotio.io/docs/drowser',
       name: 'Docs'
@@ -98,70 +100,5 @@ export const DATA = {
         label: 'Bluesky'
       }
     ]
-  },
-  trustedBy: [
-    {
-      icon: 'Crown',
-      name: 'Your company'
-    },
-    {
-      icon: 'Crown',
-      name: 'Your company'
-    },
-    {
-      icon: 'Crown',
-      name: 'Your company'
-    },
-    {
-      icon: 'Crown',
-      name: 'Your company'
-    }
-  ],
-  features: {
-    lib: {},
-    studio: [
-      {
-        title: 'Monitoring',
-        description:
-          'Easily monitor application performance with real-time insights, powered by Drowser’s automated testing capabilities.',
-        icon: 'MonitorCheck'
-      },
-      {
-        title: 'Friendly User Interface',
-        description:
-          'Access and visualize test reports through a user-friendly interface designed for clarity and ease of use.',
-        icon: 'Handshake'
-      },
-      {
-        title: 'Productivity',
-        description:
-          'Improve your workflow by quickly analyzing test results and making informed decisions with streamlined reporting tools.',
-        icon: 'TrendingUp'
-      },
-      {
-        title: 'Graph Visualization',
-        description:
-          'Easily interpret test results with dynamic graph visualizations, turning complex data into clear, actionable insights.',
-        icon: 'Share2'
-      }
-    ]
-  },
-  faq: [
-    {
-      question: 'What is this package used for?',
-      answer:
-        "This package allows you to write end-to-end (E2E) tests using Selenium WebDriver in Deno. It's designed to automate browser actions, enabling testing of web applications in different environments."
-    },
-    {
-      question: 'Why use Deno instead of Node.js?',
-      answer:
-        "Deno offers several advantages over Node.js, such as TypeScript support out of the box, secure by default (no access to files, network, or environment variables unless explicitly enabled), and a modern standard library. It's also designed with ES Modules, making it a good fit for modern JavaScript development."
-    },
-    {
-      question: 'What browsers are supported?',
-      answer:
-        "The package supports major browsers like Chrome, Firefox, and Edge. Ensure you have the corresponding WebDriver executable installed and available in your system's PATH."
-    }
-  ],
-  supportedBrowsers: ['chrome', 'firefox', 'edge', 'safari'] as BrowserKey[]
+  }
 }
