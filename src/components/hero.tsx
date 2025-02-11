@@ -45,7 +45,9 @@ export const Hero = () => {
           className='mx-auto mb-8 flex justify-center'
         >
           <div className='rounded-full bg-neutral-100 dark:bg-neutral-900 px-4 py-1.5 text-sm font-medium flex items-center gap-2'>
-            Introducing Drowser Studio <ArrowRight className='w-4 h-4' />
+            <Link href='/studio'>
+              Introducing Drowser Studio <ArrowRight className='w-4 h-4' />
+            </Link>
           </div>
         </motion.div>
 
@@ -79,7 +81,7 @@ export const Hero = () => {
               </Link>
             </Button>
             <Button size='lg' variant='outline' className='border-2 gap-2' asChild>
-              <Link href='https://github.com'>
+              <Link href='https://github.com/kinotiodotio/drowser'>
                 <Github className='w-5 h-5' />
                 GitHub
               </Link>
