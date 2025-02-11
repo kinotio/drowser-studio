@@ -2,11 +2,12 @@
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { ArrowRight, Github, Book } from 'lucide-react'
+import { ChevronRight, Github, Book } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { FlipWords } from '@/components/ui/flip-words'
 import { CodeBlock } from '@/components/ui/code-block'
+import AnimatedGradientText from '@/components/ui/animated-gradient-text'
 
 export const Hero = () => {
   const words = ['Selenium', 'Browser', 'End2End', 'User Interface']
@@ -44,11 +45,12 @@ export const Hero = () => {
           transition={{ duration: 0.5 }}
           className='mx-auto mb-8 flex justify-center'
         >
-          <div className='rounded-full bg-neutral-100 dark:bg-neutral-900 px-4 py-1.5 text-sm font-medium flex items-center gap-2'>
-            <Link href='/studio'>
-              Introducing Drowser Studio <ArrowRight className='w-4 h-4' />
+          <AnimatedGradientText className='bg-white dark:bg-slate-950'>
+            <Link href='/studio' className='flex items-center justify-center'>
+              <span className='backdrop-blur-3xl'>Introducing Drowser Studio</span>
+              <ChevronRight className='ml-1 size-3 transition-transform duration-300 ease-in-out group-hover:translate-x-0.5' />
             </Link>
-          </div>
+          </AnimatedGradientText>
         </motion.div>
 
         <motion.div

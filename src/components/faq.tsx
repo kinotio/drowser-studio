@@ -1,3 +1,7 @@
+'use client'
+
+import { motion } from 'framer-motion'
+
 import {
   Accordion,
   AccordionContent,
@@ -9,20 +13,21 @@ import { DATA } from '@/data'
 
 export const FAQ = () => {
   return (
-    <section id='faq' className='container md:w-[700px] py-24 sm:py-32 m-auto'>
-      <div className='text-center mb-8'>
-        <h2 className='text-lg text-primary text-center mb-2 tracking-wider'>FAQS</h2>
-        <h2 className='text-3xl md:text-4xl text-center font-bold'>Common Questions</h2>
-      </div>
-
-      <Accordion type='single' collapsible className='AccordionRoot'>
-        {DATA.faq.map(({ question, answer }, idx) => (
-          <AccordionItem key={idx} value={idx.toString()}>
-            <AccordionTrigger className='text-left'>{question}</AccordionTrigger>
-            <AccordionContent>{answer}</AccordionContent>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className='w-full max-w-3xl mx-auto my-16 px-8'
+    >
+      <h2 className='text-3xl font-bold text-center mb-8'>Frequently Asked Questions</h2>
+      <Accordion type='single' collapsible className='w-full'>
+        {DATA.faq.map((f, index) => (
+          <AccordionItem key={index} value={`item-${index}`}>
+            <AccordionTrigger className='text-left'>{f.question}</AccordionTrigger>
+            <AccordionContent>{f.answer}</AccordionContent>
           </AccordionItem>
         ))}
       </Accordion>
-    </section>
+    </motion.div>
   )
 }
