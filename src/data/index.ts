@@ -1,13 +1,13 @@
 import { BrowserKey } from '@/lib/definitions'
 
 export const DATA = {
-  name: 'Drowser, explore new way to write tests',
+  name: 'Drowser: explore new way to write tests',
   url: 'https://drowser.kinotio.io',
   description: 'A easy way to implement and write Selenium with TypeScript using Deno',
   social_url: {
     github: 'https://github.com/kinotiodotio',
     discord: 'https://discord.gg/cskvbKQA',
-    linkedin: 'https://linkedin.com/company/kinotio',
+    linkedin: 'https://linkedin.com/company/kinotiodotio',
     x: 'https://x.com/kinotiodotio',
     bluesky: 'https://bsky.app/profile/kinotio.io'
   },
