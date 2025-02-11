@@ -48,8 +48,6 @@ import { readableTimestamp } from '@/lib/utils'
 import { PATH } from '@/lib/constants'
 import { pocketbase } from '@/lib/pocketbase'
 
-import { useCookie } from '@/hooks/use-cookie'
-
 const menus = [
   {
     label: 'Home',
