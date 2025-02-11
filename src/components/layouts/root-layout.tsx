@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, SetStateAction, Dispatch } from 'react'
-import { Github, Menu, icons } from 'lucide-react'
+import { Github, Menu } from 'lucide-react'
 import Link from 'next/link'
 import { SignInButton, SignedOut } from '@clerk/nextjs'
 
@@ -113,7 +113,6 @@ const Footer = () => {
                 href={contact.href}
                 className='flex gap-2 items-center opacity-60 hover:opacity-100'
               >
-                <Icon name={contact.icon as keyof typeof icons} size={20} />
                 {contact.label}
               </Link>
             ))}
