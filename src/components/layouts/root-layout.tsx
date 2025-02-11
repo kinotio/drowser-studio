@@ -23,10 +23,10 @@ import {
 import { Button } from '@/components/ui/button'
 import { Drowser } from '@/components/icons/drowser'
 import { Icon } from '@/components/ui/icon'
+import { Kinotio } from '@/components/icons/kinotio'
+import { Heart } from '@/components/icons/heart'
 
 import { ToggleTheme } from '@/components/toogle-theme'
-
-import { getCurrentYear } from '@/lib/utils'
 
 import { DATA } from '@/data'
 
@@ -51,7 +51,7 @@ const Header = () => {
     <header className='w-full top-0 mx-auto sticky z-40 flex justify-center items-center bg-card border-b border-secondary'>
       <div className='w-[90%] md:w-[70%] lg:w-[75%] lg:max-w-screen-xl flex justify-between items-center py-2'>
         <Link href='/' className='flex items-center'>
-          <Drowser width={100} height={50} />
+          <Drowser width={125} height={50} />
         </Link>
         {/* <!-- Mobile --> */}
         <MobileMenu isOpen={isOpen} setIsOpen={setIsOpen} />
@@ -101,7 +101,7 @@ const Footer = () => {
         <div className='grid grid-cols-1 sm:grid-cols-4 md:grid-cols-4 xl:grid-cols-6 gap-x-12 gap-y-8 z-50'>
           <div className='col-span-full xl:col-span-2'>
             <Link href='/' className='flex font-bold items-center'>
-              <Drowser width={100} height={50} />
+              <Kinotio width={125} height={50} />
             </Link>
           </div>
 
@@ -148,17 +148,12 @@ const Footer = () => {
         </div>
 
         <section className='my-6'>
-          <h3>
-            Copyright
-            {` © ${getCurrentYear()} `}
-            <Link
-              target='_blank'
-              href={DATA.social_url.github}
-              className='text-primary transition-all border-primary hover:border-b-2 ml-1'
-            >
-              Developed by Kinotio.
-            </Link>
-          </h3>
+          <div className='flex items-center space-x-3 text-gray-400'>
+            <div className='h-6 w-6 opacity-50'>
+              <Heart />
+            </div>
+            <p className='text-sm'>crafted with care and dedication.</p>
+          </div>
         </section>
       </div>
     </footer>
@@ -187,7 +182,7 @@ const MobileMenu = ({
             <SheetHeader className='mb-4 ml-4'>
               <SheetTitle className='flex items-center'>
                 <Link href='/' className='flex items-center'>
-                  <Drowser width={100} height={50} />
+                  <Drowser width={125} height={50} />
                 </Link>
               </SheetTitle>
             </SheetHeader>
