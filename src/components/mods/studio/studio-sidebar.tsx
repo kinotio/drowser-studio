@@ -21,7 +21,7 @@ import { isEmpty } from 'lodash'
 
 import { DrowserStudio } from '@/components/icons/drowser-studio'
 import { DrowserStudioIcon } from '@/components/icons/drowser-studio-icon'
-import { ImportReport } from '@/components/import-report'
+import { ImportReport } from '@/components/mods/studio/import-report'
 import {
   Sidebar,
   SidebarContent,

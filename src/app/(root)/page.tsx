@@ -1,6 +1,6 @@
-import { FAQ } from '@/components/faq'
-import { Hero } from '@/components/hero'
-import { Bento } from '@/components/bento'
+import { FAQ } from '@/components/mods/drowser/faq'
+import { Hero } from '@/components/mods/drowser/hero'
+import { Bento } from '@/components/mods/drowser/bento'
 
 const Page = () => {
   return (

@@ -46,7 +46,7 @@ export const Hero = () => {
           className='mx-auto mb-8 flex justify-center'
         >
           <AnimatedGradientText className='bg-white dark:bg-slate-950'>
-            <Link href='/studio' className='flex items-center justify-center'>
+            <Link href='/drowser-studio' className='flex items-center justify-center'>
               <span className='backdrop-blur-3xl'>Introducing Drowser Studio</span>
               <ChevronRight className='ml-1 size-3 transition-transform duration-300 ease-in-out group-hover:translate-x-0.5' />
             </Link>
