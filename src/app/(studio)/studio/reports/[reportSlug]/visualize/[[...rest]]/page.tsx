@@ -180,18 +180,18 @@ const renderNode = ({
                               <FolderRootIcon
                                 className={`${
                                   isNodeQueryId ? 'text-primary' : 'text-gray-500'
-                                } h-4 w-4 `}
+                                } h-4 w-4 dark:text-white`}
                               />
                             ) : (
                               <ClipboardIcon
                                 className={`${
                                   isNodeQueryId ? 'text-primary' : 'text-gray-500'
-                                } h-4 w-4 `}
+                                } h-4 w-4 dark:text-white`}
                               />
                             )}
                           </div>
                         ) : (
-                          <BoxesIcon className='h-4 w-4 text-gray-500 dark:text-gray-400' />
+                          <BoxesIcon className='h-4 w-4 text-gray-500 dark:text-white' />
                         )}
                       </div>
                       <div>
@@ -234,11 +234,17 @@ const renderNode = ({
                             event.node.data.duration ?? event.node.data.avg_duration
                           )}
                         </Badge>
-                        <Badge variant={`${isNodeQueryId ? 'secondary' : 'default'}`}>
+                        <Badge
+                          variant={`${isNodeQueryId ? 'secondary' : 'default'}`}
+                          className='dark:bg-primary'
+                        >
                           <CalendarIcon size='16' className='mr-1' />
                           {readableTimestamp(event.node.data.timestamp ?? event.node.data.time)}
                         </Badge>
-                        <Badge variant={`${isNodeQueryId ? 'secondary' : 'outline'}`}>
+                        <Badge
+                          variant={`${isNodeQueryId ? 'secondary' : 'outline'}`}
+                          className='text-neutral-900'
+                        >
                           <GlobeIcon size='16' className='mr-1' />
                           {event.node.data.browser}
                         </Badge>
@@ -274,7 +280,7 @@ const ZoomControls = ({
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button
-                  className='bg-primary text-primary-foreground px-4 py-2 rounded-md hover:bg-primary/90 focus:outline-none focus:ring-1 focus:ring-primary'
+                  className='bg-primary dark:bg-primary text-primary-foreground px-4 py-2 rounded-md hover:bg-primary/90 focus:outline-none focus:ring-1 focus:ring-primary'
                   onClick={() => passedRef.current?.zoomIn?.()}
                 >
                   <ZoomInIcon className='h-4 w-4' />
@@ -287,7 +293,7 @@ const ZoomControls = ({
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button
-                  className='bg-primary text-primary-foreground px-4 py-2 rounded-md hover:bg-primary/90 focus:outline-none focus:ring-1 focus:ring-primary'
+                  className='bg-primary dark:bg-primary text-primary-foreground px-4 py-2 rounded-md hover:bg-primary/90 focus:outline-none focus:ring-1 focus:ring-primary'
                   onClick={() => passedRef.current?.zoomOut?.()}
                 >
                   <ZoomOutIcon className='h-4 w-4' />
@@ -300,7 +306,7 @@ const ZoomControls = ({
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button
-                  className='bg-primary text-primary-foreground px-4 py-2 rounded-md hover:bg-primary/90 focus:outline-none focus:ring-1 focus:ring-primary'
+                  className='bg-primary dark:bg-primary text-primary-foreground px-4 py-2 rounded-md hover:bg-primary/90 focus:outline-none focus:ring-1 focus:ring-primary'
                   onClick={() => passedRef.current?.fitCanvas?.(true)}
                 >
                   <MaximizeIcon className='h-4 w-4' />
@@ -313,7 +319,7 @@ const ZoomControls = ({
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button
-                  className='bg-primary text-primary-foreground px-4 py-2 rounded-md hover:bg-primary/90 focus:outline-none focus:ring-1 focus:ring-primary'
+                  className='bg-primary dark:bg-primary text-primary-foreground px-4 py-2 rounded-md hover:bg-primary/90 focus:outline-none focus:ring-1 focus:ring-primary'
                   onClick={() => passedRef.current?.fitNodes?.(nodeIdQuery ?? 'root')}
                 >
                   {nodeIdQuery ? (

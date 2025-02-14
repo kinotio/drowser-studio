@@ -84,7 +84,7 @@ const Header = () => {
 
           <SignedOut>
             <SignInButton>
-              <Button className='bg-primary hover:bg-neutral-800 dark:hover:bg-neutral-200'>
+              <Button className='bg-primary hover:bg-orange-600 dark:hover:bg-neutral-200'>
                 Get Started
               </Button>
             </SignInButton>
