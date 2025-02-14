@@ -2,6 +2,8 @@
 
 import { ResponsiveBar } from '@nivo/bar'
 
+import { DATA } from '@/data'
+
 export const BarChart = (props: {
   data: { name: string; count: number }[]
   className?: string
@@ -14,7 +16,7 @@ export const BarChart = (props: {
         indexBy='name'
         margin={{ top: 0, right: 0, bottom: 40, left: 40 }}
         padding={0.3}
-        colors={['#2761D7']}
+        colors={[DATA.color.base]}
         axisBottom={{
           tickSize: 0,
           tickPadding: 16

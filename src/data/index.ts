@@ -22,14 +22,7 @@ export const DATA = {
     'Selenium'
   ],
   color: {
-    gradient: {
-      from: '#6048e7',
-      to: '#56d49e'
-    },
-    base: {
-      dark: '#000000',
-      light: '#ffffff'
-    }
+    base: '#1E3E62'
   },
   navbar: [
     {

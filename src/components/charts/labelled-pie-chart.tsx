@@ -2,6 +2,8 @@
 
 import { ResponsivePie } from '@nivo/pie'
 
+import { DATA } from '@/data'
+
 interface LabelledPieChartProps {
   data: { id: string; value: number }[]
   className?: string
@@ -21,7 +23,7 @@ export const LabelledPieChart = (props: LabelledPieChartProps) => {
         borderWidth={1}
         arcLinkLabelsThickness={1}
         enableArcLabels={false}
-        colors={['#2761D7']}
+        colors={[DATA.color.base]}
         theme={{
           tooltip: {
             chip: {
