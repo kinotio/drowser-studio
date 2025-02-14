@@ -74,7 +74,7 @@ export const Hero = () => {
           <div className='flex gap-4 justify-center mb-8'>
             <Button
               size='lg'
-              className='bg-primary hover:bg-neutral-800 dark:hover:bg-neutral-200'
+              className='bg-primary hover:bg-orange-600 dark:hover:bg-neutral-200'
               asChild
             >
               <Link href='/docs'>
