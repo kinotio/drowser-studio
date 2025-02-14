@@ -24,6 +24,8 @@ import { Report, Activity, ChartDataItem } from '@/lib/definitions'
 import { readableTimestamp } from '@/lib/utils'
 import { months, deviceIcons } from '@/lib/constants'
 
+import { DATA } from '@/data'
+
 const Page = () => {
   const { userId } = useAuth()
   const { user } = useUser()
@@ -84,7 +86,7 @@ const Page = () => {
                 config={{
                   total: {
                     label: 'Reports',
-                    color: '#2761D8'
+                    color: DATA.color.base
                   }
                 }}
                 className='h-[300px] w-full'

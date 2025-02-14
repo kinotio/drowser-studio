@@ -2,6 +2,8 @@
 
 import { ResponsiveLine } from '@nivo/line'
 
+import { DATA } from '@/data'
+
 interface LineChartData {
   id: string
   data: { x: string | number; y: number }[]
@@ -30,7 +32,7 @@ export const LineChart = (props: { data: LineChartData[]; className?: string }) 
           tickValues: 5,
           tickPadding: 16
         }}
-        colors={['#2761D7']}
+        colors={[DATA.color.base]}
         pointSize={6}
         useMesh={true}
         gridYValues={6}
