@@ -8,7 +8,7 @@ import { FlipWords } from "@/components/ui/flip-words";
 import { Button } from "@/components/ui/button";
 
 export const Hero = () => {
-	const words = ["visualize", "analyze", "track", "improve"];
+	const words = ["Visualize", "Analyze", "Track", "Improve"];
 
 	return (
 		<section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-20">
