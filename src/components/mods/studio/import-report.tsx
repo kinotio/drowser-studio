@@ -158,7 +158,7 @@ export const ImportReport = ({ children }: { children: React.ReactElement }) => 
 
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={handleSubmit}>
+          <AlertDialogAction onClick={handleSubmit} className='bg-primary hover:bg-orange-600'>
             {loading ? 'Loading...' : 'Import Report'}
           </AlertDialogAction>
         </AlertDialogFooter>

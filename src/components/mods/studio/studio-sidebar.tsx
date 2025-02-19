@@ -276,7 +276,10 @@ export const StudioSidebar = () => {
           <SidebarMenuItem>
             <ImportReport>
               <SidebarMenuButton asChild>
-                <Button variant='ghost' className='w-full justify-start'>
+                <Button
+                  variant='default'
+                  className='w-full justify-start bg-primary hover:bg-orange-600 hover:text-white'
+                >
                   <Import className='h-4 w-4' />
                   <span>Import Report</span>
                 </Button>

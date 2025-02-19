@@ -1,6 +1,6 @@
 import 'dotenv/config'
 import { drizzle as pg } from 'drizzle-orm/node-postgres'
-import { eq, like, and, count, desc } from 'drizzle-orm'
+import { eq, like, and, count, desc, sql } from 'drizzle-orm'
 import {
   pgTable,
   varchar,
@@ -31,5 +31,6 @@ export {
   like,
   and,
   count,
-  desc
+  desc,
+  sql
 }

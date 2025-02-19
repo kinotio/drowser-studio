@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { ChevronRight, Github, Book } from 'lucide-react'
@@ -10,23 +11,45 @@ import { CodeBlock } from '@/components/ui/code-block'
 import AnimatedGradientText from '@/components/ui/animated-gradient-text'
 
 export const Hero = () => {
+  const [currentLine, setCurrentLine] = useState(0)
+
   const words = ['Selenium', 'Browser', 'End2End', 'User Interface']
 
-  const code = `
-  import { driver } from "https://deno.land/x/drowser@${'v0.1.5'}/mod.ts";
-      
-  driver({ browser: "chrome" })
-    .then(({ service }) => {
-      service.cases = [
-        {
-          name: "Verify Title",
-          fn: async ({ builder, assert }) => {
-            const title = await builder.getTitle();
-            assert.assertEquals(title, "Drowser");
-          },
+  const code = `import { driver } from "https://deno.land/x/drowser@${'v0.1.5'}/mod.ts";
+
+driver({ browser: "safari" })
+  .then(({ service }) => {
+    service.cases = [
+      {
+        name: "Verify Title",
+        fn: async ({ builder, assert }) => {
+          const title = await builder.getTitle();
+          assert.assertEquals(title, "Drowser");
         },
-      ];
-    }).catch((error) => console.log(error));`
+      },
+    ];
+  }).catch((error) => console.log(error));`
+
+  const terminalLines = [
+    '$ deno run -A test.ts',
+    ' ♺ Processing your tests',
+    '',
+    ' ✓ All tests completed on safari'
+  ]
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentLine((prevLine) => {
+        if (prevLine < terminalLines.length - 1) {
+          return prevLine + 1
+        }
+        clearInterval(timer)
+        return prevLine
+      })
+    }, 500)
+
+    return () => clearInterval(timer)
+  }, [])
 
   return (
     <section className='relative min-h-screen flex flex-col items-center justify-center overflow-hidden'>
@@ -62,7 +85,7 @@ export const Hero = () => {
           <h1 className='mx-auto max-w-5xl text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-8'>
             Explore new way to write{' '}
             <span className='inline-block'>
-              <FlipWords words={words} duration={2000} className='text-primary' />
+              <FlipWords words={words} duration={2000} className='text-primary dark:text-primary' />
             </span>{' '}
             tests
           </h1>
@@ -74,7 +97,7 @@ export const Hero = () => {
           <div className='flex gap-4 justify-center mb-8'>
             <Button
               size='lg'
-              className='bg-primary hover:bg-neutral-800 dark:hover:bg-neutral-200'
+              className='bg-primary hover:bg-orange-600 dark:hover:bg-neutral-200'
               asChild
             >
               <Link href='/docs'>
@@ -108,7 +131,35 @@ export const Hero = () => {
             )}
           </motion.div>
 
-          <CodeBlock language='ts' filename='test.ts' code={code} />
+          <div className='grid md:grid-cols-2 gap-8 items-start'>
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+              viewport={{ once: true }}
+            >
+              <CodeBlock language='ts' filename='test.ts' code={code} />
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+              viewport={{ once: true }}
+              className='bg-neutral-900 text-white p-4 rounded-lg font-mono text-sm h-[358px] overflow-hidden flex justify-start items-start flex-col'
+            >
+              {terminalLines.slice(0, currentLine + 1).map((line, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {line}
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
         </motion.div>
       </div>
     </section>
