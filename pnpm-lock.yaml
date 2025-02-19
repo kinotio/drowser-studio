@@ -192,6 +192,9 @@ importers:
       postcss:
         specifier: ^8
         version: 8.4.47
+      prettier:
+        specifier: ^3.5.1
+        version: 3.5.1
       tailwindcss:
         specifier: ^3.4.1
         version: 3.4.14
@@ -3168,6 +3171,11 @@ packages:
   prelude-ls@1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
+
+  prettier@3.5.1:
+    resolution: {integrity: sha512-hPpFQvHwL3Qv5AdRvBFMhnKo4tYxp0ReXiPn2bxkiohEX6mBeBwEpBSQTkD458RaaDKQMYSp4hX4UtfUTA5wDw==}
+    engines: {node: '>=14'}
+    hasBin: true
 
   prismjs@1.27.0:
     resolution: {integrity: sha512-t13BGPUlFDR7wRB5kQDG4jjl7XeuH6jbJGt11JHPL96qwsEHNX2+68tFXqc1/k+/jALsbSWJKUOT/hcYAZ5LkA==}
@@ -6749,6 +6757,8 @@ snapshots:
   postgres-range@1.1.4: {}
 
   prelude-ls@1.2.1: {}
+
+  prettier@3.5.1: {}
 
   prismjs@1.27.0: {}
 

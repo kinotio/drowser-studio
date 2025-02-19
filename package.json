@@ -78,36 +78,9 @@
     "eslint": "^8",
     "eslint-config-next": "14.2.16",
     "postcss": "^8",
+    "prettier": "^3.5.1",
     "tailwindcss": "^3.4.1",
     "tsx": "^4.19.2",
     "typescript": "^5"
-  },
-  "eslintConfig": {
-    "extends": [
-      "next/core-web-vitals",
-      "next/typescript"
-    ]
-  },
-  "prettier": {
-    "trailingComma": "none",
-    "arrowParens": "always",
-    "singleQuote": true,
-    "jsxSingleQuote": true,
-    "printWidth": 100,
-    "useTabs": false,
-    "semi": false,
-    "quoteProps": "consistent",
-    "bracketSpacing": true,
-    "overrides": [
-      {
-        "files": [
-          "**/*.css",
-          "**/*.scss"
-        ],
-        "options": {
-          "singleQuote": false
-        }
-      }
-    ]
   }
 }
