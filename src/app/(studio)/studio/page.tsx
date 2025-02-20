@@ -19,13 +19,13 @@ import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/
 import { Skeleton } from '@/components/ui/skeleton'
 import { Icon } from '@/components/ui/icon'
 
-import { pocketbase } from '@/lib/pocketbase'
 import { ChartDataItem } from '@/lib/definitions'
 import { readableTimestamp } from '@/lib/utils'
 import { months, deviceIcons } from '@/lib/constants'
 
 import { getLastThreeReport } from '@/server/actions/report'
 import { getLastThreeActivity } from '@/server/actions/activity'
+import { getCurrentYearMetrics } from '@/server/actions/metric'
 import type { ReportSelect, ActivitySelect } from '@/server/types'
 
 import { DATA } from '@/data'
@@ -43,7 +43,7 @@ const Page = () => {
 
   useEffect(() => {
     Promise.all([
-      pocketbase.collection('metrics').getFullList({ filter: `year = '${currentYear}'` }),
+      getCurrentYearMetrics({ userId: userId as string, currentYear }),
       getLastThreeReport({ userId: userId as string }),
       getLastThreeActivity({ userId: userId as string })
     ])
