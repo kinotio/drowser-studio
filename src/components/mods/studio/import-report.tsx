@@ -21,12 +21,12 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 
-import { TFileContent, MonthlyMetric } from '@/lib/definitions'
+import { TFileContent } from '@/lib/definitions'
 import { isValidFileContent } from '@/lib/utils'
-import { pocketbase } from '@/lib/pocketbase'
 
 import { saveReport } from '@/server/actions/report'
 import { saveActivity } from '@/server/actions/activity'
+import { saveMetric, getMetric, updateMetric } from '@/server/actions/metric'
 import type { ReportInferType } from '@/server/types'
 
 export const ImportReport = ({ children }: { children: React.ReactElement }) => {
@@ -89,35 +89,27 @@ export const ImportReport = ({ children }: { children: React.ReactElement }) => 
             const month = now.getMonth() + 1
             const year = now.getFullYear()
 
-            pocketbase
-              .collection('metrics')
-              .getFirstListItem<MonthlyMetric>(
-                `user_id = "${userId}" && month = ${month} && year = ${year}`
-              )
-              .then(async (existingMetric) => {
-                await pocketbase.collection('metrics').update(existingMetric.id, {
-                  total: existingMetric.total + 1
-                })
-
-                const device = (await axios.get('/api/device')).data.device
-
-                await saveActivity({
-                  type: 'report_imported',
-                  description: 'Report imported',
+            getMetric({ userId: userId as string, year, month }).then(async (metric) => {
+              if (Array.isArray(metric) && metric.length !== 0) {
+                await updateMetric({ metricId: metric[0].id, total: metric[0].total + 1 })
+              } else {
+                await saveMetric({
                   userId: userId as string,
-                  device
+                  year,
+                  month,
+                  total: 1
                 })
+              }
+
+              const device = (await axios.get('/api/device')).data.device
+
+              await saveActivity({
+                type: 'report_imported',
+                description: 'Report imported',
+                userId: userId as string,
+                device
               })
-              .catch(async (error) => {
-                if (error.status === 404) {
-                  await pocketbase.collection('metrics').create<MonthlyMetric>({
-                    user_id: userId,
-                    month: month,
-                    year: year,
-                    total: 1
-                  })
-                }
-              })
+            })
 
             return 'Report Imported'
           }
