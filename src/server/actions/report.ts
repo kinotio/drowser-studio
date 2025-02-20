@@ -31,12 +31,15 @@ export const getLastThreeReport = async (payload: { userId: string }) => {
 }
 
 export const saveReport = async (payload: ReportInferType) => {
-  return drizzle.insert(reports).values({
-    user_id: payload.userId,
-    name: payload.name,
-    slug: payload.slug,
-    metadata: payload.metadata
-  })
+  return drizzle
+    .insert(reports)
+    .values({
+      user_id: payload.userId,
+      name: payload.name,
+      slug: payload.slug,
+      metadata: payload.metadata
+    })
+    .returning()
 }
 
 export const countReports = async (payload: { userId: string }) => {
@@ -52,4 +55,8 @@ export const getReport = async (payload: { userId: string; reportSlug: string })
     .from(reports)
     .where(and(eq(reports.user_id, payload.userId), eq(reports.slug, payload.reportSlug)))
     .limit(1)
+}
+
+export const deleteReport = async (payload: { reportId: string }) => {
+  return drizzle.delete(reports).where(eq(reports.id, payload.reportId)).returning()
 }

@@ -29,7 +29,7 @@ export const metrics = pgTable('metrics', {
 export const activities = pgTable('activities', {
   id: uuid().primaryKey().defaultRandom().notNull(),
   type: varchar({ length: 256 }).notNull(),
-  description: varchar({ length: 256 }).notNull().unique(),
+  description: varchar({ length: 256 }).notNull(),
   user_id: varchar({ length: 256 }).notNull(),
   device: varchar({ length: 256 }).notNull(),
   created: timestamp({ mode: 'date' }).notNull().defaultNow(),

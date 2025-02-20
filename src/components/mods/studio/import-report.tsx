@@ -21,11 +21,12 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 
-import { TFileContent, MonthlyMetric, Activity } from '@/lib/definitions'
+import { TFileContent, MonthlyMetric } from '@/lib/definitions'
 import { isValidFileContent } from '@/lib/utils'
 import { pocketbase } from '@/lib/pocketbase'
 
 import { saveReport } from '@/server/actions/report'
+import { saveActivity } from '@/server/actions/activity'
 import type { ReportInferType } from '@/server/types'
 
 export const ImportReport = ({ children }: { children: React.ReactElement }) => {
@@ -61,16 +62,16 @@ export const ImportReport = ({ children }: { children: React.ReactElement }) => 
       return
     }
 
-    const random = uniqueNamesGenerator({
+    const randomSlug = uniqueNamesGenerator({
       dictionaries: [colors, animals, adjectives],
       separator: '-'
     })
 
     const data = {
       name: reportName,
-      slug: random,
+      slug: randomSlug,
       metadata: reportContent,
-      userId: (userId as string) ?? random
+      userId: userId as string
     } satisfies ReportInferType
 
     toast.promise(
@@ -100,10 +101,10 @@ export const ImportReport = ({ children }: { children: React.ReactElement }) => 
 
                 const device = (await axios.get('/api/device')).data.device
 
-                await pocketbase.collection('activities').create<Activity>({
+                await saveActivity({
                   type: 'report_imported',
                   description: 'Report imported',
-                  user_id: userId,
+                  userId: userId as string,
                   device
                 })
               })

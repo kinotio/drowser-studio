@@ -49,14 +49,15 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { readableTimestamp, formatToReadable, cn } from '@/lib/utils'
 import { ACTIVITIES_TYPES } from '@/lib/constants'
 
-import { pocketbase } from '@/lib/pocketbase'
-import { Activity } from '@/lib/definitions'
 import { deviceIcons } from '@/lib/constants'
+
+import { getAllActivities, countActivities } from '@/server/actions/activity'
+import type { ActivitySelect } from '@/server/types'
 
 const Page = () => {
   const { userId } = useAuth()
 
-  const [activities, setActivities] = useState<Activity[]>([])
+  const [activities, setActivities] = useState<ActivitySelect[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [searchTerm, setSearchTerm] = useState<string>('')
   const [currentPage, setCurrentPage] = useState<number>(1)
@@ -78,15 +79,10 @@ const Page = () => {
   }
 
   useEffect(() => {
-    pocketbase
-      .collection('activities')
-      .getList(currentPage, itemsPerPage, {
-        filter: `user_id = "${userId}" && type ~ "${searchTerm}" || description ~ "${searchTerm}"`,
-        sort: '-created'
-      })
+    getAllActivities({ userId: userId as string, currentPage, searchTerm, itemsPerPage })
       .then((data) => {
-        setActivities(data.items as Activity[])
-        setTotal(data.totalItems)
+        setActivities(data)
+        countActivities({ userId: userId as string }).then((count) => setTotal(count[0].count))
       })
       .catch((err) => console.log(err))
       .finally(() => setIsLoading(false))
@@ -219,7 +215,7 @@ const ActivitiesTable = ({
   activities
 }: {
   isLoading: boolean
-  activities: Activity[]
+  activities: ActivitySelect[]
 }) => {
   return (
     <Table>
@@ -240,7 +236,7 @@ const ActivitiesTable = ({
               <TableRow key={activity.id}>
                 <TableCell>{formatToReadable(activity.type)}</TableCell>
                 <TableCell>{activity.description}</TableCell>
-                <TableCell>{readableTimestamp(activity.created)}</TableCell>
+                <TableCell>{readableTimestamp(activity.created.toString())}</TableCell>
                 <TableCell>
                   <Icon
                     name={

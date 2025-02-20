@@ -44,10 +44,9 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 
 import { readableTimestamp } from '@/lib/utils'
-import { pocketbase } from '@/lib/pocketbase'
-import { Activity } from '@/lib/definitions'
 
-import { getAllReport, countReports } from '@/server/actions/report'
+import { getAllReport, countReports, deleteReport } from '@/server/actions/report'
+import { saveActivity } from '@/server/actions/activity'
 import type { ReportSelect } from '@/server/types'
 
 type ViewType = 'list' | 'card'
@@ -80,22 +79,25 @@ const Page = () => {
   }, [currentPage, itemsPerPage, searchTerm, userId])
 
   const handleRemoveReport = (reportId: string) => {
-    toast.promise(pocketbase.collection('reports').delete(reportId), {
+    toast.promise(deleteReport({ reportId }), {
       loading: 'Deleting report',
-      success: async () => {
-        setReportToRemove(null)
-        fetchReports()
+      success: async (data) => {
+        if (data) {
+          setReportToRemove(null)
 
-        const device = (await axios.get('/api/device')).data.device
+          const device = (await axios.get('/api/device')).data.device
 
-        await pocketbase.collection('activities').create<Activity>({
-          type: 'report_deleted',
-          description: 'Report deleted',
-          user_id: userId,
-          device
-        })
+          await saveActivity({
+            type: 'report_deleted',
+            description: 'Report deleted',
+            userId: userId as string,
+            device
+          })
 
-        return 'Report deleted'
+          fetchReports()
+
+          return 'Report deleted'
+        }
       },
       error: () => 'An error occurred while deleting report'
     })

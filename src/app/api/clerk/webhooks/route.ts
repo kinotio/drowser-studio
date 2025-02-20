@@ -2,8 +2,9 @@ import { Webhook } from 'svix'
 import { headers } from 'next/headers'
 import { WebhookEvent } from '@clerk/nextjs/server'
 
-import { pocketbase } from '@/lib/pocketbase'
 import { getDeviceType } from '@/lib/utils'
+
+import { saveActivity } from '@/server/actions/activity'
 
 export const POST = async (req: Request) => {
   const CLERK_WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_SECRET
@@ -43,33 +44,30 @@ export const POST = async (req: Request) => {
   }
 
   if (evt.type === 'user.created') {
-    const activity = {
+    await saveActivity({
       type: 'account_created',
       description: 'User account created',
-      user_id: evt.data.id,
+      userId: evt.data.id as string,
       device: getDeviceType(req.headers.get('user-agent') || '')
-    }
-    await pocketbase.collection('activities').create(activity)
+    })
   }
 
   if (evt.type === 'session.created') {
-    const activity = {
+    await saveActivity({
       type: 'login',
       description: 'Account logged in',
-      user_id: evt.data.user_id,
+      userId: evt.data.user_id as string,
       device: getDeviceType(req.headers.get('user-agent') || '')
-    }
-    await pocketbase.collection('activities').create(activity)
+    })
   }
 
   if (evt.type === 'session.removed') {
-    const activity = {
+    await saveActivity({
       type: 'logout',
       description: 'Account logged out',
-      user_id: evt.data.user_id,
+      userId: evt.data.user_id as string,
       device: getDeviceType(req.headers.get('user-agent') || '')
-    }
-    await pocketbase.collection('activities').create(activity)
+    })
   }
 
   return new Response('Clerk webhooks handled successfully', { status: 200 })
