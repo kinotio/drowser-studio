@@ -10,7 +10,6 @@ declare global {
       CLERK_SECRET_KEY: string
       CLERK_WEBHOOK_SECRET: string
       CRYPTO_PASSPHRASE: string
-      POCKETBASE_URL: string
     }
   }
 }
