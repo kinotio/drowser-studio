@@ -25,10 +25,12 @@ import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from '@/comp
 import { Card, CardContent, CardFooter } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 
-import { TContentCase, TContentSubCase, Report } from '@/lib/definitions'
+import { TContentCase, TContentSubCase } from '@/lib/definitions'
 import { humanizeDuration, readableTimestamp } from '@/lib/utils'
 import { CASE_STATUS, PATH } from '@/lib/constants'
-import { pocketbase } from '@/lib/pocketbase'
+
+import { getReport } from '@/server/actions/report'
+import type { ReportModiefied } from '@/server/types'
 
 type Node = {
   id: string
@@ -48,15 +50,13 @@ type Edge = {
 const Page = () => {
   const router = useRouter()
   const query = useSearchParams()
-  const params = useParams()
+  const { reportSlug } = useParams()
   const { userId } = useAuth()
 
   const ref = useRef<CanvasRef | null>(null)
   const [zoom, setZoom] = useState<number>(0.7)
 
-  const [report, setReport] = useState<Report>()
-
-  const paramsReportSlug = params.reportSlug as string
+  const [report, setReport] = useState<ReportModiefied>()
 
   const root: Node = {
     id: 'root',
@@ -105,14 +105,13 @@ const Page = () => {
   const nodeIdQuery = query.get('node')
 
   useEffect(() => {
-    pocketbase
-      .collection('reports')
-      .getFirstListItem<Report>('', {
-        filter: `user_id = "${userId}" && slug = "${paramsReportSlug}"`
+    getReport({ userId: userId as string, reportSlug: reportSlug as string })
+      .then((data) => {
+        const parsedData = data as ReportModiefied[]
+        setReport(parsedData[0])
       })
-      .then((data) => setReport(data as Report))
       .catch((err) => console.log(err))
-  }, [userId, paramsReportSlug])
+  }, [userId, reportSlug])
 
   return (
     <div className='container mx-auto min-h-[500px] h-[85vh] w-full max-w-[1500px] relative overflow-hidden'>
@@ -134,7 +133,7 @@ const Page = () => {
         edges={edges}
         className='p-0 m-0 border'
         onZoomChange={(z) => setZoom(z)}
-        node={renderNode({ router, nodeIdQuery, paramsReportSlug })}
+        node={renderNode({ router, nodeIdQuery, reportSlug })}
       />
       <ZoomControls passedRef={ref} nodeIdQuery={nodeIdQuery} clearSeachParams={clearSeachParams} />
     </div>
@@ -144,11 +143,11 @@ const Page = () => {
 const renderNode = ({
   router,
   nodeIdQuery,
-  paramsReportSlug
+  reportSlug
 }: {
   router: AppRouterInstance
   nodeIdQuery: string | null
-  paramsReportSlug: string
+  reportSlug: string
 }) => {
   return (
     <ReaflowNode>
@@ -166,7 +165,7 @@ const renderNode = ({
                 } h-full w-full flex items-center justify-center flex-col  rounded-none`}
                 onClick={() => {
                   if (!event.node.data.name && event.node.data.name !== 'Root') {
-                    router.push(`${PATH.STUDIO_REPORTS}/${paramsReportSlug}/cases/${event.node.id}`)
+                    router.push(`${PATH.STUDIO_REPORTS}/${reportSlug}/cases/${event.node.id}`)
                   }
                 }}
               >

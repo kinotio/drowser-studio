@@ -25,9 +25,12 @@ import { TFileContent, MonthlyMetric, Activity } from '@/lib/definitions'
 import { isValidFileContent } from '@/lib/utils'
 import { pocketbase } from '@/lib/pocketbase'
 
+import { saveReport } from '@/server/actions/report'
+import type { ReportInferType } from '@/server/types'
+
 export const ImportReport = ({ children }: { children: React.ReactElement }) => {
   const [loading, setLoading] = useState<boolean>(false)
-  const [reportName, setReportName] = useState<string>()
+  const [reportName, setReportName] = useState<string>('')
   const [reportContent, setReportContent] = useState<TFileContent | null>(null)
 
   const { userId } = useAuth()
@@ -58,61 +61,69 @@ export const ImportReport = ({ children }: { children: React.ReactElement }) => 
       return
     }
 
-    const reportSlug = uniqueNamesGenerator({
+    const random = uniqueNamesGenerator({
       dictionaries: [colors, animals, adjectives],
       separator: '-'
     })
 
     const data = {
       name: reportName,
-      slug: reportSlug,
+      slug: random,
       metadata: reportContent,
-      user_id: userId
-    }
+      userId: (userId as string) ?? random
+    } satisfies ReportInferType
 
-    toast.promise(pocketbase.collection('reports').create(data), {
-      loading: 'Saving report',
-      success: async (data) => {
-        if (data) {
-          const now = new Date()
-          const month = now.getMonth() + 1
-          const year = now.getFullYear()
+    toast.promise(
+      saveReport({
+        userId: data.userId,
+        name: data.name,
+        slug: data.slug,
+        metadata: data.metadata
+      }),
+      {
+        loading: 'Saving report',
+        success: async (data) => {
+          if (data) {
+            const now = new Date()
+            const month = now.getMonth() + 1
+            const year = now.getFullYear()
 
-          pocketbase
-            .collection('metrics')
-            .getFirstListItem<MonthlyMetric>(
-              `user_id = "${userId}" && month = ${month} && year = ${year}`
-            )
-            .then(async (existingMetric) => {
-              await pocketbase.collection('metrics').update(existingMetric.id, {
-                total: existingMetric.total + 1
-              })
-
-              const device = (await axios.get('/api/device')).data.device
-
-              await pocketbase.collection('activities').create<Activity>({
-                type: 'report_imported',
-                description: 'Report imported',
-                user_id: userId,
-                device
-              })
-            })
-            .catch(async (error) => {
-              if (error.status === 404) {
-                await pocketbase.collection('metrics').create<MonthlyMetric>({
-                  user_id: userId,
-                  month: month,
-                  year: year,
-                  total: 1
+            pocketbase
+              .collection('metrics')
+              .getFirstListItem<MonthlyMetric>(
+                `user_id = "${userId}" && month = ${month} && year = ${year}`
+              )
+              .then(async (existingMetric) => {
+                await pocketbase.collection('metrics').update(existingMetric.id, {
+                  total: existingMetric.total + 1
                 })
-              }
-            })
 
-          return 'Report Imported'
+                const device = (await axios.get('/api/device')).data.device
+
+                await pocketbase.collection('activities').create<Activity>({
+                  type: 'report_imported',
+                  description: 'Report imported',
+                  user_id: userId,
+                  device
+                })
+              })
+              .catch(async (error) => {
+                if (error.status === 404) {
+                  await pocketbase.collection('metrics').create<MonthlyMetric>({
+                    user_id: userId,
+                    month: month,
+                    year: year,
+                    total: 1
+                  })
+                }
+              })
+
+            return 'Report Imported'
+          }
+          return 'An error occurred while importing report'
         }
-        return 'An error occurred while importing report'
       }
-    })
+    )
   }
 
   return (

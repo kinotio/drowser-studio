@@ -24,15 +24,17 @@ import { Button } from '@/components/ui/button'
 
 import { humanizeDuration, readableTimestamp } from '@/lib/utils'
 import { CASE_STATUS, PATH } from '@/lib/constants'
-import { TContentCase, TContentSubCase, Report } from '@/lib/definitions'
-import { pocketbase } from '@/lib/pocketbase'
+import { TContentCase, TContentSubCase } from '@/lib/definitions'
+
+import { getReport } from '@/server/actions/report'
+import type { ReportModiefied } from '@/server/types'
 
 const Page = () => {
   const { reportSlug, caseId } = useParams()
   const router = useRouter()
   const { userId } = useAuth()
 
-  const [report, setReport] = useState<Report>()
+  const [report, setReport] = useState<ReportModiefied>()
 
   const paramsReportSlug = reportSlug as string
 
@@ -40,12 +42,11 @@ const Page = () => {
   const [goupedByStatus, setGoupedByStatus] = useState<Record<string, TContentSubCase[]>>()
 
   useEffect(() => {
-    pocketbase
-      .collection('reports')
-      .getFirstListItem<Report>('', {
-        filter: `user_id = "${userId}" && slug = "${reportSlug}"`
+    getReport({ userId: userId as string, reportSlug: reportSlug as string })
+      .then((data) => {
+        const parsedData = data as ReportModiefied[]
+        setReport(parsedData[0])
       })
-      .then((data) => setReport(data as Report))
       .catch((err) => console.log(err))
   }, [userId, reportSlug])
 

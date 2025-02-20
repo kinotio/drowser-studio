@@ -11,20 +11,21 @@ import { BarChart } from '@/components/charts/bar-chart'
 import { LabelledPieChart } from '@/components/charts/labelled-pie-chart'
 
 import { humanizeDuration } from '@/lib/utils'
-import { pocketbase } from '@/lib/pocketbase'
-import { Report, Metric } from '@/lib/definitions'
+import { Metric } from '@/lib/definitions'
+
+import { getReport } from '@/server/actions/report'
+import type { ReportModiefied } from '@/server/types'
 
 const Page = ({ params }: { params: { reportSlug: string } }) => {
   const { userId } = useAuth()
   const [metrics, setMetrics] = useState<Metric>()
 
   useEffect(() => {
-    pocketbase
-      .collection('reports')
-      .getFirstListItem<Report>('', {
-        filter: `user_id = "${userId}" && slug = "${params.reportSlug}"`
+    getReport({ userId: userId as string, reportSlug: params.reportSlug })
+      .then((data) => {
+        const parsedData = data as ReportModiefied[]
+        setMetrics(parsedData[0]?.metadata?.drowser?.metrics as Metric)
       })
-      .then((data) => setMetrics(data?.metadata?.drowser?.metrics as Metric))
       .catch((err) => console.log(err))
   }, [userId, params.reportSlug])
 
