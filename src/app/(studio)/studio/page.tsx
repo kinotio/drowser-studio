@@ -20,12 +20,13 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { Icon } from '@/components/ui/icon'
 
 import { pocketbase } from '@/lib/pocketbase'
-import { Activity, ChartDataItem } from '@/lib/definitions'
+import { ChartDataItem } from '@/lib/definitions'
 import { readableTimestamp } from '@/lib/utils'
 import { months, deviceIcons } from '@/lib/constants'
 
 import { getLastThreeReport } from '@/server/actions/report'
-import type { ReportSelect } from '@/server/types'
+import { getLastThreeActivity } from '@/server/actions/activity'
+import type { ReportSelect, ActivitySelect } from '@/server/types'
 
 import { DATA } from '@/data'
 
@@ -36,7 +37,7 @@ const Page = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [reports, setReports] = useState<ReportSelect[]>([])
   const [metrics, setMetrics] = useState<ChartDataItem[]>()
-  const [activities, setActivities] = useState<Activity[]>([])
+  const [activities, setActivities] = useState<ActivitySelect[]>([])
 
   const currentYear = new Date().getFullYear()
 
@@ -44,9 +45,7 @@ const Page = () => {
     Promise.all([
       pocketbase.collection('metrics').getFullList({ filter: `year = '${currentYear}'` }),
       getLastThreeReport({ userId: userId as string }),
-      pocketbase
-        .collection('activities')
-        .getList(1, 3, { sort: '-created', filter: `user_id = "${userId}"` })
+      getLastThreeActivity({ userId: userId as string })
     ])
       .then(([metricsData, reportsData, activitiesData]) => {
         const data = months.map((name) => ({
@@ -63,7 +62,7 @@ const Page = () => {
 
         setMetrics(data as ChartDataItem[])
         setReports(reportsData as ReportSelect[])
-        setActivities(activitiesData.items as Activity[])
+        setActivities(activitiesData as ActivitySelect[])
       })
       .catch((err) => console.log(err))
       .finally(() => setIsLoading(false))
@@ -147,7 +146,7 @@ const Page = () => {
                     <TableRow key={activity.id}>
                       <TableCell>{activity.type}</TableCell>
                       <TableCell>{activity.description}</TableCell>
-                      <TableCell>{readableTimestamp(activity.created)}</TableCell>
+                      <TableCell>{readableTimestamp(activity.created.toString())}</TableCell>
                       <TableCell>
                         <Icon
                           name={
