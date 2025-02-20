@@ -43,10 +43,12 @@ import { ToggleTheme } from '@/components/toogle-theme'
 import { Icon } from '@/components/ui/icon'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 
-import { MenuType, TContentCase, Report } from '@/lib/definitions'
+import { MenuType, TContentCase } from '@/lib/definitions'
 import { readableTimestamp } from '@/lib/utils'
 import { PATH } from '@/lib/constants'
-import { pocketbase } from '@/lib/pocketbase'
+
+import { getReport } from '@/server/actions/report'
+import type { ReportModiefied } from '@/server/types'
 
 const menus = [
   {
@@ -72,7 +74,7 @@ export const StudioSidebar = () => {
   const params = useParams()
   const { userId } = useAuth()
 
-  const [report, setReport] = useState<Report | null>(null)
+  const [report, setReport] = useState<ReportModiefied | null>(null)
   const [openBrowser, setOpenBrowser] = useState<string | null>(null)
 
   const paramsReportSlug = params.reportSlug as string
@@ -84,12 +86,10 @@ export const StudioSidebar = () => {
   const uniqueBrowsers = Array.from(new Set(browserCases))
 
   useEffect(() => {
-    pocketbase
-      .collection('reports')
-      .getFirstListItem('', {
-        filter: `user_id = "${userId}" && slug = "${paramsReportSlug}"`
+    getReport({ userId: userId as string, reportSlug: paramsReportSlug })
+      .then((data) => {
+        setReport(data[0] as ReportModiefied)
       })
-      .then((data) => setReport(data as Report))
       .catch(() => setReport(null))
   }, [userId, paramsReportSlug])
 

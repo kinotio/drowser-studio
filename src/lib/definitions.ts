@@ -225,3 +225,9 @@ export type Payment = {
   updated: string
   user_id: string
 }
+
+export type Modify<T, K extends keyof any, V> = Omit<T, K> & { [P in K]: V }
+
+export type ModifyDeep<T, K extends keyof T, V> = {
+  [P in keyof T]: P extends K ? V : T[P]
+}

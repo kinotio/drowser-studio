@@ -45,14 +45,17 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip
 
 import { readableTimestamp } from '@/lib/utils'
 import { pocketbase } from '@/lib/pocketbase'
-import { Report, Activity } from '@/lib/definitions'
+import { Activity } from '@/lib/definitions'
+
+import { getAllReport, countReports } from '@/server/actions/report'
+import type { ReportSelect } from '@/server/types'
 
 type ViewType = 'list' | 'card'
 
 const Page = () => {
   const { userId } = useAuth()
 
-  const [reports, setReports] = useState<Report[]>([])
+  const [reports, setReports] = useState<ReportSelect[]>([])
   const [viewType, setViewType] = useState<ViewType>('card')
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [searchTerm, setSearchTerm] = useState<string>('')
@@ -67,14 +70,10 @@ const Page = () => {
   const handlePageChange = (pageNumber: number) => setCurrentPage(pageNumber)
 
   const fetchReports = useCallback(() => {
-    pocketbase
-      .collection('reports')
-      .getList(currentPage, itemsPerPage, {
-        filter: `name ~ "${searchTerm}" && user_id = "${userId}"`
-      })
+    getAllReport({ userId: userId as string, searchTerm, currentPage, itemsPerPage })
       .then((data) => {
-        setReports(data.items as Report[])
-        setTotal(data.totalItems)
+        setReports(data)
+        countReports({ userId: userId as string }).then((count) => setTotal(count[0].count))
       })
       .catch((err) => console.log(err))
       .finally(() => setIsLoading(false))
@@ -188,7 +187,7 @@ const ListView = ({
 
   setReportToRemove
 }: {
-  reports: Report[]
+  reports: ReportSelect[]
 
   setReportToRemove: (reportId: string) => void
 }) => {
@@ -204,7 +203,9 @@ const ListView = ({
               <h2 className='text-lg font-semibold'>{report.name}</h2>
             </Link>
             <p className='text-gray-600'>{report.slug}</p>
-            <p className='text-sm text-gray-500 mt-2'>Date: {readableTimestamp(report.created)}</p>
+            <p className='text-sm text-gray-500 mt-2'>
+              Date: {readableTimestamp(report.created.toString())}
+            </p>
           </div>
           <ReportMenu reportId={report.id} setReportToRemove={setReportToRemove} />
         </li>
@@ -219,7 +220,7 @@ const CardView = ({
 
   setReportToRemove
 }: {
-  reports: Report[]
+  reports: ReportSelect[]
   isLoading: boolean
 
   setReportToRemove: (reportId: string) => void
@@ -248,7 +249,9 @@ const CardView = ({
                 <ReportMenu reportId={report.id} setReportToRemove={setReportToRemove} />
               </CardHeader>
               <CardFooter>
-                <p className='text-sm text-gray-500'>Date: {readableTimestamp(report.created)}</p>
+                <p className='text-sm text-gray-500'>
+                  Date: {readableTimestamp(report.created.toString())}
+                </p>
               </CardFooter>
             </Card>
           ))}

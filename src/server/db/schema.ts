@@ -13,9 +13,6 @@ export const reports = pgTable('reports', {
     .$onUpdate(() => new Date())
 })
 
-export type ReportSelect = typeof reports.$inferSelect
-export type ReportInsert = typeof reports.$inferInsert
-
 export const metrics = pgTable('metrics', {
   id: uuid().primaryKey().defaultRandom().notNull(),
   year: integer().notNull(),
@@ -29,9 +26,6 @@ export const metrics = pgTable('metrics', {
     .$onUpdate(() => new Date())
 })
 
-export type MetricSelect = typeof metrics.$inferSelect
-export type MetricInsert = typeof metrics.$inferInsert
-
 export const activities = pgTable('activities', {
   id: uuid().primaryKey().defaultRandom().notNull(),
   type: varchar({ length: 256 }).notNull(),
@@ -44,9 +38,6 @@ export const activities = pgTable('activities', {
     .defaultNow()
     .$onUpdate(() => new Date())
 })
-
-export type ActivitySelect = typeof activities.$inferSelect
-export type ActivityInsert = typeof activities.$inferInsert
 
 const schema = { reports, metrics, activities }
 

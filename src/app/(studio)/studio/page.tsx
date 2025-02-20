@@ -20,9 +20,12 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { Icon } from '@/components/ui/icon'
 
 import { pocketbase } from '@/lib/pocketbase'
-import { Report, Activity, ChartDataItem } from '@/lib/definitions'
+import { Activity, ChartDataItem } from '@/lib/definitions'
 import { readableTimestamp } from '@/lib/utils'
 import { months, deviceIcons } from '@/lib/constants'
+
+import { getLastThreeReport } from '@/server/actions/report'
+import type { ReportSelect } from '@/server/types'
 
 import { DATA } from '@/data'
 
@@ -31,7 +34,7 @@ const Page = () => {
   const { user } = useUser()
 
   const [isLoading, setIsLoading] = useState<boolean>(true)
-  const [reports, setReports] = useState<Report[]>([])
+  const [reports, setReports] = useState<ReportSelect[]>([])
   const [metrics, setMetrics] = useState<ChartDataItem[]>()
   const [activities, setActivities] = useState<Activity[]>([])
 
@@ -40,9 +43,7 @@ const Page = () => {
   useEffect(() => {
     Promise.all([
       pocketbase.collection('metrics').getFullList({ filter: `year = '${currentYear}'` }),
-      pocketbase
-        .collection('reports')
-        .getList(1, 3, { sort: '-created', filter: `user_id = "${userId}"` }),
+      getLastThreeReport({ userId: userId as string }),
       pocketbase
         .collection('activities')
         .getList(1, 3, { sort: '-created', filter: `user_id = "${userId}"` })
@@ -61,7 +62,7 @@ const Page = () => {
         })
 
         setMetrics(data as ChartDataItem[])
-        setReports(reportsData.items as Report[])
+        setReports(reportsData as ReportSelect[])
         setActivities(activitiesData.items as Activity[])
       })
       .catch((err) => console.log(err))
@@ -115,7 +116,9 @@ const Page = () => {
                     <Card className='flex flex-col justify-between'>
                       <CardHeader>
                         <CardTitle className='text-lg'>{report.name}</CardTitle>
-                        <CardDescription>{readableTimestamp(report.created)}</CardDescription>
+                        <CardDescription>
+                          {readableTimestamp(report.created.toString())}
+                        </CardDescription>
                       </CardHeader>
                     </Card>
                   </Link>
