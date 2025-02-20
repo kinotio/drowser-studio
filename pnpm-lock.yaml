@@ -119,9 +119,6 @@ importers:
       pg:
         specifier: ^8.13.1
         version: 8.13.1
-      pocketbase:
-        specifier: ^0.21.5
-        version: 0.21.5
       react:
         specifier: ^18
         version: 18.3.1
@@ -3080,9 +3077,6 @@ packages:
   pluralize@8.0.0:
     resolution: {integrity: sha512-Nc3IT5yHzflTfbjgqWcCPpo7DaKy4FnpB0l/zCAW0Tc7jxAiuqSxHasntB3D7887LSrA93kDJ9IXovxJYxyLCA==}
     engines: {node: '>=4'}
-
-  pocketbase@0.21.5:
-    resolution: {integrity: sha512-bnI/uinnQps+ElSlzxkc4yvwuSFfKcoszDtXH/4QT2FhGq2mJVUvDlxn+rjRXVntUjPfmMG5LEPZ1eGqV6ssog==}
 
   possible-typed-array-names@1.0.0:
     resolution: {integrity: sha512-d7Uw+eZoloe0EHDIYoe+bQ5WXnGMOpmiZFTuMWCwpjzzkL2nTjcKiAk4hh8TjnGye2TwWOk3UXucZ+3rbmBa8Q==}
@@ -6686,8 +6680,6 @@ snapshots:
   pirates@4.0.6: {}
 
   pluralize@8.0.0: {}
-
-  pocketbase@0.21.5: {}
 
   possible-typed-array-names@1.0.0: {}
 
