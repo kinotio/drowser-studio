@@ -146,8 +146,8 @@ const Page = () => {
 
           <Card>
             <CardHeader>
-              <CardTitle>Recent Activities</CardTitle>
-              <CardDescription>Your last 3 activities</CardDescription>
+              <CardTitle>Recent Logs</CardTitle>
+              <CardDescription>Your last 3 logs</CardDescription>
             </CardHeader>
             <CardContent>
               <Table>
