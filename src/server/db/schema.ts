@@ -26,7 +26,7 @@ export const metrics = pgTable('metrics', {
     .$onUpdate(() => new Date())
 })
 
-export const activities = pgTable('activities', {
+export const logs = pgTable('logs', {
   id: uuid().primaryKey().defaultRandom().notNull(),
   type: varchar({ length: 256 }).notNull(),
   description: varchar({ length: 256 }).notNull(),
@@ -39,6 +39,6 @@ export const activities = pgTable('activities', {
     .$onUpdate(() => new Date())
 })
 
-const schema = { reports, metrics, activities }
+const schema = { reports, metrics, logs }
 
 export default schema

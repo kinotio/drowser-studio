@@ -47,10 +47,10 @@ import { Icon } from '@/components/ui/icon'
 import { Skeleton } from '@/components/ui/skeleton'
 
 import { readableTimestamp, formatToReadable, cn } from '@/lib/utils'
-import { ACTIVITIES_TYPES, deviceIcons } from '@/lib/constants'
+import { LOG_TYPES, deviceIcons } from '@/lib/constants'
 
-import { getAllActivities, countActivities } from '@/server/actions/activity'
-import type { ActivitySelect } from '@/server/types'
+import { getAllLogs, countLogs } from '@/server/actions/log'
+import type { LogSelect } from '@/server/types'
 
 import { useEvents, EventTypes } from '@/hooks/use-events'
 
@@ -58,7 +58,7 @@ const Page = () => {
   const { userId } = useAuth()
   const { events } = useEvents((event) => event.type === EventTypes.REPORT_IMPORTED)
 
-  const [activities, setActivities] = useState<ActivitySelect[]>([])
+  const [logs, setLogs] = useState<LogSelect[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [searchTerm, setSearchTerm] = useState<string>('')
   const [currentPage, setCurrentPage] = useState<number>(1)
@@ -79,18 +79,18 @@ const Page = () => {
     setDate(undefined)
   }
 
-  const fetchActivities = useCallback(() => {
-    getAllActivities({ userId: userId as string, currentPage, searchTerm, itemsPerPage })
+  const fetchLogs = useCallback(() => {
+    getAllLogs({ userId: userId as string, currentPage, searchTerm, itemsPerPage })
       .then((data) => {
-        setActivities(data)
-        countActivities({ userId: userId as string }).then((count) => setTotal(count[0].count))
+        setLogs(data)
+        countLogs({ userId: userId as string }).then((count) => setTotal(count[0].count))
       })
       .catch((err) => console.log(err))
       .finally(() => setIsLoading(false))
   }, [userId, currentPage, searchTerm])
 
   useEffect(() => {
-    fetchActivities()
+    fetchLogs()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId, currentPage, searchTerm, filters])
 
@@ -98,7 +98,7 @@ const Page = () => {
     if (Array.isArray(events) && events.length > 0) {
       for (const event of events) {
         if (event.type === EventTypes.REPORT_IMPORTED) {
-          fetchActivities()
+          fetchLogs()
         }
       }
     }
@@ -110,7 +110,7 @@ const Page = () => {
       <section className='w-full mx-auto pb-12 md:pb-16 lg:pb-20 gap-6 flex flex-col'>
         <Card className='w-full'>
           <CardHeader>
-            <CardDescription>View and filter activity actions</CardDescription>
+            <CardDescription>View and filter log actions</CardDescription>
           </CardHeader>
           <CardContent>
             <div className='w-full flex flex-col gap-6'>
@@ -121,7 +121,7 @@ const Page = () => {
                   </div>
                   <Input
                     type='text'
-                    placeholder='Search activity logs...'
+                    placeholder='Search logs...'
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className='pl-10 pr-4 py-2 rounded-md w-full border border-input bg-background focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary'
@@ -150,7 +150,7 @@ const Page = () => {
                           </SelectTrigger>
                           <SelectContent>
                             <SelectGroup>
-                              {ACTIVITIES_TYPES.map((type: string) => (
+                              {LOG_TYPES.map((type: string) => (
                                 <SelectItem key={type} value={type}>
                                   {formatToReadable(type)}
                                 </SelectItem>
@@ -210,7 +210,7 @@ const Page = () => {
                 </DropdownMenu>
               </div>
               <div className='overflow-x-auto'>
-                <ActivitiesTable isLoading={isLoading} activities={activities} />
+                <ActivitiesTable isLoading={isLoading} logs={logs} />
               </div>
               <div className='flex items-center justify-between mt-6'>
                 <ActivitiesTablePagination
@@ -227,18 +227,12 @@ const Page = () => {
   )
 }
 
-const ActivitiesTable = ({
-  isLoading,
-  activities
-}: {
-  isLoading: boolean
-  activities: ActivitySelect[]
-}) => {
+const ActivitiesTable = ({ isLoading, logs }: { isLoading: boolean; logs: LogSelect[] }) => {
   return (
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead>Activity Type</TableHead>
+          <TableHead>Type</TableHead>
           <TableHead>Description</TableHead>
           <TableHead>Timestamp</TableHead>
           <TableHead>Device</TableHead>
@@ -249,16 +243,14 @@ const ActivitiesTable = ({
           <SkeletonLoader />
         ) : (
           <>
-            {activities.map((activity) => (
-              <TableRow key={activity.id}>
-                <TableCell>{formatToReadable(activity.type)}</TableCell>
-                <TableCell>{activity.description}</TableCell>
-                <TableCell>{readableTimestamp(activity.created.toString())}</TableCell>
+            {logs.map((log) => (
+              <TableRow key={log.id}>
+                <TableCell>{formatToReadable(log.type)}</TableCell>
+                <TableCell>{log.description}</TableCell>
+                <TableCell>{readableTimestamp(log.created.toString())}</TableCell>
                 <TableCell>
                   <Icon
-                    name={
-                      deviceIcons[activity.device as keyof typeof deviceIcons] as keyof typeof icons
-                    }
+                    name={deviceIcons[log.device as keyof typeof deviceIcons] as keyof typeof icons}
                     size={20}
                   />
                 </TableCell>

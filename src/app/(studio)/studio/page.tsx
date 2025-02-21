@@ -24,9 +24,9 @@ import { readableTimestamp } from '@/lib/utils'
 import { months, deviceIcons } from '@/lib/constants'
 
 import { getLastThreeReport } from '@/server/actions/report'
-import { getLastThreeActivity } from '@/server/actions/activity'
+import { getLastThreeLogs } from '@/server/actions/log'
 import { getCurrentYearMetrics } from '@/server/actions/metric'
-import type { ReportSelect, ActivitySelect } from '@/server/types'
+import type { ReportSelect, LogSelect } from '@/server/types'
 
 import { useEvents, EventTypes } from '@/hooks/use-events'
 
@@ -40,7 +40,7 @@ const Page = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [reports, setReports] = useState<ReportSelect[]>([])
   const [metrics, setMetrics] = useState<ChartDataItem[]>()
-  const [activities, setActivities] = useState<ActivitySelect[]>([])
+  const [logs, setLogs] = useState<LogSelect[]>([])
 
   const currentYear = new Date().getFullYear()
 
@@ -48,7 +48,7 @@ const Page = () => {
     Promise.all([
       getCurrentYearMetrics({ userId: userId as string, currentYear }),
       getLastThreeReport({ userId: userId as string }),
-      getLastThreeActivity({ userId: userId as string })
+      getLastThreeLogs({ userId: userId as string })
     ])
       .then(([metricsData, reportsData, activitiesData]) => {
         const data = months.map((name) => ({
@@ -65,7 +65,7 @@ const Page = () => {
 
         setMetrics(data as ChartDataItem[])
         setReports(reportsData as ReportSelect[])
-        setActivities(activitiesData as ActivitySelect[])
+        setLogs(activitiesData as LogSelect[])
       })
       .catch((err) => console.log(err))
       .finally(() => setIsLoading(false))
@@ -160,16 +160,16 @@ const Page = () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {activities.map((activity) => (
-                    <TableRow key={activity.id}>
-                      <TableCell>{activity.type}</TableCell>
-                      <TableCell>{activity.description}</TableCell>
-                      <TableCell>{readableTimestamp(activity.created.toString())}</TableCell>
+                  {logs.map((log) => (
+                    <TableRow key={log.id}>
+                      <TableCell>{log.type}</TableCell>
+                      <TableCell>{log.description}</TableCell>
+                      <TableCell>{readableTimestamp(log.created.toString())}</TableCell>
                       <TableCell>
                         <Icon
                           name={
                             deviceIcons[
-                              activity.device as keyof typeof deviceIcons
+                              log.device as keyof typeof deviceIcons
                             ] as keyof typeof icons
                           }
                           size={20}

@@ -14,7 +14,7 @@ export const MetricValidationSchema = z.object({
   userId: z.string().max(256)
 })
 
-export const ActivityValidationSchema = z.object({
+export const LogValidationSchema = z.object({
   type: z.string().max(256),
   description: z.string().max(256),
   userId: z.string().max(256),

@@ -25,7 +25,7 @@ import { TFileContent } from '@/lib/definitions'
 import { isValidFileContent } from '@/lib/utils'
 
 import { saveReport } from '@/server/actions/report'
-import { saveActivity } from '@/server/actions/activity'
+import { saveLog } from '@/server/actions/log'
 import { saveMetric, getMetric, updateMetric } from '@/server/actions/metric'
 import type { ReportInferType } from '@/server/types'
 
@@ -106,7 +106,7 @@ export const ImportReport = ({ children }: { children: React.ReactElement }) => 
 
               const device = (await axios.get('/api/device')).data.device
 
-              await saveActivity({
+              await saveLog({
                 type: 'report_imported',
                 description: 'Report imported',
                 userId: userId as string,
