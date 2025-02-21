@@ -133,7 +133,7 @@ const Page = () => {
         edges={edges}
         className='p-0 m-0 border'
         onZoomChange={(z) => setZoom(z)}
-        node={renderNode({ router, nodeIdQuery, reportSlug })}
+        node={renderNode({ router, nodeIdQuery, reportSlug: reportSlug as string })}
       />
       <ZoomControls passedRef={ref} nodeIdQuery={nodeIdQuery} clearSeachParams={clearSeachParams} />
     </div>
