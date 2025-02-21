@@ -62,12 +62,12 @@ const menus = [
     label: 'Reports',
     path: '/studio/reports',
     icon: 'Files'
-  },
-  {
+  }
+  /* {
     label: 'Ask AI',
     path: '/studio/reports/ask',
     icon: 'Sparkles'
-  }
+  }*/
 ] as MenuType[]
 
 export const StudioSidebar = () => {
