@@ -100,24 +100,26 @@ const Page = () => {
               <CardDescription>Reports imported for the past year</CardDescription>
             </CardHeader>
             <CardContent>
-              <ChartContainer
-                config={{
-                  total: {
-                    label: 'Reports',
-                    color: DATA.color.base
-                  }
-                }}
-                className='h-[300px] w-full'
-              >
-                <ResponsiveContainer width='100%' height='100%'>
-                  <BarChart data={metrics}>
-                    <XAxis dataKey='name' />
-                    <YAxis />
-                    <ChartTooltip content={<ChartTooltipContent />} />
-                    <Bar dataKey='total' fill='var(--color-total)' />
-                  </BarChart>
-                </ResponsiveContainer>
-              </ChartContainer>
+              {Array.isArray(metrics) && metrics.length !== 0 ? (
+                <ChartContainer
+                  config={{
+                    total: {
+                      label: 'Reports',
+                      color: DATA.color.base
+                    }
+                  }}
+                  className='h-[300px] w-full'
+                >
+                  <ResponsiveContainer width='100%' height='100%'>
+                    <BarChart data={metrics}>
+                      <XAxis dataKey='name' />
+                      <YAxis />
+                      <ChartTooltip content={<ChartTooltipContent />} />
+                      <Bar dataKey='total' fill='var(--color-total)' />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </ChartContainer>
+              ) : null}
             </CardContent>
           </Card>
 
