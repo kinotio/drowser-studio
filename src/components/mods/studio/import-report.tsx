@@ -29,12 +29,15 @@ import { saveActivity } from '@/server/actions/activity'
 import { saveMetric, getMetric, updateMetric } from '@/server/actions/metric'
 import type { ReportInferType } from '@/server/types'
 
+import { useEvents, EventTypes } from '@/hooks/use-events'
+
 export const ImportReport = ({ children }: { children: React.ReactElement }) => {
   const [loading, setLoading] = useState<boolean>(false)
   const [reportName, setReportName] = useState<string>('')
   const [reportContent, setReportContent] = useState<TFileContent | null>(null)
 
   const { userId } = useAuth()
+  const { publish } = useEvents((event) => event.type === EventTypes.REPORT_IMPORTED)
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files) return
@@ -110,6 +113,8 @@ export const ImportReport = ({ children }: { children: React.ReactElement }) => 
                 device
               })
             })
+
+            publish({ type: EventTypes.REPORT_IMPORTED, payload: data })
 
             return 'Report Imported'
           }

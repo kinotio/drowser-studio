@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { SearchIcon, FilterIcon, Calendar as CalendarIcon, icons } from 'lucide-react'
 import { format } from 'date-fns'
 import { DateRange } from 'react-day-picker'
@@ -47,15 +47,16 @@ import { Icon } from '@/components/ui/icon'
 import { Skeleton } from '@/components/ui/skeleton'
 
 import { readableTimestamp, formatToReadable, cn } from '@/lib/utils'
-import { ACTIVITIES_TYPES } from '@/lib/constants'
-
-import { deviceIcons } from '@/lib/constants'
+import { ACTIVITIES_TYPES, deviceIcons } from '@/lib/constants'
 
 import { getAllActivities, countActivities } from '@/server/actions/activity'
 import type { ActivitySelect } from '@/server/types'
 
+import { useEvents, EventTypes } from '@/hooks/use-events'
+
 const Page = () => {
   const { userId } = useAuth()
+  const { events } = useEvents((event) => event.type === EventTypes.REPORT_IMPORTED)
 
   const [activities, setActivities] = useState<ActivitySelect[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(true)
@@ -78,7 +79,7 @@ const Page = () => {
     setDate(undefined)
   }
 
-  useEffect(() => {
+  const fetchActivities = useCallback(() => {
     getAllActivities({ userId: userId as string, currentPage, searchTerm, itemsPerPage })
       .then((data) => {
         setActivities(data)
@@ -86,7 +87,23 @@ const Page = () => {
       })
       .catch((err) => console.log(err))
       .finally(() => setIsLoading(false))
+  }, [userId, currentPage, searchTerm])
+
+  useEffect(() => {
+    fetchActivities()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId, currentPage, searchTerm, filters])
+
+  useEffect(() => {
+    if (Array.isArray(events) && events.length > 0) {
+      for (const event of events) {
+        if (event.type === EventTypes.REPORT_IMPORTED) {
+          fetchActivities()
+        }
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [events])
 
   return (
     <div className='container mx-auto flex flex-1 flex-col gap-8 w-full py-4 px-3'>

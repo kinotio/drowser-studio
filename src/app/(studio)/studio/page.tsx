@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { useAuth, useUser } from '@clerk/nextjs'
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from 'recharts'
 import Link from 'next/link'
@@ -28,11 +28,14 @@ import { getLastThreeActivity } from '@/server/actions/activity'
 import { getCurrentYearMetrics } from '@/server/actions/metric'
 import type { ReportSelect, ActivitySelect } from '@/server/types'
 
+import { useEvents, EventTypes } from '@/hooks/use-events'
+
 import { DATA } from '@/data'
 
 const Page = () => {
   const { userId } = useAuth()
   const { user } = useUser()
+  const { events } = useEvents((event) => event.type === EventTypes.REPORT_IMPORTED)
 
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [reports, setReports] = useState<ReportSelect[]>([])
@@ -41,7 +44,7 @@ const Page = () => {
 
   const currentYear = new Date().getFullYear()
 
-  useEffect(() => {
+  const getOverviewData = useCallback(() => {
     Promise.all([
       getCurrentYearMetrics({ userId: userId as string, currentYear }),
       getLastThreeReport({ userId: userId as string }),
@@ -66,8 +69,23 @@ const Page = () => {
       })
       .catch((err) => console.log(err))
       .finally(() => setIsLoading(false))
+  }, [userId, currentYear])
+
+  useEffect(() => {
+    getOverviewData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId])
+
+  useEffect(() => {
+    if (Array.isArray(events) && events.length > 0) {
+      for (const event of events) {
+        if (event.type === EventTypes.REPORT_IMPORTED) {
+          getOverviewData()
+        }
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [events])
 
   return (
     <div className='container mx-auto p-4 mb-20'>
