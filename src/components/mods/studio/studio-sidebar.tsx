@@ -13,7 +13,8 @@ import {
   LifeBuoy,
   SquareStack,
   FileText,
-  Shield
+  Shield,
+  Logs
 } from 'lucide-react'
 import { useUser, useAuth, UserButton } from '@clerk/nextjs'
 import { usePathname, useParams } from 'next/navigation'
@@ -42,6 +43,7 @@ import { Button } from '@/components/ui/button'
 import { ToggleTheme } from '@/components/toogle-theme'
 import { Icon } from '@/components/ui/icon'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
+import { Badge } from '@/components/ui/badge'
 
 import { MenuType, TContentCase } from '@/lib/definitions'
 import { readableTimestamp } from '@/lib/utils'
@@ -62,9 +64,9 @@ const menus = [
     icon: 'Files'
   },
   {
-    label: 'Activities',
-    path: '/studio/activities',
-    icon: 'Activity'
+    label: 'Ask AI',
+    path: '/studio/reports/ask',
+    icon: 'Sparkles'
   }
 ] as MenuType[]
 
@@ -223,6 +225,22 @@ export const StudioSidebar = () => {
         ) : null}
 
         <SidebarGroup>
+          <SidebarGroupLabel>Activities</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <Link href={'/studio/activities/logs'}>
+                    <Logs className='h-4 w-4' />
+                    <span>Logs</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        <SidebarGroup>
           <SidebarGroupLabel>Help</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
@@ -298,11 +316,11 @@ export const StudioSidebar = () => {
 
           <SidebarMenuItem>
             <SidebarMenuButton asChild size={'lg'}>
-              <div className='flex items-center'>
+              <div className='flex items-center gap-4 w-full'>
                 <UserButton />
-                <div className='flex flex-col gap-1'>
-                  <span>{user?.firstName}</span>
-                  <span className='text-xs'>{user?.emailAddresses[0].emailAddress}</span>
+                <div className='flex items-center justify-between w-full'>
+                  <span>{user?.firstName?.split(' ')[0]}</span>
+                  <Badge variant='outline'>Free</Badge>
                 </div>
               </div>
             </SidebarMenuButton>

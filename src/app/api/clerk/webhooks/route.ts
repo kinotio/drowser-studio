@@ -4,7 +4,7 @@ import { WebhookEvent } from '@clerk/nextjs/server'
 
 import { getDeviceType } from '@/lib/utils'
 
-import { saveActivity } from '@/server/actions/activity'
+import { saveLog } from '@/server/actions/log'
 
 export const POST = async (req: Request) => {
   const CLERK_WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_SECRET
@@ -44,7 +44,7 @@ export const POST = async (req: Request) => {
   }
 
   if (evt.type === 'user.created') {
-    await saveActivity({
+    await saveLog({
       type: 'account_created',
       description: 'User account created',
       userId: evt.data.id as string,
@@ -53,7 +53,7 @@ export const POST = async (req: Request) => {
   }
 
   if (evt.type === 'session.created') {
-    await saveActivity({
+    await saveLog({
       type: 'login',
       description: 'Account logged in',
       userId: evt.data.user_id as string,
@@ -62,7 +62,7 @@ export const POST = async (req: Request) => {
   }
 
   if (evt.type === 'session.removed') {
-    await saveActivity({
+    await saveLog({
       type: 'logout',
       description: 'Account logged out',
       userId: evt.data.user_id as string,

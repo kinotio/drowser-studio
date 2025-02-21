@@ -10,6 +10,9 @@ declare global {
       CLERK_SECRET_KEY: string
       CLERK_WEBHOOK_SECRET: string
       CRYPTO_PASSPHRASE: string
+
+      AI_TOKEN: string
+      AI_BASE_URL: string
     }
   }
 }

@@ -46,7 +46,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip
 import { readableTimestamp } from '@/lib/utils'
 
 import { getAllReport, countReports, deleteReport } from '@/server/actions/report'
-import { saveActivity } from '@/server/actions/activity'
+import { saveLog } from '@/server/actions/log'
 import type { ReportSelect } from '@/server/types'
 
 import { useEvents, EventTypes } from '@/hooks/use-events'
@@ -90,7 +90,7 @@ const Page = () => {
 
           const device = (await axios.get('/api/device')).data.device
 
-          await saveActivity({
+          await saveLog({
             type: 'report_deleted',
             description: 'Report deleted',
             userId: userId as string,
