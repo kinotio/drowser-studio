@@ -24,12 +24,14 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { TFileContent } from '@/lib/definitions'
 import { isValidFileContent } from '@/lib/utils'
 
-import { saveReport } from '@/server/actions/report'
+import { saveReport, countReports } from '@/server/actions/report'
 import { saveLog } from '@/server/actions/log'
 import { saveMetric, getMetric, updateMetric } from '@/server/actions/metric'
 import type { ReportInferType } from '@/server/types'
 
 import { useEvents, EventTypes } from '@/hooks/use-events'
+
+const FREE_MAX_REPORT_COUNT = 10
 
 export const ImportReport = ({ children }: { children: React.ReactElement }) => {
   const [loading, setLoading] = useState<boolean>(false)
@@ -59,7 +61,14 @@ export const ImportReport = ({ children }: { children: React.ReactElement }) => 
     }
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    const userReportCount = await countReports({ userId: userId as string })
+
+    if (userReportCount[0].count >= FREE_MAX_REPORT_COUNT) {
+      toast.error('You have reached the maximum number of reports allowed')
+      return
+    }
+
     if (!isValidFileContent(reportContent)) {
       toast.error('Invalid report format')
       return
