@@ -49,10 +49,13 @@ import { getAllReport, countReports, deleteReport } from '@/server/actions/repor
 import { saveActivity } from '@/server/actions/activity'
 import type { ReportSelect } from '@/server/types'
 
+import { useEvents, EventTypes } from '@/hooks/use-events'
+
 type ViewType = 'list' | 'card'
 
 const Page = () => {
   const { userId } = useAuth()
+  const { events } = useEvents((event) => event.type === EventTypes.REPORT_IMPORTED)
 
   const [reports, setReports] = useState<ReportSelect[]>([])
   const [viewType, setViewType] = useState<ViewType>('card')
@@ -107,6 +110,17 @@ const Page = () => {
     fetchReports()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId, currentPage, searchTerm])
+
+  useEffect(() => {
+    if (Array.isArray(events) && events.length > 0) {
+      for (const event of events) {
+        if (event.type === EventTypes.REPORT_IMPORTED) {
+          fetchReports()
+        }
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [events])
 
   return (
     <div className='container mx-auto p-4'>

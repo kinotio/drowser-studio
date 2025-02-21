@@ -59,6 +59,7 @@
     "react-syntax-highlighter": "^15.6.1",
     "reaflow": "^5.3.1",
     "recharts": "^2.13.0",
+    "rxjs": "^7.8.1",
     "sonner": "^1.5.0",
     "svix": "^1.37.0",
     "tailwind-merge": "^2.5.4",
