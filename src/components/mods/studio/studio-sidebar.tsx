@@ -14,7 +14,8 @@ import {
   SquareStack,
   FileText,
   Shield,
-  Logs
+  Logs,
+  Sparkles
 } from 'lucide-react'
 import { useUser, useAuth, UserButton } from '@clerk/nextjs'
 import { usePathname, useParams } from 'next/navigation'
@@ -63,11 +64,6 @@ const menus = [
     path: '/studio/reports',
     icon: 'Files'
   }
-  /* {
-    label: 'Ask AI',
-    path: '/studio/reports/ask',
-    icon: 'Sparkles'
-  }*/
 ] as MenuType[]
 
 export const StudioSidebar = () => {
@@ -216,6 +212,21 @@ export const StudioSidebar = () => {
                     <Link href={`${PATH.STUDIO_REPORTS}/${paramsReportSlug}/visualize`}>
                       <SquareStack className='h-4 w-4 -rotate-90' />
                       <span>Visualize</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+
+                <SidebarMenuItem>
+                  <SidebarMenuButton
+                    asChild
+                    isActive={pathName === `${PATH.STUDIO_REPORTS}/${paramsReportSlug}/ai`}
+                  >
+                    <Link href={`${PATH.STUDIO_REPORTS}/${paramsReportSlug}/ai`}>
+                      <Sparkles className='h-4 w-4 -rotate-90' />
+                      <span className='flex items-center gap-6'>
+                        <span>Drowser AI</span>
+                        <Badge variant='secondary'>Experimental</Badge>
+                      </span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>

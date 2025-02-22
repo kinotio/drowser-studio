@@ -65,13 +65,9 @@ const Header = ({ pathname }: { pathname: string }) => {
                   <div key={href} className='flex items-center gap-2'>
                     <BreadcrumbItem>
                       {index === pathSegments.length - 1 ? (
-                        <BreadcrumbPage>
-                          {segment.charAt(0).toUpperCase() + segment.slice(1)}{' '}
-                        </BreadcrumbPage>
+                        <BreadcrumbPage>{segment.toLowerCase()}</BreadcrumbPage>
                       ) : (
-                        <BreadcrumbLink href={href}>
-                          {segment.charAt(0).toUpperCase() + segment.slice(1)}{' '}
-                        </BreadcrumbLink>
+                        <BreadcrumbLink href={href}>{segment.toLowerCase()}</BreadcrumbLink>
                       )}
                     </BreadcrumbItem>
                     {index < pathSegments.length - 1 && (
