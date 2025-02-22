@@ -10,7 +10,7 @@ const BASE_EVENT_TYPES = [
   'logout'
 ] as string[]
 
-export const LOG_TYPES = BASE_EVENT_TYPES
+export const ACTIVITIES_TYPES = BASE_EVENT_TYPES
 
 export const EVENT_TYPES: { [key: string]: string } = {
   unknown: 'unknown',
@@ -61,3 +61,50 @@ export const deviceIcons = {
   mobile: 'Smartphone',
   unknown: 'CircleAlert'
 }
+
+export const analyzeTemplates = [
+  {
+    id: 'quick-analysis',
+    icon: 'Brain',
+    title: 'Quick Analysis',
+    description: 'Instant test report overview',
+    prompts: [
+      'Summarize the key findings from this test report',
+      'What are the main issues identified?',
+      'Show the success rate of all test cases'
+    ]
+  },
+  {
+    id: 'performance',
+    icon: 'ChartBar',
+    title: 'Performance Analysis',
+    description: 'Deep dive into test metrics',
+    prompts: [
+      'Analyze test execution times and identify bottlenecks',
+      'Compare performance across different test suites',
+      'Show trends in test duration over time'
+    ]
+  },
+  {
+    id: 'failures',
+    icon: 'CircleAlert',
+    title: 'Failure Analysis',
+    description: 'Investigate test failures',
+    prompts: [
+      'List all failed tests with their error messages',
+      'Identify common patterns in test failures',
+      'Suggest potential fixes for failed tests'
+    ]
+  },
+  {
+    id: 'improvements',
+    icon: 'TrendingUp',
+    title: 'Recommendations',
+    description: 'Get actionable insights',
+    prompts: [
+      'Suggest improvements for test coverage',
+      'Identify flaky tests and propose solutions',
+      'Recommend test optimization strategies'
+    ]
+  }
+]

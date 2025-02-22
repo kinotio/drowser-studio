@@ -1,67 +1,14 @@
 'use client'
 
-import {
-  AlertCircle,
-  Bot,
-  Brain,
-  BarChartIcon as ChartBar,
-  MessageSquare,
-  Send,
-  TrendingUp
-} from 'lucide-react'
+import { Bot, MessageSquare, Send, icons } from 'lucide-react'
 import { useState, useRef, useEffect } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-
+import { Icon } from '@/components/ui/icon'
 import { Textarea } from '@/components/ui/textarea'
 
-const analyzeTemplates = [
-  {
-    id: 'quick-analysis',
-    icon: <Brain className='h-5 w-5' />,
-    title: 'Quick Analysis',
-    description: 'Instant test report overview',
-    prompts: [
-      'Summarize the key findings from this test report',
-      'What are the main issues identified?',
-      'Show the success rate of all test cases'
-    ]
-  },
-  {
-    id: 'performance',
-    icon: <ChartBar className='h-5 w-5' />,
-    title: 'Performance Analysis',
-    description: 'Deep dive into test metrics',
-    prompts: [
-      'Analyze test execution times and identify bottlenecks',
-      'Compare performance across different test suites',
-      'Show trends in test duration over time'
-    ]
-  },
-  {
-    id: 'failures',
-    icon: <AlertCircle className='h-5 w-5' />,
-    title: 'Failure Analysis',
-    description: 'Investigate test failures',
-    prompts: [
-      'List all failed tests with their error messages',
-      'Identify common patterns in test failures',
-      'Suggest potential fixes for failed tests'
-    ]
-  },
-  {
-    id: 'improvements',
-    icon: <TrendingUp className='h-5 w-5' />,
-    title: 'Recommendations',
-    description: 'Get actionable insights',
-    prompts: [
-      'Suggest improvements for test coverage',
-      'Identify flaky tests and propose solutions',
-      'Recommend test optimization strategies'
-    ]
-  }
-]
+import { analyzeTemplates } from '@/lib/constants'
 
 const Page = () => {
   const [messages, setMessages] = useState([
@@ -72,6 +19,7 @@ const Page = () => {
     }
   ])
   const [inputValue, setInputValue] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
   const scrollAreaRef = useRef<HTMLDivElement>(null)
 
   // Scroll to bottom when new messages are added
@@ -79,25 +27,28 @@ const Page = () => {
     if (scrollAreaRef.current) {
       scrollAreaRef.current.scrollTop = scrollAreaRef.current.scrollHeight
     }
-  }, [messages])
+  }, [messages, isLoading])
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!inputValue.trim()) return
 
-    setMessages([...messages, { role: 'user', content: inputValue }])
+    const userMessage = { role: 'user', content: inputValue }
+    setMessages((prev) => [...prev, userMessage])
     setInputValue('')
+    setIsLoading(true)
 
     // Simulate AI response - replace with actual AI integration
-    setTimeout(() => {
-      setMessages((current) => [
-        ...current,
-        {
-          role: 'assistant',
-          content:
-            "I'm analyzing your request. This is a placeholder response - integrate your AI service here."
-        }
-      ])
-    }, 1000)
+    await new Promise((resolve) => setTimeout(resolve, 2000))
+
+    setMessages((current) => [
+      ...current,
+      {
+        role: 'assistant',
+        content:
+          "I'm analyzing your request. This is a placeholder response - integrate your AI service here."
+      }
+    ])
+    setIsLoading(false)
   }
 
   const handlePromptClick = (prompt: string) => {
@@ -110,7 +61,9 @@ const Page = () => {
         {analyzeTemplates.map((template) => (
           <Card key={template.id} className='overflow-hidden'>
             <CardHeader className='flex flex-row items-center gap-3 space-y-0'>
-              <div className='rounded-full bg-primary/10 p-2'>{template.icon}</div>
+              <div className='rounded-full bg-primary/10 p-2'>
+                <Icon name={template.icon as keyof typeof icons} size={20} />
+              </div>
               <div>
                 <CardTitle className='text-base'>{template.title}</CardTitle>
                 <CardDescription className='text-xs'>{template.description}</CardDescription>
@@ -167,6 +120,29 @@ const Page = () => {
                   )}
                 </div>
               ))}
+
+              {/* Loading Message */}
+              {isLoading && (
+                <div className='flex gap-3 justify-start'>
+                  <div className='rounded-full bg-primary/10 p-2 h-8 w-8 flex items-center justify-center shrink-0'>
+                    <Bot className='h-4 w-4' />
+                  </div>
+                  <div className='rounded-lg px-4 py-2 max-w-[80%] bg-muted'>
+                    <p className='text-sm whitespace-pre-wrap flex items-center gap-1'>
+                      Drowser AI is analyzing your request
+                      <span className='inline-flex w-4'>
+                        <span className='animate-bounce'>.</span>
+                        <span className='animate-bounce' style={{ animationDelay: '0.2s' }}>
+                          .
+                        </span>
+                        <span className='animate-bounce' style={{ animationDelay: '0.4s' }}>
+                          .
+                        </span>
+                      </span>
+                    </p>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 
@@ -196,6 +172,11 @@ const Page = () => {
                 </Button>
               </div>
             </div>
+          </div>
+
+          {/* Disclaimer */}
+          <div className='text-center text-xs text-muted-foreground mt-2'>
+            Drowser AI can make mistakes. Consider checking important information.
           </div>
         </CardContent>
       </Card>
