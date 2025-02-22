@@ -1,0 +1,15 @@
+services:
+  postgres:
+    container_name: drowser_studio_postgres
+    image: postgres:17.2
+    environment:
+      POSTGRES_USER: drowser_studio
+      POSTGRES_PASSWORD: drowser_studio
+      POSTGRES_DB: drowser_studio
+    volumes:
+      - drowser_studio_postgres_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+volumes:
+  drowser_studio_postgres_data:
