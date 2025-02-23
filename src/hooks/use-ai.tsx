@@ -9,13 +9,15 @@ export const useAI = (type: 'chat' | 'prompt', message: string) => {
 
     const baseUrl = process.env.AI_BASE_URL
     const endpoint = type === 'chat' ? `${baseUrl}/api/ai/chat` : `${baseUrl}/api/ai/generate`
+    const token = process.env.AI_TOKEN
 
     setIsLoading(true)
     try {
       const response = await fetch(endpoint, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({ message })
       })
