@@ -225,7 +225,7 @@ export const StudioSidebar = () => {
                       <Sparkles className='h-4 w-4 -rotate-90' />
                       <span className='flex items-center gap-6'>
                         <span>Drowser AI</span>
-                        <Badge variant='secondary'>Experimental</Badge>
+                        <Badge variant='destructive'>Experimental</Badge>
                       </span>
                     </Link>
                   </SidebarMenuButton>

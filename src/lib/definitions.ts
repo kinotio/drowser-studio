@@ -231,3 +231,8 @@ export type Modify<T, K extends keyof any, V> = Omit<T, K> & { [P in K]: V }
 export type ModifyDeep<T, K extends keyof T, V> = {
   [P in keyof T]: P extends K ? V : T[P]
 }
+
+export type Message = {
+  role: 'assistant' | 'user'
+  content: string
+}

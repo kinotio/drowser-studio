@@ -1,17 +1,20 @@
 'use client'
 
-import { Bot, MessageSquare, Send, icons } from 'lucide-react'
-import { useState, useRef, useEffect } from 'react'
+import { icons } from 'lucide-react'
+import React, { useState, useRef, useEffect } from 'react'
 
-import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Icon } from '@/components/ui/icon'
-import { Textarea } from '@/components/ui/textarea'
-
+import { Switch } from '@/components/ui/switch'
 import { analyzeTemplates } from '@/lib/constants'
+import { Message } from '@/lib/definitions'
+import { ChatMode } from '@/components/mods/studio/ai/chat-mode'
+import { PromptMode } from '@/components/mods/studio/ai/prompt-mode'
 
 const Page = () => {
-  const [messages, setMessages] = useState([
+  const [isChatMode, setIsChatMode] = useState(false)
+
+  const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
       content:
@@ -19,6 +22,7 @@ const Page = () => {
     }
   ])
   const [inputValue, setInputValue] = useState('')
+
   const [isLoading, setIsLoading] = useState(false)
   const scrollAreaRef = useRef<HTMLDivElement>(null)
 
@@ -32,8 +36,7 @@ const Page = () => {
   const handleSubmit = async () => {
     if (!inputValue.trim()) return
 
-    const userMessage = { role: 'user', content: inputValue }
-    setMessages((prev) => [...prev, userMessage])
+    setMessages((prev) => [...prev, { role: 'user', content: inputValue }])
     setInputValue('')
     setIsLoading(true)
 
@@ -56,7 +59,7 @@ const Page = () => {
   }
 
   return (
-    <div className='flex flex-col gap-4 p-4'>
+    <div className='flex flex-col gap-4 p-4 mb-12'>
       <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-4'>
         {analyzeTemplates.map((template) => (
           <Card key={template.id} className='overflow-hidden'>
@@ -86,100 +89,41 @@ const Page = () => {
         ))}
       </div>
 
+      {/* Mode Switch */}
+      <div className='flex items-center justify-end gap-4'>
+        <div className='flex items-center gap-2 rounded-lg border bg-muted/50 p-2'>
+          <div className='flex items-center gap-2'>
+            <span className='text-xs text-muted-foreground'>Prompt</span>
+            <Switch checked={isChatMode} onCheckedChange={setIsChatMode} />
+            <span className='text-xs text-muted-foreground'>Chat</span>
+          </div>
+        </div>
+      </div>
+
       {/* Chat Interface */}
-      <Card className='flex-1'>
-        <CardContent className='flex flex-col p-4 h-[420px]'>
-          <div
-            ref={scrollAreaRef}
-            className='flex-1 overflow-y-auto pr-4 mb-4 scrollbar-thin scrollbar-thumb-muted-foreground/20 scrollbar-track-transparent'
-          >
-            <div className='space-y-4'>
-              {messages.map((message, index) => (
-                <div
-                  key={index}
-                  className={`flex gap-3 ${message.role === 'assistant' ? 'justify-start' : 'justify-end'}`}
-                >
-                  {message.role === 'assistant' && (
-                    <div className='rounded-full bg-primary/10 p-2 h-8 w-8 flex items-center justify-center shrink-0'>
-                      <Bot className='h-4 w-4' />
-                    </div>
-                  )}
-                  <div
-                    className={`rounded-lg px-4 py-2 max-w-[80%] ${
-                      message.role === 'assistant'
-                        ? 'bg-muted'
-                        : 'bg-primary text-primary-foreground'
-                    }`}
-                  >
-                    <p className='text-sm whitespace-pre-wrap'>{message.content}</p>
-                  </div>
-                  {message.role === 'user' && (
-                    <div className='rounded-full bg-primary p-2 h-8 w-8 flex items-center justify-center shrink-0'>
-                      <MessageSquare className='h-4 w-4 text-white' />
-                    </div>
-                  )}
-                </div>
-              ))}
+      {isChatMode ? (
+        <ChatMode
+          messages={messages}
+          scrollAreaRef={scrollAreaRef}
+          isLoading={isLoading}
+          inputValue={inputValue}
+          handleSubmit={handleSubmit}
+          setInputValue={setInputValue}
+        />
+      ) : (
+        <PromptMode
+          prompt={inputValue}
+          response={''}
+          isLoading={isLoading}
+          setInputValue={setInputValue}
+          handleSubmit={handleSubmit}
+        />
+      )}
 
-              {/* Loading Message */}
-              {isLoading && (
-                <div className='flex gap-3 justify-start'>
-                  <div className='rounded-full bg-primary/10 p-2 h-8 w-8 flex items-center justify-center shrink-0'>
-                    <Bot className='h-4 w-4' />
-                  </div>
-                  <div className='rounded-lg px-4 py-2 max-w-[80%] bg-muted'>
-                    <p className='text-sm whitespace-pre-wrap flex items-center gap-1'>
-                      Drowser AI is analyzing your request
-                      <span className='inline-flex w-4'>
-                        <span className='animate-bounce'>.</span>
-                        <span className='animate-bounce' style={{ animationDelay: '0.2s' }}>
-                          .
-                        </span>
-                        <span className='animate-bounce' style={{ animationDelay: '0.4s' }}>
-                          .
-                        </span>
-                      </span>
-                    </p>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-
-          <div className='flex gap-2'>
-            <div className='relative flex-1'>
-              <Textarea
-                className='min-h-[80px] max-h-[160px] resize-none pr-12 bg-muted/50'
-                placeholder='Ask about your test results or choose a template above...'
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault()
-                    handleSubmit()
-                  }
-                }}
-              />
-              <div className='absolute bottom-2 right-2'>
-                <Button
-                  size='icon'
-                  onClick={handleSubmit}
-                  disabled={!inputValue.trim()}
-                  className='rounded-full'
-                >
-                  <Send className='h-4 w-4' />
-                  <span className='sr-only'>Send message</span>
-                </Button>
-              </div>
-            </div>
-          </div>
-
-          {/* Disclaimer */}
-          <div className='text-center text-xs text-muted-foreground mt-2'>
-            Drowser AI can make mistakes. Consider checking important information.
-          </div>
-        </CardContent>
-      </Card>
+      {/* Disclaimer */}
+      <div className='text-center text-xs text-muted-foreground'>
+        Drowser AI can make mistakes. Consider checking important information.
+      </div>
     </div>
   )
 }
