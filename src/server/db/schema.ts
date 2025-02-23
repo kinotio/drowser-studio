@@ -39,6 +39,18 @@ export const logs = pgTable('logs', {
     .$onUpdate(() => new Date())
 })
 
-const schema = { reports, metrics, logs }
+export const users = pgTable('users', {
+  id: varchar({ length: 256 }).primaryKey().notNull(),
+  email: varchar({ length: 256 }).notNull(),
+  first_name: varchar({ length: 256 }).notNull(),
+  last_name: varchar({ length: 256 }).notNull(),
+  created: timestamp({ mode: 'date' }).notNull().defaultNow(),
+  updated: timestamp({ mode: 'date' })
+    .notNull()
+    .defaultNow()
+    .$onUpdate(() => new Date())
+})
+
+const schema = { reports, metrics, logs, users }
 
 export default schema
