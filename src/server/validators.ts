@@ -20,3 +20,10 @@ export const LogValidationSchema = z.object({
   userId: z.string().max(256),
   device: z.string().max(256)
 })
+
+export const UserValidationSchema = z.object({
+  id: z.string().max(256),
+  email: z.string().max(256),
+  firstName: z.string().max(256),
+  lastName: z.string().max(256)
+})
