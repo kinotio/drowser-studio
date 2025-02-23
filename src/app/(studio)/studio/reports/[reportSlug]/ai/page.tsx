@@ -20,7 +20,7 @@ const Page = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
-      content: "Hello! I'm your Test Analysis Assistant. Choose an analysis template to begin."
+      content: "Hello! I'm Drowser AI. Choose an analysis template to begin."
     }
   ])
   const [inputValue, setInputValue] = useState('')
