@@ -63,7 +63,7 @@ export const ChatMode = ({
                 </div>
                 <div className='rounded-lg px-4 py-2 max-w-[80%] bg-muted'>
                   <p className='text-sm whitespace-pre-wrap flex items-center gap-1'>
-                    Drowser AI is typing
+                    Drowser AI is responding
                     <span className='inline-flex w-4'>
                       <span className='animate-bounce'>.</span>
                       <span className='animate-bounce' style={{ animationDelay: '0.2s' }}>
