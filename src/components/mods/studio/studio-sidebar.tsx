@@ -14,8 +14,7 @@ import {
   SquareStack,
   FileText,
   Shield,
-  Logs,
-  Sparkles
+  Logs
 } from 'lucide-react'
 import { useUser, useAuth, UserButton } from '@clerk/nextjs'
 import { usePathname, useParams } from 'next/navigation'
