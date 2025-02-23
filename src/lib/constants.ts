@@ -10,7 +10,7 @@ const BASE_EVENT_TYPES = [
   'logout'
 ] as string[]
 
-export const ACTIVITIES_TYPES = BASE_EVENT_TYPES
+export const LOG_TYPES = BASE_EVENT_TYPES
 
 export const EVENT_TYPES: { [key: string]: string } = {
   unknown: 'unknown',
