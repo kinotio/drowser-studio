@@ -11,52 +11,50 @@ import { Message } from '@/lib/definitions'
 import { ChatMode } from '@/components/mods/studio/ai/chat-mode'
 import { PromptMode } from '@/components/mods/studio/ai/prompt-mode'
 
+import { useAI } from '@/hooks/use-ai'
+
 const Page = () => {
   const [isChatMode, setIsChatMode] = useState(false)
+  const { responseData, isLoading, fetchData } = useAI(isChatMode ? 'chat' : 'prompt')
 
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
-      content:
-        "Hello! I'm your Test Analysis Assistant. Upload a test report or choose an analysis template to begin."
+      content: "Hello! I'm your Test Analysis Assistant. Choose an analysis template to begin."
     }
   ])
   const [inputValue, setInputValue] = useState('')
-
-  const [isLoading, setIsLoading] = useState(false)
   const scrollAreaRef = useRef<HTMLDivElement>(null)
 
-  // Scroll to bottom when new messages are added
+  const handleSubmit = async () => {
+    if (!inputValue.trim()) return
+
+    if (isChatMode) {
+      setMessages((prev) => [...prev, { role: 'user', content: inputValue }])
+    }
+
+    await fetchData(isChatMode ? messages : inputValue)
+
+    if (isChatMode) {
+      setMessages((current) => [
+        ...current,
+        {
+          role: 'assistant',
+          content: responseData || "I'm sorry, I couldn't understand your request."
+        }
+      ])
+    }
+
+    setInputValue('')
+  }
+
+  const handlePromptClick = (input: string) => setInputValue(input)
+
   useEffect(() => {
     if (scrollAreaRef.current) {
       scrollAreaRef.current.scrollTop = scrollAreaRef.current.scrollHeight
     }
   }, [messages, isLoading])
-
-  const handleSubmit = async () => {
-    if (!inputValue.trim()) return
-
-    setMessages((prev) => [...prev, { role: 'user', content: inputValue }])
-    setInputValue('')
-    setIsLoading(true)
-
-    // Simulate AI response - replace with actual AI integration
-    await new Promise((resolve) => setTimeout(resolve, 2000))
-
-    setMessages((current) => [
-      ...current,
-      {
-        role: 'assistant',
-        content:
-          "I'm analyzing your request. This is a placeholder response - integrate your AI service here."
-      }
-    ])
-    setIsLoading(false)
-  }
-
-  const handlePromptClick = (prompt: string) => {
-    setInputValue(prompt)
-  }
 
   return (
     <div className='flex flex-col gap-4 p-4 mb-12'>
@@ -113,7 +111,7 @@ const Page = () => {
       ) : (
         <PromptMode
           prompt={inputValue}
-          response={''}
+          response={isChatMode ? '' : (responseData as string)}
           isLoading={isLoading}
           setInputValue={setInputValue}
           handleSubmit={handleSubmit}

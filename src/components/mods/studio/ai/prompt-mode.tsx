@@ -34,7 +34,7 @@ export const PromptMode = ({
           <div className='space-y-4'>
             <div className='relative'>
               <Textarea
-                className='min-h-[150px] resize-none pr-12 bg-muted/50'
+                className='h-[150px] resize-none pr-12 bg-muted/50'
                 placeholder='Enter your analysis prompt here...'
                 value={prompt}
                 onChange={(e) => setInputValue(e.target.value)}
@@ -65,10 +65,10 @@ export const PromptMode = ({
           <CardDescription>AI-generated analysis based on your prompt</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className='relative min-h-[150px] rounded-md bg-muted/50 p-4'>
+          <div className='relative h-[175px] overflow-y-auto rounded-md bg-muted/50 p-4'>
             {isLoading ? (
               <div className='flex items-center gap-2 text-sm text-muted-foreground'>
-                <span>The assistant is thinking</span>
+                <span>Drowser AI is thinking</span>
                 <span className='inline-flex w-4'>
                   <span className='animate-bounce'>.</span>
                   <span className='animate-bounce' style={{ animationDelay: '0.2s' }}>
