@@ -10,6 +10,12 @@ services:
       - drowser_studio_postgres_data:/var/lib/postgresql/data
     ports:
       - 5432:5432
+    networks:
+      - drowser_studio_network
 
 volumes:
   drowser_studio_postgres_data:
+
+networks:
+  drowser_studio_network:
+    driver: bridge

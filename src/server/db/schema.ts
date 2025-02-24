@@ -51,6 +51,22 @@ export const users = pgTable('users', {
     .$onUpdate(() => new Date())
 })
 
-const schema = { reports, metrics, logs, users }
+export const plans = pgTable('plans', {
+  id: uuid().primaryKey().defaultRandom().notNull(),
+  name: varchar({ length: 256 }).notNull(),
+  description: varchar({ length: 256 }).notNull(),
+  duration: varchar({ length: 256 }).notNull(),
+  price: integer().notNull(),
+  price_id: varchar({ length: 256 }),
+  metadata: jsonb(),
+  type: varchar({ length: 256 }).notNull(),
+  created: timestamp({ mode: 'date' }).notNull().defaultNow(),
+  updated: timestamp({ mode: 'date' })
+    .notNull()
+    .defaultNow()
+    .$onUpdate(() => new Date())
+})
+
+const schema = { reports, metrics, logs, users, plans }
 
 export default schema
