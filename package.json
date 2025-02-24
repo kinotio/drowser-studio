@@ -1,5 +1,5 @@
 {
-  "name": "drowser-studio",
+  "name": "@kinotiodotio/drowser-studio",
   "version": "0.1.1",
   "private": true,
   "packageManager": "pnpm@9.7.0",
@@ -12,7 +12,8 @@
     "prettier": "prettier --ignore-path .gitignore --write \"./src/**/*.+(js|ts|json)\"",
     "prettier:fix": "prettier --write src",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "drizzle-kit migrate"
+    "db:migrate": "drizzle-kit migrate",
+    "db:seed": "tsx ./src/server/db/seeds.ts"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.0.2",
