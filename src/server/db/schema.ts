@@ -59,7 +59,7 @@ export const plans = pgTable('plans', {
   price: integer().notNull(),
   price_id: varchar({ length: 256 }),
   metadata: jsonb(),
-  type: varchar({ length: 256 }).notNull(),
+  type: varchar({ length: 256 }).notNull().unique(),
   created: timestamp({ mode: 'date' }).notNull().defaultNow(),
   updated: timestamp({ mode: 'date' })
     .notNull()
