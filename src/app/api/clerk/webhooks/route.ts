@@ -5,7 +5,7 @@ import { WebhookEvent } from '@clerk/nextjs/server'
 import { getDeviceType } from '@/lib/utils'
 
 import { saveLog } from '@/server/actions/log'
-import { saveUser, updateUser } from '@/server/actions/user'
+import { saveUser, updateUser, deleteUser } from '@/server/actions/user'
 
 export const POST = async (req: Request) => {
   const CLERK_WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_SECRET
@@ -66,6 +66,17 @@ export const POST = async (req: Request) => {
       email: evt.data.email_addresses[0].email_address,
       firstName: evt.data.first_name as string,
       lastName: evt.data.last_name as string
+    })
+  }
+
+  if (evt.type === 'user.deleted') {
+    await deleteUser({ userId: evt.data.id as string })
+
+    await saveLog({
+      type: 'account_deleted',
+      description: 'User account deleted',
+      userId: evt.data.id as string,
+      device: getDeviceType(req.headers.get('user-agent') || '')
     })
   }
 

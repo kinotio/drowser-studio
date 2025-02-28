@@ -5,71 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1738859792104,
-      "tag": "0000_fearless_harry_osborn",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1738928815400,
-      "tag": "0001_amused_xavin",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1738929028213,
-      "tag": "0002_puzzling_baron_strucker",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1738929844287,
-      "tag": "0003_absent_kate_bishop",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "7",
-      "when": 1738947340411,
-      "tag": "0004_brown_sunfire",
-      "breakpoints": true
-    },
-    {
-      "idx": 5,
-      "version": "7",
-      "when": 1740068853812,
-      "tag": "0005_aromatic_namor",
-      "breakpoints": true
-    },
-    {
-      "idx": 6,
-      "version": "7",
-      "when": 1740161543028,
-      "tag": "0006_shallow_marvel_apes",
-      "breakpoints": true
-    },
-    {
-      "idx": 7,
-      "version": "7",
-      "when": 1740331232579,
-      "tag": "0007_medical_carlie_cooper",
-      "breakpoints": true
-    },
-    {
-      "idx": 8,
-      "version": "7",
-      "when": 1740332502574,
-      "tag": "0008_rainy_silver_fox",
-      "breakpoints": true
-    },
-    {
-      "idx": 9,
-      "version": "7",
-      "when": 1740762906766,
-      "tag": "0009_chilly_nova",
+      "when": 1740766363193,
+      "tag": "0000_lyrical_miek",
       "breakpoints": true
     }
   ]
