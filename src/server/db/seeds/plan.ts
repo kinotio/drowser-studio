@@ -1,7 +1,7 @@
 import { drizzle } from '@/server/drizzle'
 import { plans } from '@/server/db/schema'
 
-const seed = async () => {
+const seed = (async () => {
   const data = [
     {
       name: 'Free',
@@ -29,6 +29,6 @@ const seed = async () => {
   for (const plan of data) {
     await drizzle.insert(plans).values(plan)
   }
-}
+})()
 
 export default seed

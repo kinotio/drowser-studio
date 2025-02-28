@@ -13,7 +13,7 @@
     "prettier:fix": "prettier --write src",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
-    "db:seed": "tsx ./src/server/db/seeds.ts"
+    "db:seed": "tsx ./src/server/db/seed.ts"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.0.2",
