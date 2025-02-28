@@ -49,11 +49,7 @@ export const DATA = {
       },
       {
         href: 'https://github.com/kinotiodotio/drowser/issues',
-        name: 'Issues (Drowser)'
-      },
-      {
-        href: 'https://github.com/kinotiodotio/drowser-studio/issues',
-        name: 'Issues (Drowser Studio)'
+        name: 'Issues'
       }
     ],
     legal: [
