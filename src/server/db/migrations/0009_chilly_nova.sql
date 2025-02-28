@@ -1,1 +1,0 @@
-ALTER TABLE "plans" ADD CONSTRAINT "plans_type_unique" UNIQUE("type");

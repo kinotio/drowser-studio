@@ -1,1 +1,0 @@
-ALTER TABLE "activities" DROP CONSTRAINT "activities_description_unique";

@@ -31,3 +31,7 @@ export const updateUser = async (payload: UserInferType) => {
     .where(eq(users.id, payload.id))
     .returning()
 }
+
+export const deleteUser = async (payload: { userId: string }) => {
+  return drizzle.delete(users).where(eq(users.id, payload.userId)).returning()
+}
