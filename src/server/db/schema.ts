@@ -1,7 +1,7 @@
 import { varchar, pgTable, uuid, timestamp, jsonb, integer } from '@/server/drizzle'
 
 export const users = pgTable('users', {
-  id: uuid().primaryKey().notNull(),
+  id: varchar({ length: 256 }).primaryKey().notNull(),
   email: varchar({ length: 256 }).notNull(),
   first_name: varchar({ length: 256 }).notNull(),
   last_name: varchar({ length: 256 }).notNull(),
@@ -17,7 +17,7 @@ export const reports = pgTable('reports', {
   name: varchar({ length: 256 }).notNull(),
   slug: varchar({ length: 256 }).notNull().unique(),
   metadata: jsonb().notNull(),
-  user_id: uuid()
+  user_id: varchar()
     .notNull()
     .references(() => users.id, { onDelete: 'cascade' }),
   created: timestamp({ withTimezone: true }).notNull().defaultNow(),
@@ -32,7 +32,7 @@ export const metrics = pgTable('metrics', {
   year: integer().notNull(),
   total: integer().notNull(),
   month: integer().notNull(),
-  user_id: uuid()
+  user_id: varchar()
     .notNull()
     .references(() => users.id, { onDelete: 'cascade' }),
   created: timestamp({ withTimezone: true }).notNull().defaultNow(),
@@ -46,7 +46,7 @@ export const logs = pgTable('logs', {
   id: uuid().primaryKey().defaultRandom().notNull(),
   type: varchar({ length: 256 }).notNull(),
   description: varchar({ length: 256 }).notNull(),
-  user_id: uuid()
+  user_id: varchar()
     .notNull()
     .references(() => users.id, { onDelete: 'cascade' }),
   device: varchar({ length: 256 }).notNull(),
@@ -75,7 +75,7 @@ export const plans = pgTable('plans', {
 
 export const subscriptions = pgTable('subscriptions', {
   id: uuid().primaryKey().defaultRandom().notNull(),
-  user_id: uuid()
+  user_id: varchar()
     .notNull()
     .references(() => users.id, { onDelete: 'cascade' }),
   plan_id: varchar({ length: 256 }).notNull(),

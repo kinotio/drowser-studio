@@ -2,7 +2,7 @@ CREATE TABLE "logs" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"type" varchar(256) NOT NULL,
 	"description" varchar(256) NOT NULL,
-	"user_id" uuid NOT NULL,
+	"user_id" varchar NOT NULL,
 	"device" varchar(256) NOT NULL,
 	"created" timestamp with time zone DEFAULT now() NOT NULL,
 	"updated" timestamp with time zone DEFAULT now() NOT NULL
@@ -13,7 +13,7 @@ CREATE TABLE "metrics" (
 	"year" integer NOT NULL,
 	"total" integer NOT NULL,
 	"month" integer NOT NULL,
-	"user_id" uuid NOT NULL,
+	"user_id" varchar NOT NULL,
 	"created" timestamp with time zone DEFAULT now() NOT NULL,
 	"updated" timestamp with time zone DEFAULT now() NOT NULL
 );
@@ -37,7 +37,7 @@ CREATE TABLE "reports" (
 	"name" varchar(256) NOT NULL,
 	"slug" varchar(256) NOT NULL,
 	"metadata" jsonb NOT NULL,
-	"user_id" uuid NOT NULL,
+	"user_id" varchar NOT NULL,
 	"created" timestamp with time zone DEFAULT now() NOT NULL,
 	"updated" timestamp with time zone DEFAULT now() NOT NULL,
 	CONSTRAINT "reports_slug_unique" UNIQUE("slug")
@@ -45,7 +45,7 @@ CREATE TABLE "reports" (
 --> statement-breakpoint
 CREATE TABLE "subscriptions" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
-	"user_id" uuid NOT NULL,
+	"user_id" varchar NOT NULL,
 	"plan_id" varchar(256) NOT NULL,
 	"status" varchar(256) DEFAULT 'active' NOT NULL,
 	"start_date" timestamp with time zone DEFAULT now() NOT NULL,
@@ -55,7 +55,7 @@ CREATE TABLE "subscriptions" (
 );
 --> statement-breakpoint
 CREATE TABLE "users" (
-	"id" uuid PRIMARY KEY NOT NULL,
+	"id" varchar(256) PRIMARY KEY NOT NULL,
 	"email" varchar(256) NOT NULL,
 	"first_name" varchar(256) NOT NULL,
 	"last_name" varchar(256) NOT NULL,
