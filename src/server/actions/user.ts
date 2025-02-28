@@ -19,3 +19,15 @@ export const saveUser = async (payload: UserInferType) => {
     })
     .returning()
 }
+
+export const updateUser = async (payload: UserInferType) => {
+  return drizzle
+    .update(users)
+    .set({
+      email: payload.email,
+      first_name: payload.firstName,
+      last_name: payload.lastName
+    })
+    .where(eq(users.id, payload.id))
+    .returning()
+}
