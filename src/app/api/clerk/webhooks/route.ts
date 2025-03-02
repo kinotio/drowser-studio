@@ -6,6 +6,8 @@ import { getDeviceType } from '@/lib/utils'
 
 import { saveLog } from '@/server/actions/log'
 import { saveUser, updateUser, deleteUser } from '@/server/actions/user'
+import { saveSubscription } from '@/server/actions/subscriptions'
+import { getFreePlan } from '@/server/actions/plan'
 
 export const POST = async (req: Request) => {
   const CLERK_WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_SECRET
@@ -50,6 +52,15 @@ export const POST = async (req: Request) => {
       email: evt.data.email_addresses[0].email_address,
       firstName: evt.data.first_name as string,
       lastName: evt.data.last_name as string
+    })
+
+    const freePlan = await getFreePlan()
+
+    await saveSubscription({
+      userId: evt.data.id as string,
+      planId: freePlan[0].id,
+      status: 'active',
+      startDate: new Date()
     })
 
     await saveLog({

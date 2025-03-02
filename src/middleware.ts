@@ -23,6 +23,10 @@ export default clerkMiddleware(async (auth, request) => {
     return NextResponse.redirect(url)
   }
 
+  if (userId && request.nextUrl.pathname.endsWith('ai')) {
+    return NextResponse.redirect('/studio')
+  }
+
   if (isProtectedRoute(request)) await auth.protect()
 })
 
