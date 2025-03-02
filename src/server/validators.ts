@@ -37,3 +37,11 @@ export const PlanValidationSchema = z.object({
   metadata: z.any().optional(),
   type: z.string().max(256)
 })
+
+export const SubscriptionValidationSchema = z.object({
+  userId: z.string().max(256),
+  planId: z.string().max(256),
+  status: z.string().max(256),
+  startDate: z.date().default(new Date()),
+  endDate: z.date().optional()
+})
