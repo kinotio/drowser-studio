@@ -43,7 +43,6 @@ import { Button } from '@/components/ui/button'
 import { ToggleTheme } from '@/components/toogle-theme'
 import { Icon } from '@/components/ui/icon'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
-import { Badge } from '@/components/ui/badge'
 
 import { MenuType, TContentCase } from '@/lib/definitions'
 import { readableTimestamp } from '@/lib/utils'
@@ -332,7 +331,6 @@ export const StudioSidebar = () => {
                 <UserButton />
                 <div className='flex items-center justify-between w-full'>
                   <span>{user?.firstName?.split(' ')[0]}</span>
-                  <Badge variant='outline'>Free</Badge>
                 </div>
               </div>
             </SidebarMenuButton>

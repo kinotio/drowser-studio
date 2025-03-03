@@ -27,21 +27,3 @@ export const UserValidationSchema = z.object({
   firstName: z.string().max(256),
   lastName: z.string().max(256)
 })
-
-export const PlanValidationSchema = z.object({
-  name: z.string().max(256),
-  description: z.string().max(256),
-  duration: z.string().max(256),
-  price: z.number(),
-  priceId: z.string().max(256).optional(),
-  metadata: z.any().optional(),
-  type: z.string().max(256)
-})
-
-export const SubscriptionValidationSchema = z.object({
-  userId: z.string().max(256),
-  planId: z.string().max(256),
-  status: z.string().max(256),
-  startDate: z.date().default(new Date()),
-  endDate: z.date().optional()
-})
