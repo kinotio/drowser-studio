@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 import { ModifyDeep, Metric, TContentCase } from '@/lib/definitions'
-import { reports, metrics, logs, users, plans, subscriptions } from '@/server/db/schema'
+import { reports, metrics, logs, users } from '@/server/db/schema'
 import {
   ReportValidationSchema,
   MetricValidationSchema,
@@ -29,12 +29,6 @@ export type LogInsert = typeof logs.$inferInsert
 
 export type UserSelect = typeof users.$inferSelect
 export type UserInsert = typeof users.$inferInsert
-
-export type PlanSelect = typeof plans.$inferSelect
-export type PlanInsert = typeof plans.$inferInsert
-
-export type SubscriptionSelect = typeof subscriptions.$inferSelect
-export type SubscriptionInsert = typeof subscriptions.$inferInsert
 
 export type ReportModiefied = ModifyDeep<
   ReportSelect,

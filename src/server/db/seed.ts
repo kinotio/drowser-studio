@@ -1,5 +1,5 @@
 const seed = async () => {
-  await import('@/server/db/seeds/plan')
+  // Add your seed code here
 }
 
 seed()
