@@ -6,17 +6,13 @@ import {
   ReportValidationSchema,
   MetricValidationSchema,
   LogValidationSchema,
-  UserValidationSchema,
-  PlanValidationSchema,
-  SubscriptionValidationSchema
+  UserValidationSchema
 } from '@/server/validators'
 
 export type ReportInferType = z.infer<typeof ReportValidationSchema>
 export type MetricInferType = z.infer<typeof MetricValidationSchema>
 export type LogInferType = z.infer<typeof LogValidationSchema>
 export type UserInferType = z.infer<typeof UserValidationSchema>
-export type PlanInferType = z.infer<typeof PlanValidationSchema>
-export type SubscriptionInferType = z.infer<typeof SubscriptionValidationSchema>
 
 export type ReportSelect = typeof reports.$inferSelect
 export type ReportInsert = typeof reports.$inferInsert
