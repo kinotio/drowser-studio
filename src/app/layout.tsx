@@ -20,11 +20,11 @@ const Layout = ({
 }>) => {
   return (
     <ClerkProvider dynamic>
-      <html lang='en'>
+      <html lang='en' suppressHydrationWarning>
         <Script
           async
-          src='https://umami.kinotio.io/script.js'
-          data-website-id='eb707704-e55f-4bcd-bb71-637d1ca6a7a4'
+          src='https://insight.kinotio.io/script.js'
+          data-website-id='a3a15497-c4c8-4fc5-95da-4235c05e77b2'
         />
         <body className={`${inter.className}`}>
           <ThemeProvider attribute='class' defaultTheme='system' enableSystem>
