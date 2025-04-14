@@ -213,23 +213,6 @@ export const StudioSidebar = () => {
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
-
-                {/* 
-                <SidebarMenuItem>
-                  <SidebarMenuButton
-                    asChild
-                    isActive={pathName === `${PATH.STUDIO_REPORTS}/${paramsReportSlug}/ai`}
-                  >
-                    <Link href={`${PATH.STUDIO_REPORTS}/${paramsReportSlug}/ai`}>
-                      <Sparkles className='h-4 w-4 -rotate-90' />
-                      <span className='flex items-center gap-6'>
-                        <span>Drowser AI</span>
-                        <Badge variant='destructive'>Experimental</Badge>
-                      </span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-                */}
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
