@@ -26,8 +26,9 @@ import { humanizeDuration, readableTimestamp } from '@/lib/utils'
 import { CASE_STATUS, PATH } from '@/lib/constants'
 import { TContentCase, TContentSubCase } from '@/lib/definitions'
 
-import { getReport } from '@/server/actions/report'
-import type { ReportModiefied } from '@/server/types'
+import { getReport } from '@/server/actions'
+import type { ReportWithTimestamps } from '@/server/types/extended'
+import type { ReportModiefied } from '@/server/databases/types'
 
 const Page = () => {
   const { reportSlug, caseId } = useParams()
@@ -43,9 +44,14 @@ const Page = () => {
 
   useEffect(() => {
     getReport({ userId: userId as string, reportSlug: reportSlug as string })
-      .then((data) => {
-        const parsedData = data as ReportModiefied[]
-        setReport(parsedData[0])
+      .then((response) => {
+        if (response.success && response.data) {
+          // Get report from the response data
+          const report = response.data as ReportWithTimestamps & ReportModiefied
+          setReport(report)
+        } else {
+          console.error('Error fetching report for case detail:', response.error)
+        }
       })
       .catch((err) => console.log(err))
   }, [userId, reportSlug])

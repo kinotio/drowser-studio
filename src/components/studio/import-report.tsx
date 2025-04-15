@@ -24,10 +24,14 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { TFileContent } from '@/lib/definitions'
 import { isValidFileContent } from '@/lib/utils'
 
-import { saveReport, countReports } from '@/server/actions/report'
-import { saveLog } from '@/server/actions/log'
-import { saveMetric, getMetric, updateMetric } from '@/server/actions/metric'
-import type { ReportInferType } from '@/server/types'
+// Use correct modular imports with the standardized function names
+import { createReport } from '@/server/actions/report/create'
+import { countReports } from '@/server/actions/report/get'
+import { createLog } from '@/server/actions/log/create'
+import { getMetric } from '@/server/actions/metric/get'
+import { createMetric } from '@/server/actions/metric/create'
+import { updateMetric } from '@/server/actions/metric/update'
+import type { Report } from '@/server/databases/types'
 
 import { useEvents, EventTypes } from '@/hooks/use-events'
 
@@ -52,7 +56,9 @@ export const ImportReport = ({ children }: { children: React.ReactElement }) => 
     const fileReader = new FileReader()
     fileReader.readAsText(file, 'UTF-8')
     fileReader.onload = (e: ProgressEvent<FileReader>) => {
-      setReportContent(JSON.parse(e.target?.result as string))
+      if (e.target?.result) {
+        setReportContent(JSON.parse(e.target.result as string))
+      }
       setLoading(false)
     }
     fileReader.onerror = () => {
@@ -62,9 +68,20 @@ export const ImportReport = ({ children }: { children: React.ReactElement }) => 
   }
 
   const handleSubmit = async () => {
-    const userReportCount = await countReports({ userId: userId as string })
+    // Ensure userId is defined
+    if (!userId) {
+      toast.error('User ID not available')
+      return
+    }
 
-    if (userReportCount[0].count >= FREE_MAX_REPORT_COUNT) {
+    const countResponse = await countReports({ userId: userId })
+
+    if (!countResponse.success) {
+      toast.error('Failed to check report count')
+      return
+    }
+
+    if (countResponse.data && countResponse.data.count >= FREE_MAX_REPORT_COUNT) {
       toast.error('You have reached the maximum number of reports allowed')
       return
     }
@@ -83,52 +100,64 @@ export const ImportReport = ({ children }: { children: React.ReactElement }) => 
       name: reportName,
       slug: randomSlug,
       metadata: reportContent,
-      userId: userId as string
-    } satisfies ReportInferType
+      user_id: userId
+    } satisfies Omit<Report, 'id'>
 
     toast.promise(
-      saveReport({
-        userId: data.userId,
+      createReport({
+        // Changed from saveReport to createReport
+        user_id: data.user_id,
         name: data.name,
         slug: data.slug,
         metadata: data.metadata
       }),
       {
         loading: 'Saving report',
-        success: async (data) => {
-          if (data) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        success: async (response: any) => {
+          // Type added to fix unknown type errors
+          if (response.success && response.data) {
             const now = new Date()
             const month = now.getMonth() + 1
             const year = now.getFullYear()
 
-            getMetric({ userId: userId as string, year, month }).then(async (metric) => {
-              if (Array.isArray(metric) && metric.length !== 0) {
-                await updateMetric({ metricId: metric[0].id, total: metric[0].total + 1 })
-              } else {
-                await saveMetric({
-                  userId: userId as string,
-                  year,
-                  month,
-                  total: 1
-                })
-              }
+            // Get metric for current month/year
+            const metricResponse = await getMetric({ userId, year, month })
 
-              const device = (await axios.get('/api/device')).data.device
-
-              await saveLog({
-                type: 'report_imported',
-                description: 'Report imported',
-                userId: userId as string,
-                device
+            if (metricResponse.success && metricResponse.data) {
+              // Update existing metric
+              await updateMetric({
+                metricId: metricResponse.data.id as string,
+                total: metricResponse.data.total + 1
               })
+            } else {
+              // Create new metric
+              await createMetric({
+                user_id: userId,
+                year,
+                month,
+                total: 1
+              })
+            }
+
+            // Log the import
+            const deviceResponse = await axios.get('/api/device')
+            const device = deviceResponse.data.device
+
+            await createLog({
+              type: 'report_imported',
+              description: 'Report imported',
+              user_id: userId,
+              device
             })
 
-            publish({ type: EventTypes.REPORT_IMPORTED, payload: data })
+            publish({ type: EventTypes.REPORT_IMPORTED, payload: response.data })
 
             return 'Report Imported'
           }
           return 'An error occurred while importing report'
-        }
+        },
+        error: 'Failed to import report'
       }
     )
   }

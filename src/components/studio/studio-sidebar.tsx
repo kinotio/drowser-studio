@@ -22,7 +22,7 @@ import { isEmpty } from 'lodash'
 
 import { DrowserStudio } from '@/components/icons/drowser-studio'
 import { KinotioIcon } from '@/components/icons/kinotio-icon'
-import { ImportReport } from '@/components/mods/studio/import-report'
+import { ImportReport } from '@/components/studio/import-report'
 import {
   Sidebar,
   SidebarContent,
@@ -48,8 +48,9 @@ import { MenuType, TContentCase } from '@/lib/definitions'
 import { readableTimestamp } from '@/lib/utils'
 import { PATH } from '@/lib/constants'
 
-import { getReport } from '@/server/actions/report'
-import type { ReportModiefied } from '@/server/types'
+import { getReport } from '@/server/actions'
+import type { ReportWithTimestamps } from '@/server/types/extended'
+import type { ReportModiefied } from '@/server/databases/types'
 
 const menus = [
   {
@@ -82,11 +83,19 @@ export const StudioSidebar = () => {
   const uniqueBrowsers = Array.from(new Set(browserCases))
 
   useEffect(() => {
-    getReport({ userId: userId as string, reportSlug: paramsReportSlug })
-      .then((data) => {
-        setReport(data[0] as ReportModiefied)
-      })
-      .catch(() => setReport(null))
+    if (userId && paramsReportSlug) {
+      getReport({ userId: userId as string, reportSlug: paramsReportSlug })
+        .then((response) => {
+          if (response.success && response.data) {
+            // Get report from the response data
+            setReport(response.data as ReportWithTimestamps & ReportModiefied)
+          } else {
+            console.error('Error fetching report for sidebar:', response.error)
+            setReport(null)
+          }
+        })
+        .catch(() => setReport(null))
+    }
   }, [userId, paramsReportSlug])
 
   return (

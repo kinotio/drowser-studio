@@ -1,6 +1,4 @@
-const seed = async () => {
-  // Add your seed code here
-}
+const seed = async () => {}
 
 seed()
   .then(() => console.log('[✓] seeds applied successfully!'))

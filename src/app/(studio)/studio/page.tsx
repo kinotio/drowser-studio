@@ -23,10 +23,8 @@ import { ChartDataItem } from '@/lib/definitions'
 import { readableTimestamp } from '@/lib/utils'
 import { months, deviceIcons } from '@/lib/constants'
 
-import { getLastThreeReport } from '@/server/actions/report'
-import { getLastThreeLogs } from '@/server/actions/log'
-import { getCurrentYearMetrics } from '@/server/actions/metric'
-import type { ReportSelect, LogSelect } from '@/server/types'
+import { getLastThreeReport, getLastThreeLogs, getCurrentYearMetrics } from '@/server/actions'
+import type { LogWithTimestamps, ReportWithTimestamps } from '@/server/types/extended'
 
 import { useEvents, EventTypes } from '@/hooks/use-events'
 
@@ -38,9 +36,9 @@ const Page = () => {
   const { events } = useEvents((event) => event.type === EventTypes.REPORT_IMPORTED)
 
   const [isLoading, setIsLoading] = useState<boolean>(true)
-  const [reports, setReports] = useState<ReportSelect[]>([])
+  const [reports, setReports] = useState<ReportWithTimestamps[]>([])
   const [metrics, setMetrics] = useState<ChartDataItem[]>()
-  const [logs, setLogs] = useState<LogSelect[]>([])
+  const [logs, setLogs] = useState<LogWithTimestamps[]>([])
 
   const currentYear = new Date().getFullYear()
 
@@ -50,22 +48,39 @@ const Page = () => {
       getLastThreeReport({ userId: userId as string }),
       getLastThreeLogs({ userId: userId as string })
     ])
-      .then(([metricsData, reportsData, activitiesData]) => {
+      .then(([metricsResponse, reportsResponse, logsResponse]) => {
+        // Initialize chart data with zero values
         const data = months.map((name) => ({
           name,
           total: 0
         }))
 
-        metricsData.forEach((metric) => {
-          const monthIndex = metric.month - 1
-          if (monthIndex >= 0 && monthIndex < 12) {
-            data[monthIndex].total = metric.total
-          }
-        })
+        // Process metrics data if successful
+        if (metricsResponse.success && metricsResponse.data) {
+          metricsResponse.data.forEach((metric) => {
+            const monthIndex = metric.month - 1
+            if (monthIndex >= 0 && monthIndex < 12) {
+              data[monthIndex].total = metric.total
+            }
+          })
+          setMetrics(data as ChartDataItem[])
+        } else {
+          console.error('Error fetching metrics:', metricsResponse.error)
+        }
 
-        setMetrics(data as ChartDataItem[])
-        setReports(reportsData as ReportSelect[])
-        setLogs(activitiesData as LogSelect[])
+        // Process reports data if successful
+        if (reportsResponse.success && reportsResponse.data) {
+          setReports(reportsResponse.data as ReportWithTimestamps[])
+        } else {
+          console.error('Error fetching reports:', reportsResponse.error)
+        }
+
+        // Process logs data if successful
+        if (logsResponse.success && logsResponse.data) {
+          setLogs(logsResponse.data as LogWithTimestamps[])
+        } else {
+          console.error('Error fetching logs:', logsResponse.error)
+        }
       })
       .catch((err) => console.log(err))
       .finally(() => setIsLoading(false))

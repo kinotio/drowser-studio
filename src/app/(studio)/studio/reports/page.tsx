@@ -45,9 +45,10 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip
 
 import { readableTimestamp } from '@/lib/utils'
 
-import { getAllReport, countReports, deleteReport } from '@/server/actions/report'
-import { saveLog } from '@/server/actions/log'
-import type { ReportSelect } from '@/server/types'
+import { getAllReport, countReports } from '@/server/actions/report/get'
+import { deleteReport } from '@/server/actions/report/delete'
+import { createLog } from '@/server/actions/log/create'
+import type { ReportWithTimestamps } from '@/server/types/extended'
 
 import { useEvents, EventTypes } from '@/hooks/use-events'
 
@@ -57,7 +58,7 @@ const Page = () => {
   const { userId } = useAuth()
   const { events } = useEvents((event) => event.type === EventTypes.REPORT_IMPORTED)
 
-  const [reports, setReports] = useState<ReportSelect[]>([])
+  const [reports, setReports] = useState<ReportWithTimestamps[]>([])
   const [viewType, setViewType] = useState<ViewType>('card')
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [searchTerm, setSearchTerm] = useState<string>('')
@@ -72,37 +73,61 @@ const Page = () => {
   const handlePageChange = (pageNumber: number) => setCurrentPage(pageNumber)
 
   const fetchReports = useCallback(() => {
-    getAllReport({ userId: userId as string, searchTerm, currentPage, itemsPerPage })
-      .then((data) => {
-        setReports(data)
-        countReports({ userId: userId as string }).then((count) => setTotal(count[0].count))
+    if (!userId) return
+
+    getAllReport({ userId, searchTerm, currentPage, itemsPerPage })
+      .then(async (response) => {
+        if (response.success && response.data) {
+          setReports(response.data as ReportWithTimestamps[])
+
+          // Log the fetch action
+          await createLog({
+            type: 'reports_fetched',
+            description: 'Reports list fetched',
+            user_id: userId,
+            device: 'web'
+          })
+
+          // Get total count
+          const countResponse = await countReports({ userId })
+          if (countResponse.success && countResponse.data) {
+            setTotal(countResponse.data.count)
+          } else {
+            console.error('Error fetching report count:', countResponse.error)
+          }
+        } else {
+          console.error('Error fetching reports:', response.error)
+        }
       })
-      .catch((err) => console.log(err))
+      .catch((err) => console.error(err))
       .finally(() => setIsLoading(false))
   }, [currentPage, itemsPerPage, searchTerm, userId])
 
-  const handleRemoveReport = (reportId: string) => {
+  const handleRemoveReport = async (reportId: string) => {
+    if (!userId) return
+
     toast.promise(deleteReport({ reportId }), {
       loading: 'Deleting report',
-      success: async (data) => {
-        if (data) {
+      success: async (response) => {
+        if (response.success && response.data) {
           setReportToRemove(null)
 
-          const device = (await axios.get('/api/device')).data.device
+          const deviceResponse = await axios.get('/api/device')
+          const device = deviceResponse.data.device
 
-          await saveLog({
+          await createLog({
             type: 'report_deleted',
             description: 'Report deleted',
-            userId: userId as string,
+            user_id: userId,
             device
           })
 
           fetchReports()
-
           return 'Report deleted'
         }
+        return 'Failed to delete report'
       },
-      error: () => 'An error occurred while deleting report'
+      error: 'An error occurred while deleting report'
     })
   }
 
@@ -128,7 +153,7 @@ const Page = () => {
         <div className='flex items-center gap-2'>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant={'outline'} onClick={fetchReports}>
+              <Button variant={'outline'} onClick={() => fetchReports()}>
                 <RefreshCcwIcon className='h-4 w-4' size={20} />
               </Button>
             </TooltipTrigger>
@@ -200,11 +225,9 @@ const Page = () => {
 
 const ListView = ({
   reports,
-
   setReportToRemove
 }: {
-  reports: ReportSelect[]
-
+  reports: ReportWithTimestamps[]
   setReportToRemove: (reportId: string) => void
 }) => {
   return (
@@ -233,12 +256,10 @@ const ListView = ({
 const CardView = ({
   reports,
   isLoading,
-
   setReportToRemove
 }: {
-  reports: ReportSelect[]
+  reports: ReportWithTimestamps[]
   isLoading: boolean
-
   setReportToRemove: (reportId: string) => void
 }) => {
   return (

@@ -49,8 +49,8 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { readableTimestamp, formatToReadable, cn } from '@/lib/utils'
 import { LOG_TYPES, deviceIcons } from '@/lib/constants'
 
-import { getAllLogs, countLogs } from '@/server/actions/log'
-import type { LogSelect } from '@/server/types'
+import { getAllLogs, countLogs } from '@/server/actions'
+import type { LogWithTimestamps } from '@/server/types/extended'
 
 import { useEvents, EventTypes } from '@/hooks/use-events'
 
@@ -58,7 +58,7 @@ const Page = () => {
   const { userId } = useAuth()
   const { events } = useEvents((event) => event.type === EventTypes.REPORT_IMPORTED)
 
-  const [logs, setLogs] = useState<LogSelect[]>([])
+  const [logs, setLogs] = useState<LogWithTimestamps[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [searchTerm, setSearchTerm] = useState<string>('')
   const [currentPage, setCurrentPage] = useState<number>(1)
@@ -81,13 +81,25 @@ const Page = () => {
 
   const fetchLogs = useCallback(() => {
     getAllLogs({ userId: userId as string, currentPage, searchTerm, itemsPerPage })
-      .then((data) => {
-        setLogs(data)
-        countLogs({ userId: userId as string }).then((count) => setTotal(count[0].count))
+      .then((response) => {
+        if (response.success && response.data) {
+          setLogs(response.data as LogWithTimestamps[])
+
+          // Get total count for pagination
+          countLogs({ userId: userId as string }).then((countResponse) => {
+            if (countResponse.success && countResponse.data) {
+              setTotal(countResponse.data.count)
+            } else {
+              console.error('Error fetching logs count:', countResponse.error)
+            }
+          })
+        } else {
+          console.error('Error fetching logs:', response.error)
+        }
       })
       .catch((err) => console.log(err))
       .finally(() => setIsLoading(false))
-  }, [userId, currentPage, searchTerm])
+  }, [userId, currentPage, searchTerm, itemsPerPage])
 
   useEffect(() => {
     fetchLogs()
@@ -227,7 +239,13 @@ const Page = () => {
   )
 }
 
-const ActivitiesTable = ({ isLoading, logs }: { isLoading: boolean; logs: LogSelect[] }) => {
+const ActivitiesTable = ({
+  isLoading,
+  logs
+}: {
+  isLoading: boolean
+  logs: LogWithTimestamps[]
+}) => {
   return (
     <Table>
       <TableHeader>

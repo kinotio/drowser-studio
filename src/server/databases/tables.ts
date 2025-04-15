@@ -1,15 +1,20 @@
-import { varchar, pgTable, uuid, timestamp, jsonb, integer } from '@/server/drizzle'
+import { varchar, pgTable, uuid, timestamp, jsonb, integer } from 'drizzle-orm/pg-core'
+
+// Common Columns
+const baseColumns = {
+  created: timestamp({ withTimezone: true }).notNull().defaultNow(),
+  updated: timestamp({ withTimezone: true })
+    .notNull()
+    .defaultNow()
+    .$onUpdate(() => new Date())
+}
 
 export const users = pgTable('users', {
   id: varchar({ length: 256 }).primaryKey().notNull(),
   email: varchar({ length: 256 }).notNull(),
   first_name: varchar({ length: 256 }).notNull(),
   last_name: varchar({ length: 256 }).notNull(),
-  created: timestamp({ withTimezone: true }).notNull().defaultNow(),
-  updated: timestamp({ withTimezone: true })
-    .notNull()
-    .defaultNow()
-    .$onUpdate(() => new Date())
+  ...baseColumns
 })
 
 export const reports = pgTable('reports', {
@@ -20,11 +25,7 @@ export const reports = pgTable('reports', {
   user_id: varchar()
     .notNull()
     .references(() => users.id, { onDelete: 'cascade' }),
-  created: timestamp({ withTimezone: true }).notNull().defaultNow(),
-  updated: timestamp({ withTimezone: true })
-    .notNull()
-    .defaultNow()
-    .$onUpdate(() => new Date())
+  ...baseColumns
 })
 
 export const metrics = pgTable('metrics', {
@@ -35,11 +36,7 @@ export const metrics = pgTable('metrics', {
   user_id: varchar()
     .notNull()
     .references(() => users.id, { onDelete: 'cascade' }),
-  created: timestamp({ withTimezone: true }).notNull().defaultNow(),
-  updated: timestamp({ withTimezone: true })
-    .notNull()
-    .defaultNow()
-    .$onUpdate(() => new Date())
+  ...baseColumns
 })
 
 export const logs = pgTable('logs', {
@@ -50,13 +47,5 @@ export const logs = pgTable('logs', {
     .notNull()
     .references(() => users.id, { onDelete: 'cascade' }),
   device: varchar({ length: 256 }).notNull(),
-  created: timestamp({ withTimezone: true }).notNull().defaultNow(),
-  updated: timestamp({ withTimezone: true })
-    .notNull()
-    .defaultNow()
-    .$onUpdate(() => new Date())
+  ...baseColumns
 })
-
-const schema = { reports, metrics, logs, users }
-
-export default schema

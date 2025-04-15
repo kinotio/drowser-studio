@@ -14,9 +14,10 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb'
+import { Button } from '@/components/ui/button'
+
 import { SidebarProvider, SidebarInset, useSidebar } from '@/components/ui/sidebar'
-import { StudioSidebar } from '@/components/mods/studio/studio-sidebar'
-import { Button } from '../ui/button'
+import { StudioSidebar } from '@/components/studio/studio-sidebar'
 
 export const StudioLayout = ({
   children
