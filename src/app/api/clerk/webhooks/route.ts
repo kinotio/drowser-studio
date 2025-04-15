@@ -4,8 +4,7 @@ import { WebhookEvent } from '@clerk/nextjs/server'
 
 import { getDeviceType } from '@/lib/utils'
 
-import { saveLog } from '@/server/actions/log'
-import { saveUser, updateUser, deleteUser } from '@/server/actions/user'
+import { createUser, updateUser, deleteUser, createLog } from '@/server/actions'
 
 export const POST = async (req: Request) => {
   const CLERK_WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_SECRET
@@ -45,55 +44,55 @@ export const POST = async (req: Request) => {
   }
 
   if (evt.type === 'user.created') {
-    await saveUser({
+    await createUser({
       id: evt.data.id,
       email: evt.data.email_addresses[0].email_address,
-      firstName: evt.data.first_name as string,
-      lastName: evt.data.last_name as string
+      first_name: evt.data.first_name as string,
+      last_name: evt.data.last_name as string
     })
 
-    await saveLog({
+    await createLog({
       type: 'account_created',
       description: 'User account created',
-      userId: evt.data.id as string,
+      user_id: evt.data.id as string,
       device: getDeviceType(req.headers.get('user-agent') || '')
     })
   }
 
   if (evt.type === 'user.updated') {
-    await updateUser({
+    await updateUser(evt.data.id, {
       id: evt.data.id,
       email: evt.data.email_addresses[0].email_address,
-      firstName: evt.data.first_name as string,
-      lastName: evt.data.last_name as string
+      first_name: evt.data.first_name as string,
+      last_name: evt.data.last_name as string
     })
   }
 
   if (evt.type === 'user.deleted') {
-    await deleteUser({ userId: evt.data.id as string })
+    await deleteUser({ user_id: evt.data.id as string })
 
-    await saveLog({
+    await createLog({
       type: 'account_deleted',
       description: 'User account deleted',
-      userId: evt.data.id as string,
+      user_id: evt.data.id as string,
       device: getDeviceType(req.headers.get('user-agent') || '')
     })
   }
 
   if (evt.type === 'session.created') {
-    await saveLog({
+    await createLog({
       type: 'login',
       description: 'Account logged in',
-      userId: evt.data.user_id as string,
+      user_id: evt.data.user_id as string,
       device: getDeviceType(req.headers.get('user-agent') || '')
     })
   }
 
   if (evt.type === 'session.removed') {
-    await saveLog({
+    await createLog({
       type: 'logout',
       description: 'Account logged out',
-      userId: evt.data.user_id as string,
+      user_id: evt.data.user_id as string,
       device: getDeviceType(req.headers.get('user-agent') || '')
     })
   }
