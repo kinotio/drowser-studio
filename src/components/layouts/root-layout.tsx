@@ -21,9 +21,7 @@ import {
   NavigationMenuList
 } from '@/components/ui/navigation-menu'
 import { Button } from '@/components/ui/button'
-import { Drowser } from '@/components/icons/drowser'
-import { Kinotio } from '@/components/icons/kinotio'
-import { Heart } from '@/components/icons/heart'
+import { Drowser, Kinotio, Heart } from '@/components/icons'
 
 import { ToggleTheme } from '@/components/toogle-theme'
 

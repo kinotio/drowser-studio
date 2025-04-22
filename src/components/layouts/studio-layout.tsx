@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 import { Toaster } from '@/components/ui/sonner'
-import { Kinotio } from '@/components/icons/kinotio'
+import { Kinotio } from '@/components/icons'
 import {
   Breadcrumb,
   BreadcrumbItem,
