@@ -20,8 +20,7 @@ import { useUser, useAuth, UserButton } from '@clerk/nextjs'
 import { usePathname, useParams } from 'next/navigation'
 import { isEmpty } from 'lodash'
 
-import { DrowserStudio } from '@/components/icons/drowser-studio'
-import { KinotioIcon } from '@/components/icons/kinotio-icon'
+import { DrowserStudio, KinotioIcon } from '@/components/icons'
 import { ImportReport } from '@/components/studio/import-report'
 import {
   Sidebar,
