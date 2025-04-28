@@ -3,14 +3,14 @@ export const DATA = {
   url: 'https://drowser.kinotio.io',
   description: 'A easy way to implement and write Selenium with TypeScript using Deno',
   social_url: {
-    github: 'https://github.com/kinotiodotio',
+    github: 'https://github.com/kinotio',
     discord: 'https://discord.gg/cskvbKQA',
-    linkedin: 'https://linkedin.com/company/kinotiodotio',
-    x: 'https://x.com/kinotiodotio',
+    linkedin: 'https://linkedin.com/company/kinotio',
+    x: 'https://x.com/kinotio',
     bluesky: 'https://bsky.app/profile/kinotio.io'
   },
-  repo: 'https://github.com/kinotiodotio/drowser',
-  doc_repo: 'https://github.com/kinotiodotio/drowser/tree/main',
+  repo: 'https://github.com/kinotio/drowser',
+  doc_repo: 'https://github.com/kinotio/drowser/tree/main',
   keywords: [
     'Drowser',
     'Drowser Studio',
@@ -48,7 +48,7 @@ export const DATA = {
         name: 'FAQ'
       },
       {
-        href: 'https://github.com/kinotiodotio/drowser/issues',
+        href: 'https://github.com/kinotio/drowser/issues',
         name: 'Issues'
       }
     ],
@@ -65,12 +65,12 @@ export const DATA = {
     socials: [
       {
         icon: 'Github',
-        href: 'https://github.com/kinotiodotio',
+        href: 'https://github.com/kinotio',
         name: 'github'
       },
       {
         icon: 'X',
-        href: 'https://x.com/kinotiodotio',
+        href: 'https://x.com/kinotio',
         label: 'X'
       },
       {

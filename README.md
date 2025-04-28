@@ -14,7 +14,7 @@
   />
 </p>
 
-![build](https://github.com/kinotiodotio/drowser-studio/workflows/build/badge.svg)
+![build](https://github.com/kinotio/drowser-studio/workflows/build/badge.svg)
 
 Track, Visualize and Analyze
 

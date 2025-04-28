@@ -1,5 +1,5 @@
 {
-  "name": "@kinotiodotio/drowser-studio",
+  "name": "@kinotio/drowser-studio",
   "version": "0.1.1",
   "private": true,
   "packageManager": "pnpm@9.7.0",
