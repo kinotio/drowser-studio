@@ -107,7 +107,7 @@ driver({ browser: "safari" })
               </Link>
             </Button>
             <Button size='lg' variant='outline' className='border-2 gap-2' asChild>
-              <Link href='https://github.com/kinotiodotio/drowser'>
+              <Link href='https://github.com/kinotio/drowser'>
                 <Github className='w-5 h-5' />
                 GitHub
               </Link>
